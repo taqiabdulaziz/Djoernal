@@ -12,6 +12,7 @@ import {
   Dimensions,
   TouchableOpacity
 } from 'react-native'
+const {width, height} = Dimensions.get('window')
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import axios from 'axios'
 var {baseUrl} = require('../helpers/helpers')
@@ -19,7 +20,11 @@ const { width: WIDTH, height: HEIGHT } = Dimensions.get('window')
 
 export default class signin extends Component {
   static navigationOptions = {
-    title: 'Signin'
+    title: 'Signin',
+    headerStyle: {
+      backgroundColor: "#25d55f",
+      elevation: 0
+    }
   }
 
   state = {
@@ -38,15 +43,17 @@ export default class signin extends Component {
   }
 
   signin = () => {
+    console.log(`login`);
+    
     axios.post(`${baseUrl}/users/login`, {
       email: this.state.email,
       password: this.state.password
     }).then((result) => {
       console.log(result.data);
       
-      this.props.navigation.navigate("Revenue")
+      this.props.navigation.navigate("MainNavigation")
     }).catch((err) => {
-      console.log(err);
+      console.log(err.message);
       
     });
   }
@@ -54,10 +61,7 @@ export default class signin extends Component {
   render() {
     const { navigation: { navigate } } = this.props
     return (
-      <ImageBackground source={{ uri: 'https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-548354.png' }} style={styles.container}>
-        {/* <View style={styles.logoContainer}>
-          <Image source={{ uri: 'http://www.proant.se/files/user/Bilder/Reference%20designs/Sphero/sphero_logo_full.png' }} style={styles.logo} />
-        </View> */}
+      <View style={styles.container}>
         <View style={styles.inputContainer}>
           <Icon name={'email'} size={28} color={'rgba(255, 255, 255, 0.7)'}
             style={styles.inputIcon} />
@@ -89,7 +93,9 @@ export default class signin extends Component {
             <Text style={styles.text}>Login</Text>
           </TouchableOpacity>
         </View>
-      </ImageBackground>
+        <Text style={{ marginTop: 20 }}>Dont have account?</Text>
+        <Text style={{fontWeight: "bold"}} onPress={() => navigate("Signup")}> Register</Text>
+      </View>
     )
   }
 }
@@ -98,10 +104,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: null,
-    height: null
+    height: "100%",
+    backgroundColor: "#25d55f",
+    alignItems: "center",
+    justifyContent: "center",
   },
   inputContainer: {
-    margin: 7
+    margin: 7,
   },
   input: {
     width: WIDTH - 55,
@@ -112,7 +121,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.35)',
     color: 'rgba(255, 255, 255, 0.7)',
     marginHorizontal: 25,
-    fontFamily: "serif"
   },
   logoContainer: {
     alignItems: 'center',
@@ -133,13 +141,15 @@ const styles = StyleSheet.create({
     right: 37
   },
   btnLogin: {
-    width: WIDTH - 55,
+    width: width - 55,
     height: 45,
     borderRadius: 25,
-    backgroundColor: '#432577',
+    backgroundColor: '#3CB371',
     justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 10,
-    marginHorizontal: 25
+    marginHorizontal: 25,
+    color: 'white'
   },
   text: {
     color: 'rgba(255, 255, 255, 0.7)',
