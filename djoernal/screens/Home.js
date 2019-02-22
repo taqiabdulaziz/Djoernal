@@ -47,6 +47,14 @@ class Home extends React.Component {
             Revenue
           </Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => this.props.navigation.navigate('Expense')}
+        >
+          <Text style={styles.text}>
+            Expense
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   }

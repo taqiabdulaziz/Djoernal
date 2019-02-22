@@ -12,41 +12,70 @@ import {
 const {width, height} = Dimensions.get('window')
 
 class Revenue extends React.Component {
+  componentDidMount() {
+    this.state.diff = this.state.sourceAmount - this.state.expenseAmount
+  }
+
   static navigationOptions = {
-    title: 'Revenue'
+    title: 'Expense'
   }
 
   state = {
-    incomeType: 'Penjualan',
-    incomeAmount: 0,
-    revenueType: 'Revenue',
-    revenueAmount: 0,
-    incomeAccounts: [
-      "Penjualan",
-      "Bunga bank",
-      "Pendapatan lain-lain"
+    source: 'Kas',
+    sourceAmount: 0,
+    expenseType: 'Harga pokok penjualan',
+    expenseAmount: 0,
+    diff: 0,
+    sourceAccounts: [
+      "Kas",
+      "Utang"
     ],
-    revenueAccounts: [
-      "Pendapatan",
+    expenseAccounts: [
+      "Abodemen",
+      "Asuransi", 
+      "Biaya bank",
+      "Biaya hukum",
+      "Biaya pembersihan",
+      "Biaya umum",
+      "Bunga bank",
+      "Depresiasi",
+      "Entertainment",
+      "Gaji karyawan",
+      "Harga pokok penjualan",
+      "Iklan",
+      "Kendaraan",
+      "Konsultasi & akuntansi", 
+      "Listrik",
+      "Pajak",
+      "Pengeluaran kantor",
+      "Pengiriman & kurir", 
+      "Perangkat kantor",
+      "Perangkat komputer",
+      "Perjalanan",
+      "Printing & alat tulis",
+      "Reparasi & perbaikan",
+      "Sewa",
+      "Telepon & internet",
     ]
   }
 
   submit = () => {
     console.log("this is submit")
   }
+
   render() {
     return (
       <View style={styles.container}>
-        <View style= {styles.boxWrapper} >
+        <View style={styles.boxWrapper}>
           <View style={styles.box}>
-            <Text style={styles.text}>Debet: </Text>
+            <Text style={styles.text}>Pengeluaran: </Text>
             <Picker
-              selectedValue={this.state.incomeType}
+              selectedValue={this.state.expenseType}
               style={styles.input}
               onValueChange={(itemValue, itemIndex) =>
-                this.setState({incomeType: itemValue})
+                this.setState({expenseType: itemValue})
               }>
-              {this.state.incomeAccounts.map((item, index)=> (
+              {this.state.expenseAccounts.map((item, index)=> (
                 <Picker.Item label={item} value={item} key={index} />
               ))}
             </Picker>
@@ -57,28 +86,39 @@ class Revenue extends React.Component {
               style={styles.input}
               placeholder={"IDR"}
               placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
-              onChangeText={(incomeAmount) => this.setState({ incomeAmount, revenueAmount: incomeAmount })}
+              onChangeText={(expenseAmount) => this.setState({ expenseAmount })}
             />
           </View>
         </View>
-        <View style={styles.boxWrapper}>
+        <View style= {styles.boxWrapper} >
           <View style={styles.box}>
-            <Text style={styles.text}>Credit: </Text>
+            <Text style={styles.text}>Sumber Dana: </Text>
             <Picker
-              selectedValue={this.state.revenueType}
+              selectedValue={this.state.source}
               style={styles.input}
               onValueChange={(itemValue, itemIndex) =>
-                this.setState({revenueType: itemValue})
+                this.setState({source: itemValue})
               }>
-              {this.state.revenueAccounts.map((item, index)=> (
+              {this.state.sourceAccounts.map((item, index)=> (
                 <Picker.Item label={item} value={item} key={index} />
               ))}
             </Picker>
           </View>
           <View style={styles.box}>
-            <Text style={styles.text}>Revenue: </Text>
-            <Text style={styles.input}>{this.state.revenueAmount}</Text>
+            <Text style={styles.text}>Jumlah: </Text>
+            <TextInput
+              style={styles.input}
+              placeholder={"IDR"}
+              placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+              onChangeText={(sourceAmount) => this.setState({ sourceAmount, diff: (sourceAmount - this.state.expenseAmount)*-1 })}
+            />
           </View>
+          {(this.state.diff > 0) 
+            ? ( <View style={styles.box}>
+              <Text style={styles.text}>Utang: </Text>
+              <Text style={styles.input}>{(this.state.diff)} </Text>
+              </View>) 
+            : <Text></Text>}    
           <TouchableOpacity style={styles.btn} onPress={this.submit}>
             <Text style={styles.text}>Submit</Text>
           </TouchableOpacity> 
@@ -100,7 +140,7 @@ const styles = StyleSheet.create({
   },
   boxWrapper: {
     width: width,
-    height: height/5
+    height: height/4
   },
   box: {
     flex: 1,
