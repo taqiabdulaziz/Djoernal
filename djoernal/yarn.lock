@@ -1370,6 +1370,7 @@ asap@~2.0.3:
   integrity sha1-5QNHYR1+aQlDIIu9r+vLwvuGbUY=
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ascli@~1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/ascli/-/ascli-1.0.1.tgz#bcfa5974a62f18e81cabaeb49732ab4a88f906bc"
@@ -1378,6 +1379,8 @@ ascli@~1:
     colour "~0.7.1"
     optjs "~3.2.2"
 =======
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
 asn1@~0.2.3:
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/asn1/-/asn1-0.2.4.tgz#8d2475dfab553bb33e77b54e59e880bb8ce23136"
@@ -1389,7 +1392,10 @@ assert-plus@1.0.0, assert-plus@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/assert-plus/-/assert-plus-1.0.0.tgz#f12e0f3c5d77b0b1cdd9146942e4e96c1e4dd525"
   integrity sha1-8S4PPF13sLHN2RRpQuTpbB5N1SU=
+<<<<<<< HEAD
 >>>>>>> Login & Signup sudah
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
 
 assign-symbols@^1.0.0:
   version "1.0.0"
@@ -1447,11 +1453,14 @@ axios@0.18.0, axios@^0.18.0:
     is-buffer "^1.1.5"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 b64-to-blob@^1.2.19:
   version "1.2.19"
   resolved "https://registry.yarnpkg.com/b64-to-blob/-/b64-to-blob-1.2.19.tgz#157d85fdc8811665b9a35d29ffbc6a522ba28fbe"
   integrity sha512-L3nSu8GgF4iEyNYakCQSfL2F5GI5aCXcot9mNTf+4N0/BMhpxqqHyOb6jIR24iq2xLjQZLG8FOt3gnUcV+9NVg==
 =======
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
 axios@v0.19.0-beta.1:
   version "0.19.0-beta.1"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.0-beta.1.tgz#3d6a9ee75885d1fd39e108df9a4fb2e48e1af1e8"
@@ -1459,7 +1468,10 @@ axios@v0.19.0-beta.1:
   dependencies:
     follow-redirects "^1.4.1"
     is-buffer "^2.0.2"
+<<<<<<< HEAD
 >>>>>>> Login & Signup sudah
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
 
 babel-code-frame@^6.26.0:
   version "6.26.0"
@@ -2157,6 +2169,7 @@ buffer-from@^1.0.0:
   integrity sha512-MQcXEUbCKtEo7bhqEs6560Hyd4XaovZlO/k9V3hjVUF/zwW7KBVdSK4gIt/bzwS9MbR5qob+F5jusZsb0YQK2A==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 bytebuffer@~5:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/bytebuffer/-/bytebuffer-5.0.1.tgz#582eea4b1a873b6d020a48d58df85f0bba6cfddd"
@@ -2164,11 +2177,16 @@ bytebuffer@~5:
   dependencies:
     long "~3"
 =======
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
 builtins@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/builtins/-/builtins-1.0.3.tgz#cb94faeb61c8696451db36534e1422f94f0aee88"
   integrity sha1-y5T662HIaWRR2zZTThQi+U8K7og=
+<<<<<<< HEAD
 >>>>>>> Login & Signup sudah
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
 
 bytes@3.0.0:
   version "3.0.0"
@@ -2464,11 +2482,14 @@ color@~1.0.3:
     color-string "^1.4.0"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 colour@~0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/colour/-/colour-0.7.1.tgz#9cb169917ec5d12c0736d3e8685746df1cadf778"
   integrity sha1-nLFpkX7F0SwHNtPoaFdG3xyt93g=
 =======
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
 colors@1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/colors/-/colors-1.0.3.tgz#0433f44d809680fdeb60ed260f1b0c262e82a40b"
@@ -2492,7 +2513,10 @@ commander@2.17.1:
   version "2.17.1"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.17.1.tgz#bd77ab7de6de94205ceacc72f1716d29f20a77bf"
   integrity sha512-wPMUt6FnH2yzG95SA6mzjQOEKUU3aLaDEmzs1ti+1E9h+CsrZghRlqEM/EJ4KscsQVG8uNN4uVreUeT8+drlgg==
+<<<<<<< HEAD
 >>>>>>> Login & Signup sudah
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
 
 commander@^2.9.0:
   version "2.19.0"
@@ -3812,6 +3836,7 @@ find-up@^2.0.0, find-up@^2.1.0:
     locate-path "^2.0.0"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 firebase@^5.8.4:
   version "5.8.4"
   resolved "https://registry.yarnpkg.com/firebase/-/firebase-5.8.4.tgz#5b3a6e2a7415c9bfbd30ffd3a147d392387347ea"
@@ -3828,6 +3853,8 @@ firebase@^5.8.4:
 
 follow-redirects@^1.3.0:
 =======
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
 flush-write-stream@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/flush-write-stream/-/flush-write-stream-1.1.1.tgz#8dd7d873a1babc207d94ead0c2e0e44276ebf2e8"
@@ -3837,7 +3864,10 @@ flush-write-stream@^1.0.0:
     readable-stream "^2.3.6"
 
 follow-redirects@^1.3.0, follow-redirects@^1.4.1:
+<<<<<<< HEAD
 >>>>>>> Login & Signup sudah
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.7.0.tgz#489ebc198dc0e7f64167bd23b03c4c19b5784c76"
   integrity sha512-m/pZQy4Gj287eNy94nivy5wchN3Kp+Q5WgUPNy5lJSZ3sgkVKSYV/ZChMAQVIgx1SqfZ2zBZtPA2YlXIWxxJOQ==
@@ -4065,11 +4095,14 @@ glob-parent@^2.0.0:
     is-glob "^2.0.0"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 glob@7.0.6:
   version "7.0.6"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.0.6.tgz#211bafaf49e525b8cd93260d14ab136152b3f57a"
   integrity sha1-IRuvr0nlJbjNkyYNFKsTYVKz9Xo=
 =======
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
 glob-promise@3.4.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/glob-promise/-/glob-promise-3.4.0.tgz#b6b8f084504216f702dc2ce8c9bc9ac8866fdb20"
@@ -4081,11 +4114,15 @@ glob@7.1.2:
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.2.tgz#c19c9df9a028702d678612384a6552404c636d15"
   integrity sha512-MJTUg1kjuLeQCJ+ccE4Vpa6kKVXkPYJ2mOCQyUuKLcLQsdrMCpBPUi8qVE6+YuaJkozeA9NusTAw3hLr8Xe5EQ==
+<<<<<<< HEAD
 >>>>>>> Login & Signup sudah
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
   dependencies:
     fs.realpath "^1.0.0"
     inflight "^1.0.4"
     inherits "2"
+<<<<<<< HEAD
 <<<<<<< HEAD
     minimatch "^3.0.2"
     once "^1.3.0"
@@ -4093,6 +4130,8 @@ glob@7.1.2:
 
 glob@^7.0.5, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3:
 =======
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
     minimatch "^3.0.4"
     once "^1.3.0"
     path-is-absolute "^1.0.0"
@@ -4109,7 +4148,10 @@ glob@^6.0.1:
     path-is-absolute "^1.0.0"
 
 glob@^7.0.3, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3:
+<<<<<<< HEAD
 >>>>>>> Login & Signup sudah
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
   version "7.1.3"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.3.tgz#3960832d3f1574108342dafd3a67b332c0969df1"
   integrity sha512-vcfuiIxogLV4DlGBHIUOwI0IbrJ8HWPc4MU7HzviGeNho/UJDfi6B5p3sHeWIQ0KGIU0Jpxi5ZHxemQfLkkAwQ==
@@ -4392,11 +4434,14 @@ http-errors@1.6.3, http-errors@~1.6.2, http-errors@~1.6.3:
     statuses ">= 1.4.0 < 2"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 http-parser-js@>=0.4.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/http-parser-js/-/http-parser-js-0.5.0.tgz#d65edbede84349d0dc30320815a15d39cc3cbbd8"
   integrity sha512-cZdEF7r4gfRIq7ezX9J0T+kQmJNOub71dWbgAXVHDct80TKP4MCETtZQ31xyv38UwgzkWPYF/Xc0ge55dW9Z9w==
 =======
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
 http-proxy-agent@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/http-proxy-agent/-/http-proxy-agent-2.1.0.tgz#e4821beef5b2142a2026bd73926fe537631c5405"
@@ -4435,7 +4480,10 @@ iconv-lite@0.4.23:
   integrity sha512-neyTUVFtahjf0mB3dZT77u+8O0QB89jFdnBkd5P1JgYPbPaia3gXXOVL2fq8VyU2gMMD7SaN7QukTB/pmXYvDA==
   dependencies:
     safer-buffer ">= 2.1.2 < 3"
+<<<<<<< HEAD
 >>>>>>> Login & Signup sudah
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
 
 iconv-lite@^0.4.17, iconv-lite@^0.4.4, iconv-lite@~0.4.13:
   version "0.4.24"
@@ -5144,6 +5192,7 @@ locate-path@^2.0.0:
     path-exists "^3.0.0"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 lodash.camelcase@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz#b28aa6288a2b9fc651035c7711f65ab6190331a6"
@@ -5154,6 +5203,8 @@ lodash.clone@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.clone/-/lodash.clone-4.5.0.tgz#195870450f5a13192478df4bc3d23d2dea1907b6"
   integrity sha1-GVhwRQ9aExkkeN9Lw9I9LeoZB7Y=
 =======
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
 lock@^0.1.2:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/lock/-/lock-0.1.4.tgz#fec7deaef17e7c3a0a55e1da042803e25d91745d"
@@ -5163,7 +5214,10 @@ lodash.assign@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/lodash.assign/-/lodash.assign-4.2.0.tgz#0d99f3ccd7a6d261d19bdaeb9245005d285808e7"
   integrity sha1-DZnzzNem0mHRm9rrkkUAXShYCOc=
+<<<<<<< HEAD
 >>>>>>> Login & Signup sudah
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
 
 lodash.filter@^4.6.0:
   version "4.6.0"
@@ -5246,11 +5300,14 @@ lodash@4.x, lodash@^4.0.0, lodash@^4.10.1, lodash@^4.11.1, lodash@^4.13.1, lodas
   integrity sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 long@~3:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/long/-/long-3.2.0.tgz#d821b7138ca1cb581c172990ef14db200b5c474b"
   integrity sha1-2CG3E4yhy1gcFymQ7xTbIAtcR0s=
 =======
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
 log-symbols@^2.1.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/log-symbols/-/log-symbols-2.2.0.tgz#5740e1c5d6f0dfda4ad9323b5332107ef6b4c40a"
@@ -5266,7 +5323,10 @@ logfmt@^1.2.0:
     lodash "4.x"
     split "0.2.x"
     through "2.3.x"
+<<<<<<< HEAD
 >>>>>>> Login & Signup sudah
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
 
 loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.3.1, loose-envify@^1.4.0:
   version "1.4.0"
@@ -5744,10 +5804,14 @@ min-document@^2.19.0:
     dom-walk "^0.1.0"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 minimatch@^3.0.2, minimatch@^3.0.4:
 =======
 "minimatch@2 || 3", minimatch@3.0.4, minimatch@^3.0.4:
 >>>>>>> Login & Signup sudah
+=======
+"minimatch@2 || 3", minimatch@3.0.4, minimatch@^3.0.4:
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
   integrity sha512-yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==
@@ -5866,8 +5930,11 @@ mute-stream@0.0.7:
   integrity sha1-MHXOk7whuPq0PhvE2n6BFe0ee6s=
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 nan@^2.0.0, nan@^2.9.2:
 =======
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
 mv@2.1.1, mv@~2:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/mv/-/mv-2.1.1.tgz#ae6ce0d6f6d5e0a4f7d893798d03c1ea9559b6a2"
@@ -6051,6 +6118,7 @@ node-pre-gyp@^0.10.0:
     tar "^4"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 node-pre-gyp@^0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.12.0.tgz#39ba4bb1439da030295f899e3b520b7785766149"
@@ -6067,6 +6135,8 @@ node-pre-gyp@^0.12.0:
     semver "^5.3.0"
     tar "^4"
 =======
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
 node-pty-prebuilt@^0.7.6:
   version "0.7.6"
   resolved "https://registry.yarnpkg.com/node-pty-prebuilt/-/node-pty-prebuilt-0.7.6.tgz#c04c41e40a527ed894bf0ee801f40e5fd6f5faf6"
@@ -6074,7 +6144,10 @@ node-pty-prebuilt@^0.7.6:
   dependencies:
     nan "2.10.0"
     prebuild-install "^5.0.0"
+<<<<<<< HEAD
 >>>>>>> Login & Signup sudah
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
 
 noop-fn@^1.0.0:
   version "1.0.0"
@@ -6308,6 +6381,7 @@ options@>=0.0.5:
   integrity sha1-7CLTEoBrtT5zF3Pnza788cZDEo8=
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 optjs@~3.2.2:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/optjs/-/optjs-3.2.2.tgz#69a6ce89c442a44403141ad2f9b370bd5bb6f4ee"
@@ -6315,6 +6389,8 @@ optjs@~3.2.2:
 
 os-homedir@^1.0.0:
 =======
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
 ora@1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/ora/-/ora-1.4.0.tgz#884458215b3a5d4097592285f93321bb7a79e2e5"
@@ -6326,7 +6402,10 @@ ora@1.4.0:
     log-symbols "^2.1.0"
 
 os-homedir@^1.0.0, os-homedir@^1.0.1:
+<<<<<<< HEAD
 >>>>>>> Login & Signup sudah
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/os-homedir/-/os-homedir-1.0.2.tgz#ffbc4988336e0e833de0c168c7ef152121aa7fb3"
   integrity sha1-/7xJiDNuDoM94MFox+8VISGqf7M=
@@ -6636,6 +6715,15 @@ plist@2.1.0:
     xmlbuilder "8.2.2"
     xmldom "0.1.x"
 
+plist@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/plist/-/plist-2.1.0.tgz#57ccdb7a0821df21831217a3cad54e3e146a1025"
+  integrity sha1-V8zbeggh3yGDEhejytVOPhRqECU=
+  dependencies:
+    base64-js "1.2.0"
+    xmlbuilder "8.2.2"
+    xmldom "0.1.x"
+
 plist@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/plist/-/plist-3.0.1.tgz#a9b931d17c304e8912ef0ba3bdd6182baf2e1f8c"
@@ -6763,11 +6851,14 @@ process@~0.5.1:
   integrity sha1-FjjYqONML0QKkduVq5rrZ3/Bhc8=
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 promise-polyfill@7.1.2:
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/promise-polyfill/-/promise-polyfill-7.1.2.tgz#ab05301d8c28536301622d69227632269a70ca3b"
   integrity sha512-FuEc12/eKqqoRYIGBrUptCBRhobL19PS2U31vMNTfyck1FxPyMfgsXyW4Mav85y/ZN1hop3hOwRlUDok23oYfQ==
 =======
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
 progress@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.0.tgz#8a1be366bf8fc23db2bd23f10c6fe920b4389d1f"
@@ -6785,7 +6876,10 @@ promise-retry@^1.1.1:
   dependencies:
     err-code "^1.0.0"
     retry "^0.10.0"
+<<<<<<< HEAD
 >>>>>>> Login & Signup sudah
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
 
 promise@^7.1.1:
   version "7.3.1"
@@ -6804,6 +6898,7 @@ prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1,
     react-is "^16.8.1"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 protobufjs@^5.0.3:
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-5.0.3.tgz#e4dfe9fb67c90b2630d15868249bcc4961467a17"
@@ -6814,6 +6909,8 @@ protobufjs@^5.0.3:
     glob "^7.0.5"
     yargs "^3.10.0"
 =======
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
 protoduck@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/protoduck/-/protoduck-5.0.1.tgz#03c3659ca18007b69a50fd82a7ebcc516261151f"
@@ -6828,7 +6925,10 @@ proxy-addr@~2.0.4:
   dependencies:
     forwarded "~0.1.2"
     ipaddr.js "1.8.0"
+<<<<<<< HEAD
 >>>>>>> Login & Signup sudah
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
 
 pseudomap@^1.0.2:
   version "1.0.2"
@@ -8416,11 +8516,14 @@ trim-right@^1.0.1:
   integrity sha1-yy4SAwZ+DI3h9hQJS5/kVwTqYAM=
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 tslib@1.9.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.0.tgz#e37a86fda8cbbaf23a057f473c9f4dc64e5fc2e8"
   integrity sha512-f/qGG2tUkrISBlQZEjEqoZ3B2+npJjIf04H1wuAv9iA8i04Icp+61KRXxFdha22670NJopsZCIjhC3SnjPRKrQ==
 =======
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
 tslib@^1.9.3:
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
@@ -8432,7 +8535,10 @@ tunnel-agent@^0.6.0:
   integrity sha1-J6XeoGs2sEoKmWZ3SykIaPD8QP0=
   dependencies:
     safe-buffer "^5.0.1"
+<<<<<<< HEAD
 >>>>>>> Login & Signup sudah
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
 
 tween-functions@^1.0.1:
   version "1.2.0"
@@ -8758,6 +8864,7 @@ wide-align@^1.1.0:
     string-width "^1.0.2 || 2"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 window-size@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.1.4.tgz#f8e1aa1ee5a53ec5bf151ffa09742a6ad7697876"
@@ -8765,6 +8872,8 @@ window-size@^0.1.4:
 
 wordwrap@^1.0.0:
 =======
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
 widest-line@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/widest-line/-/widest-line-2.0.1.tgz#7438764730ec7ef4381ce4df82fb98a53142a3fc"
@@ -8773,7 +8882,10 @@ widest-line@^2.0.0:
     string-width "^2.1.1"
 
 wordwrap@1.0.0, wordwrap@^1.0.0:
+<<<<<<< HEAD
 >>>>>>> Login & Signup sudah
+=======
+>>>>>>> 1e484f9c82b57d323702e565489b788f78456e6a
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-1.0.0.tgz#27584810891456a4171c8d0226441ade90cbcaeb"
   integrity sha1-J1hIEIkUVqQXHI0CJkQa3pDLyus=
