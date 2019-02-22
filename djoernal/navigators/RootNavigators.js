@@ -54,7 +54,8 @@ const rootNav = createSwitchNavigator({
   Signup: Signup,
   Test: Test,
 }, {
-  initialRouteName: 'Register'
+    initialRouteName: 'Register'
+  
 })
 
 export default createAppContainer(rootNav)
