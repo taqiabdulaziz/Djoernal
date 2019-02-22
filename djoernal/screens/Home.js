@@ -16,6 +16,9 @@ class Home extends React.Component {
   }
 
   static navigationOptions = {
+    headerStyle: {
+      elevation: 0
+    },
     drawerIcon: ({tintColor}) => (
       <Icon name="home" style={{fontSize: 24, color: tintColor}} />
     )
@@ -39,14 +42,6 @@ class Home extends React.Component {
             Signin
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={() => this.props.navigation.navigate('Revenue')}
-        >
-          <Text style={styles.text}>
-            Revenue
-          </Text>
-        </TouchableOpacity>
       </View>
     );
   }
@@ -65,7 +60,6 @@ const styles = StyleSheet.create({
   text: {
     color: 'white',
     fontSize: 18,
-    fontFamily: 'serif'
   },
   btn: {
     width: width - 55,
