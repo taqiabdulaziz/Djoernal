@@ -16,6 +16,9 @@ class Home extends React.Component {
   }
 
   static navigationOptions = {
+    headerStyle: {
+      elevation: 0
+    },
     drawerIcon: ({tintColor}) => (
       <Icon name="home" style={{fontSize: 24, color: tintColor}} />
     )
@@ -73,7 +76,6 @@ const styles = StyleSheet.create({
   text: {
     color: 'white',
     fontSize: 18,
-    fontFamily: 'serif'
   },
   btn: {
     width: width - 55,
