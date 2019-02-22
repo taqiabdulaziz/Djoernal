@@ -50,6 +50,8 @@ export default class signup extends Component {
       company: this.state.company,
       phone: this.state.phone
     }).then((result) => {
+      console.log(result.data);
+      
       this.props.navigation.navigate("Signin", result.data)
       
     }).catch((err) => {

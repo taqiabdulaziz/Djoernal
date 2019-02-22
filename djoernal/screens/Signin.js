@@ -38,6 +38,8 @@ export default class signin extends Component {
   }
 
   signin = () => {
+    console.log(`login`);
+    
     axios.post(`${baseUrl}/users/login`, {
       email: this.state.email,
       password: this.state.password
@@ -46,7 +48,7 @@ export default class signin extends Component {
       
       this.props.navigation.navigate("Revenue")
     }).catch((err) => {
-      console.log(err);
+      console.log(err.message);
       
     });
   }
