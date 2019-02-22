@@ -12,6 +12,10 @@ import {
   Dimensions,
   TouchableOpacity
 } from 'react-native'
+
+var {baseUrl} = require(`../helpers/helpers`)
+import axios from 'axios'
+
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('window')
@@ -32,14 +36,26 @@ export default class signup extends Component {
 
   showPass = () => {
     if (this.state.press == false) {
-      this.setState({ showPass: false, press: true})
+      this.setState({ showPass: false, press: true })
     } else {
-      this.setState({ showPass: true, press: false})
+      this.setState({ showPass: true, press: false })
     }
   }
 
   signup = () => {
-    console.log("this is signup")
+    console.log(this.state)
+    axios.post(`${baseUrl}/users`, {
+      email: this.state.email,
+      password: this.state.password,
+      company: this.state.company,
+      phone: this.state.phone
+    }).then((result) => {
+      this.props.navigation.navigate("Signin", result.data)
+      
+    }).catch((err) => {
+      console.log(err.message);
+      
+    });
   }
 
   render() {
@@ -67,12 +83,12 @@ export default class signup extends Component {
             placeholder={"Password"}
             secureTextEntry={this.state.showPass}
             placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
-            onChangeText={(email) => this.setState({ email })}
+            onChangeText={(password) => this.setState({ password })}
           />
           <TouchableOpacity style={styles.btnEye}
             onPress={this.showPass.bind(this)}>
-            <Icon name={this.state.press == false ? 'eye' : 'eye-off'} 
-            size={26} color={'rgba(255, 255, 255, 0.7)'} />
+            <Icon name={this.state.press == false ? 'eye' : 'eye-off'}
+              size={26} color={'rgba(255, 255, 255, 0.7)'} />
           </TouchableOpacity>
         </View>
         <View style={styles.inputContainer}>
@@ -95,8 +111,8 @@ export default class signup extends Component {
             onChangeText={(phone) => this.setState({ phone })}
           />
         </View>
-        <View style={styles.inputContainer} onPress={this.signup}>        
-          <TouchableOpacity style={styles.btnLogin}>
+        <View style={styles.inputContainer}>
+          <TouchableOpacity style={styles.btnLogin} onPress={this.signup}>
             <Text style={styles.text}>Signup </Text>
           </TouchableOpacity>
         </View>
@@ -112,7 +128,9 @@ const styles = StyleSheet.create({
     height: null
   },
   inputContainer: {
-    margin: 7
+    margin: 7,
+    justifyContent: "center",
+    alignItems: "center"
   },
   input: {
     width: WIDTH - 55,

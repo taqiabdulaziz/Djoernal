@@ -13,7 +13,8 @@ import {
   TouchableOpacity
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-
+import axios from 'axios'
+var {baseUrl} = require('../helpers/helpers')
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('window')
 
 export default class signin extends Component {
@@ -37,7 +38,17 @@ export default class signin extends Component {
   }
 
   signin = () => {
-    console.log("this is signin")
+    axios.post(`${baseUrl}/users/login`, {
+      email: this.state.email,
+      password: this.state.password
+    }).then((result) => {
+      console.log(result.data);
+      
+      this.props.navigation.navigate("Revenue")
+    }).catch((err) => {
+      console.log(err);
+      
+    });
   }
 
   render() {
@@ -65,7 +76,7 @@ export default class signin extends Component {
             placeholder={"Password"}
             secureTextEntry={this.state.showPass}
             placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
-            onChangeText={(email) => this.setState({ email })}
+            onChangeText={(password) => this.setState({ password })}
           />
           <TouchableOpacity style={styles.btnEye}
             onPress={this.showPass.bind(this)}>
