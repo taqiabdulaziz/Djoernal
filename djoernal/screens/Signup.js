@@ -13,7 +13,7 @@ import {
   TouchableOpacity
 } from 'react-native'
 
-var {baseUrl} = require(`../helpers/helpers`)
+var { baseUrl } = require(`../helpers/helpers`)
 import axios from 'axios'
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -51,22 +51,19 @@ export default class signup extends Component {
       phone: this.state.phone
     }).then((result) => {
       console.log(result.data);
-      
+
       this.props.navigation.navigate("Signin", result.data)
-      
+
     }).catch((err) => {
       console.log(err.message);
-      
+
     });
   }
 
   render() {
     const { navigation: { navigate } } = this.props
     return (
-      <ImageBackground source={{ uri: 'https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-548354.png' }} style={styles.container}>
-        {/* <View style={styles.logoContainer}>
-          <Image source={{ uri: 'http://www.proant.se/files/user/Bilder/Reference%20designs/Sphero/sphero_logo_full.png' }} style={styles.logo} />
-        </View> */}
+      <View style={styles.container}>
         <View style={styles.inputContainer}>
           <Icon name={'email'} size={28} color={'rgba(255, 255, 255, 0.7)'}
             style={styles.inputIcon} />
@@ -118,7 +115,12 @@ export default class signup extends Component {
             <Text style={styles.text}>Signup </Text>
           </TouchableOpacity>
         </View>
-      </ImageBackground>
+        
+        <Text style={{ marginTop: 20 }}>already have account?</Text>
+        <Text style={{fontWeight: "bold"}} onPress={() => navigate("Signin")}> Signin</Text>
+        
+      </View>
+
     )
   }
 }
@@ -127,7 +129,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: null,
-    height: null
+    height: null,
+    backgroundColor: "#25d55f",
+    alignItems: "center",
+    justifyContent: "center",
   },
   inputContainer: {
     margin: 7,
@@ -143,7 +148,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.35)',
     color: 'rgba(255, 255, 255, 0.7)',
     marginHorizontal: 25,
-    fontFamily: "serif"
   },
   logoContainer: {
     alignItems: 'center',
@@ -167,7 +171,7 @@ const styles = StyleSheet.create({
     width: WIDTH - 55,
     height: 45,
     borderRadius: 25,
-    backgroundColor: '#432577',
+    backgroundColor: '#3CB371',
     justifyContent: 'center',
     marginTop: 10,
     marginHorizontal: 25
