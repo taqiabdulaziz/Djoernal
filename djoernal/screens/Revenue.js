@@ -10,6 +10,10 @@ import {
 const {width, height} = Dimensions.get('window')
 
 class Revenue extends React.Component {
+  static navigationOptions = {
+    title: 'Revenue'
+  }
+
   state = {
     type: 'Penjualan'
   }
@@ -40,8 +44,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'flex-start',
-    paddingTop: Platform.OS === 'android' ? 25 : 0,
+    justifyContent: 'flex-start'
   },
   display: {
     width: width,

@@ -16,16 +16,18 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('window')
 
-export default class signin extends Component {
+export default class signup extends Component {
   static navigationOptions = {
-    title: 'Signin'
+    title: 'Signup'
   }
 
   state = {
     showPass: true,
     press: false,
     email: '',
-    password: ''
+    password: '',
+    company: '',
+    phone: '',
   }
 
   showPass = () => {
@@ -36,8 +38,8 @@ export default class signin extends Component {
     }
   }
 
-  signin = () => {
-    console.log("this is signin")
+  signup = () => {
+    console.log("this is signup")
   }
 
   render() {
@@ -73,9 +75,29 @@ export default class signin extends Component {
             size={26} color={'rgba(255, 255, 255, 0.7)'} />
           </TouchableOpacity>
         </View>
-        <View style={styles.inputContainer}>        
-          <TouchableOpacity style={styles.btnLogin} onPress={this.signin}>
-            <Text style={styles.text}>Login</Text>
+        <View style={styles.inputContainer}>
+          <Icon name={'office-building'} size={28} color={'rgba(255, 255, 255, 0.7)'}
+            style={styles.inputIcon} />
+          <TextInput
+            style={styles.input}
+            placeholder={"Company"}
+            placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+            onChangeText={(company) => this.setState({ company })}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Icon name={'phone'} size={28} color={'rgba(255, 255, 255, 0.7)'}
+            style={styles.inputIcon} />
+          <TextInput
+            style={styles.input}
+            placeholder={"Phone"}
+            placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+            onChangeText={(phone) => this.setState({ phone })}
+          />
+        </View>
+        <View style={styles.inputContainer} onPress={this.signup}>        
+          <TouchableOpacity style={styles.btnLogin}>
+            <Text style={styles.text}>Signup </Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>
