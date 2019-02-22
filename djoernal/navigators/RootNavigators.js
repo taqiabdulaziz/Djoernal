@@ -1,17 +1,19 @@
 import {
   createAppContainer, 
-  createDrawerNavigator
+  createStackNavigator
 } from 'react-navigation'
 
 //screens
 import Home from '../screens/Home'
 import Revenue from '../screens/Revenue'
 import Signin from '../screens/Signin'
+import Signup from '../screens/Signup'
 
-const rootNav = createDrawerNavigator({
+const rootNav = createStackNavigator({
   Home: Home,
   Revenue: Revenue,
-  Signin: Signin
+  Signin: Signin,
+  Signup: Signup
 }, {
   initialRouteName: 'Home'
 })
