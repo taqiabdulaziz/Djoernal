@@ -19,15 +19,11 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { setTransaction } from '../store/action'
-const { width, height } = Dimensions.get('window')
-var { baseUrl } = require('../helpers/helpers')
-const { width: WIDTH, height: HEIGHT } = Dimensions.get('window')
+const { width, height} = Dimensions.get('window')
 
 import Gradient from 'react-native-css-gradient'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import axios from 'axios'
 var {baseUrl, gradient} = require('../helpers/helpers')
-const {width, height} = Dimensions.get('window')
+
 
 
 class Signin extends Component {
@@ -61,16 +57,21 @@ class Signin extends Component {
         email: this.state.email,
         password: this.state.password
       })
-
+      console.log(data);
+      
       var transactions = await axios.get(`${baseUrl}/users/${data._id}`)
       
-      setTransaction(transactions.data.transactionList)
+      setTransaction({
+        transactionList: transactions.data.transactionList,
+        otherTransactionList: transactions.data.otherTransactionList
+      })
     
       await AsyncStorage.setItem("token", data.token)
       await AsyncStorage.setItem("id", data._id)
 
       this.props.navigation.navigate("MainNavigation")
     } catch (error) {
+      // this.props.navigation.navigate("MainNavigation")
       console.log(error);
     }
   }

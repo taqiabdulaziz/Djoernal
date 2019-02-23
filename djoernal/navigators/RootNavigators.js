@@ -14,6 +14,7 @@ import Revenue from '../screens/Revenue'
 import Expense from '../screens/Expense'
 import Home from '../screens/Home'
 import Transaction from '../screens/MyTransaction/MyTransaction'
+import Detail from '../screens/MyTransaction/Detail'
 import { Drawer } from 'native-base';
 
 const HomeNav = createStackNavigator({
@@ -37,6 +38,9 @@ const ExpenseNav = createStackNavigator({
 const MyTransaction = createStackNavigator({
   MyTransaction: {
     screen: Transaction
+  },
+  Detail: {
+    screen: Detail
   }
 })
 
@@ -64,7 +68,7 @@ const rootNav = createSwitchNavigator({
   Signup: Signup,
   Test: Test,
 }, {
-    initialRouteName: 'Register'
+    initialRouteName: 'Signin'
   
 })
 

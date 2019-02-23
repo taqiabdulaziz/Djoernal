@@ -13,41 +13,32 @@ import { baseUrl } from '../../helpers/helpers'
 
 const styles = StyleSheet.create({
   card: {
-    margin: 14,
+    marginTop: 14,
+    marginLeft: 14,
+    marginRight: 14,
     padding: 10,
     backgroundColor: "white",
     elevation: 4,
-    flexDirection: "row"
+    flexDirection: "row",
+    borderRadius: 4
   },
   detail: {
-    flex: 1
+    flex: 2
+  },
+  status: {
+    flex: 1,
+    flexDirection: "row-reverse"
   }
 })
 
 class MyTransaction extends React.Component {
   render() {
     const { transactionData } = this.props
+    console.log(transactionData);
+    
     return (
       <View>
-        {
-          transactionData.map((transaction) => {
-            const { transactionType, debit, kredit, receipt } = transaction
-            return (
-              <TouchableNativeFeedback>
-                <View style={styles.card}>
-                  <View style={styles.detail}>
-                    <Text>{transactionType.accountType}</Text>
-                    <Text>{transactionType.subAccount}</Text>
-                    <Text>Rp {debit.nominal}</Text>
-                  </View>
-                  <View>
-
-                  </View>
-                </View>
-              </TouchableNativeFeedback>
-            )
-          })
-        }
+        
       </View>
     )
   }
