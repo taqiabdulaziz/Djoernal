@@ -115,6 +115,17 @@ class Revenue extends React.Component {
     }
   }
 
+  capture = async () => {
+    let receiptPath = await capture()
+    if (receiptPath) {
+      this.setState({
+        receipt: receiptPath
+      }, () => {
+          console.log(this.state)
+      })
+    }
+  }
+
   uploadImage = async () => {
     let imageUrl = await uploadImage(this.state.receipt)
     return imageUrl
@@ -125,6 +136,31 @@ class Revenue extends React.Component {
       <Gradient gradient={gradient} style={{width: width, height: height}}>
         <View style={styles.container}>
         <Button onPress={() => this.imagePick()} title="Receipt Image"></Button>
+
+        <Button onPress={() => this.capture()} title="Take Photo"></Button>
+        <View style={styles.boxWrapper}>
+          <View style={styles.box}>
+            <Text style={styles.text}>Pengeluaran: </Text>
+            <Picker
+              selectedValue={this.state.expenseType}
+              style={styles.input}
+              onValueChange={(itemValue, itemIndex) =>
+                this.setState({ expenseType: itemValue })
+              }>
+              {this.state.expenseAccounts.map((item, index) => (
+                <Picker.Item label={item} value={item} key={index} />
+              ))}
+            </Picker>
+          </View>
+          <View style={styles.box}>
+            <Text style={styles.text}>Jumlah: </Text>
+            <TextInput
+              style={styles.input}
+              placeholder={"IDR"}
+              placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+              onChangeText={(expenseAmount) => this.setState({ expenseAmount })}
+            />
+
           <View style={styles.boxWrapper}>
             <View style={styles.box}>
               <Text style={styles.text}>Pengeluaran: </Text>
@@ -148,6 +184,7 @@ class Revenue extends React.Component {
                 onChangeText={(expenseAmount) => this.setState({ expenseAmount })}
               />
             </View>
+
           </View>
           <View style= {styles.boxWrapper} >
             <View style={styles.box}>

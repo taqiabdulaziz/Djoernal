@@ -14,13 +14,23 @@ import {
   TouchableOpacity
 } from 'react-native'
 
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import axios from 'axios'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { setTransaction } from '../store/action'
+const { width, height } = Dimensions.get('window')
+var { baseUrl } = require('../helpers/helpers')
+const { width: WIDTH, height: HEIGHT } = Dimensions.get('window')
+
 import Gradient from 'react-native-css-gradient'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import axios from 'axios'
 var {baseUrl, gradient} = require('../helpers/helpers')
 const {width, height} = Dimensions.get('window')
 
-export default class signin extends Component {
+
+class Signin extends Component {
   static navigationOptions = {
     title: 'Signin',
     headerStyle: {
@@ -32,7 +42,7 @@ export default class signin extends Component {
   state = {
     showPass: true,
     press: false,
-    email: 'T@mail.com',
+    email: 'T',
     password: 'T'
   }
 
@@ -45,25 +55,24 @@ export default class signin extends Component {
   }
 
   signin = async () => {
-    console.log(`login`);
+    let { setTransaction } = this.props
     try {
       var { data } = await axios.post(`${baseUrl}/users/login`, {
         email: this.state.email,
         password: this.state.password
       })
-      console.log(data);
-      console.log(`bisa`);
+
+      var transactions = await axios.get(`${baseUrl}/users/${data._id}`)
       
+      setTransaction(transactions.data.transactionList)
+    
       await AsyncStorage.setItem("token", data.token)
       await AsyncStorage.setItem("id", data._id)
+
       this.props.navigation.navigate("MainNavigation")
     } catch (error) {
-      this.props.navigation.navigate("MainNavigation")
       console.log(error);
-
     }
-
-
   }
 
   render() {
@@ -108,7 +117,12 @@ export default class signin extends Component {
       </Gradient>
     )
   }
+
 }
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({ setTransaction }, dispatch)
+
+export default connect(null, mapDispatchToProps)(Signin)
 
 const styles = StyleSheet.create({
   container: {
