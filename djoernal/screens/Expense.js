@@ -12,10 +12,10 @@ import {
   AsyncStorage
 } from 'react-native';
 import Receipt from '../components/receipt'
+import Gradient from 'react-native-css-gradient'
 import axios from 'axios'
-const { baseUrl, imagePick, capture, uploadImage } = require(`../helpers/helpers`)
+const { baseUrl, imagePick, capture, uploadImage, gradient } = require(`../helpers/helpers`)
 const { width, height } = Dimensions.get('window')
-
 
 class Revenue extends React.Component {
   componentDidMount() {
@@ -23,7 +23,7 @@ class Revenue extends React.Component {
   }
 
   static navigationOptions = {
-    title: 'Expense'
+    title: 'Pengeluaran'
   }
 
   state = {
@@ -133,8 +133,10 @@ class Revenue extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <Gradient gradient={gradient} style={{width: width, height: height}}>
+        <View style={styles.container}>
         <Button onPress={() => this.imagePick()} title="Receipt Image"></Button>
+
         <Button onPress={() => this.capture()} title="Take Photo"></Button>
         <View style={styles.boxWrapper}>
           <View style={styles.box}>
@@ -158,48 +160,106 @@ class Revenue extends React.Component {
               placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
               onChangeText={(expenseAmount) => this.setState({ expenseAmount })}
             />
+
+          <View style={styles.boxWrapper}>
+            <View style={styles.box}>
+              <Text style={styles.text}>Pengeluaran: </Text>
+              <Picker
+                selectedValue={this.state.expenseType}
+                style={styles.input}
+                onValueChange={(itemValue, itemIndex) =>
+                  this.setState({expenseType: itemValue})
+                }>
+                {this.state.expenseAccounts.map((item, index)=> (
+                  <Picker.Item label={item} value={item} key={index} />
+                ))}
+              </Picker>
+            </View>
+            <View style={styles.box}>
+              <Text style={styles.text}>Jumlah: </Text>
+              <TextInput
+                style={styles.input}
+                placeholder={"IDR"}
+                placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+                onChangeText={(expenseAmount) => this.setState({ expenseAmount })}
+              />
+            </View>
+
+          </View>
+          <View style= {styles.boxWrapper} >
+            <View style={styles.box}>
+              <Text style={styles.text}>Sumber Dana: </Text>
+              <Picker
+                selectedValue={this.state.source}
+                style={styles.input}
+                onValueChange={(itemValue, itemIndex) =>
+                  this.setState({source: itemValue})
+                }>
+                {this.state.sourceAccounts.map((item, index)=> (
+                  <Picker.Item label={item} value={item} key={index} />
+                ))}
+              </Picker>
+            </View>
+            <View style={styles.box}>
+              <Text style={styles.text}>Jumlah: </Text>
+              <TextInput
+                style={styles.input}
+                placeholder={"IDR"}
+                placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+                onChangeText={(sourceAmount) => this.setState({ sourceAmount, diff: (sourceAmount - this.state.expenseAmount)*-1 })}
+              />
+            </View>
+            {(this.state.diff > 0) 
+              ? ( <View style={styles.box}>
+                <Text style={styles.text}>Utang: </Text>
+                <Text style={styles.input}>{(this.state.diff)} </Text>
+                </View>) 
+              : <Text></Text>}    
+            <TouchableOpacity style={styles.btn} onPress={this.submit}>
+              <Text style={styles.text}>Submit</Text>
+            </TouchableOpacity> 
+          </View>
+          <View style={styles.boxWrapper} >
+            <View style={styles.box}>
+              <Text style={styles.text}>Sumber Dana: </Text>
+              <Picker
+                selectedValue={this.state.source}
+                style={styles.input}
+                onValueChange={(itemValue, itemIndex) =>
+                  this.setState({ source: itemValue })
+                }>
+                {this.state.sourceAccounts.map((item, index) => (
+                  <Picker.Item label={item} value={item} key={index} />
+                ))}
+              </Picker>
+            </View>
+            <View style={styles.box}>
+              <Text style={styles.text}>Jumlah: </Text>
+              <TextInput
+                style={styles.input}
+                placeholder={"IDR"}
+                placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+                onChangeText={(sourceAmount) => this.setState({ sourceAmount, diff: (sourceAmount - this.state.expenseAmount) * -1 })}
+              />
+            </View>
+            <View style={styles.box}>
+              <Text style={styles.text}>Receipt: </Text>
+              <Text style={styles.input}>
+                {this.state.receipt}
+              </Text>
+            </View>
+            {(this.state.diff > 0)
+              ? (<View style={styles.box}>
+                <Text style={styles.text}>Utang: </Text>
+                <Text style={styles.input}>{(this.state.diff)} </Text>
+              </View>)
+              : <Text></Text>}
+            <TouchableOpacity style={styles.btn} onPress={this.submit}>
+              <Text style={styles.text}>Submit</Text>
+            </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.boxWrapper} >
-          <View style={styles.box}>
-            <Text style={styles.text}>Sumber Dana: </Text>
-            <Picker
-              selectedValue={this.state.source}
-              style={styles.input}
-              onValueChange={(itemValue, itemIndex) =>
-                this.setState({ source: itemValue })
-              }>
-              {this.state.sourceAccounts.map((item, index) => (
-                <Picker.Item label={item} value={item} key={index} />
-              ))}
-            </Picker>
-          </View>
-          <View style={styles.box}>
-            <Text style={styles.text}>Jumlah: </Text>
-            <TextInput
-              style={styles.input}
-              placeholder={"IDR"}
-              placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
-              onChangeText={(sourceAmount) => this.setState({ sourceAmount, diff: (sourceAmount - this.state.expenseAmount) * -1 })}
-            />
-          </View>
-          <View style={styles.box}>
-            <Text style={styles.text}>Receipt: </Text>
-            <Text style={styles.input}>
-              {this.state.receipt}
-            </Text>
-          </View>
-          {(this.state.diff > 0)
-            ? (<View style={styles.box}>
-              <Text style={styles.text}>Utang: </Text>
-              <Text style={styles.input}>{(this.state.diff)} </Text>
-            </View>)
-            : <Text></Text>}
-          <TouchableOpacity style={styles.btn} onPress={this.submit}>
-            <Text style={styles.text}>Submit</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      </Gradient>
     );
   }
 }
@@ -209,14 +269,14 @@ export default Revenue;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
+    justifyContent: 'center',
     justifyContent: 'flex-start',
     margin: 20
   },
   boxWrapper: {
     width: width,
-    height: height / 4
+    height: height/5
   },
   box: {
     flex: 1,
