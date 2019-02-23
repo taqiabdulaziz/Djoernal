@@ -47,6 +47,7 @@ module.exports = {
         blob.close()
         let url = await snapshot.ref.getDownloadURL();
         return url
-      }
+      },
     
+    gradient: `linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%)`
 };

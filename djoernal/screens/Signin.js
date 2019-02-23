@@ -13,11 +13,12 @@ import {
   AsyncStorage,
   TouchableOpacity
 } from 'react-native'
-const { width, height } = Dimensions.get('window')
+
+import Gradient from 'react-native-css-gradient'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import axios from 'axios'
-var { baseUrl } = require('../helpers/helpers')
-const { width: WIDTH, height: HEIGHT } = Dimensions.get('window')
+var {baseUrl, gradient} = require('../helpers/helpers')
+const {width, height} = Dimensions.get('window')
 
 export default class signin extends Component {
   static navigationOptions = {
@@ -68,41 +69,43 @@ export default class signin extends Component {
   render() {
     const { navigation: { navigate } } = this.props
     return (
-      <View style={styles.container}>
-        <View style={styles.inputContainer}>
-          <Icon name={'email'} size={28} color={'rgba(255, 255, 255, 0.7)'}
-            style={styles.inputIcon} />
-          <TextInput
-            style={styles.input}
-            placeholder={"Email"}
-            placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
-            onChangeText={(email) => this.setState({ email })}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Icon name={'lock'} size={28} color={'rgba(255, 255, 255, 0.7)'}
-            style={styles.inputIcon} />
-          <TextInput
-            style={styles.input}
-            placeholder={"Password"}
-            secureTextEntry={this.state.showPass}
-            placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
-            onChangeText={(password) => this.setState({ password })}
-          />
-          <TouchableOpacity style={styles.btnEye}
-            onPress={this.showPass.bind(this)}>
-            <Icon name={this.state.press == false ? 'eye' : 'eye-off'}
+      <Gradient gradient={gradient} style={{width: width, height: height}}>
+        <View style={styles.container}>
+          <View style={styles.inputContainer}>
+            <Icon name={'email'} size={28} color={'rgba(255, 255, 255, 0.7)'}
+              style={styles.inputIcon} />
+            <TextInput
+              style={styles.input}
+              placeholder={"Email"}
+              placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+              onChangeText={(email) => this.setState({ email })}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Icon name={'lock'} size={28} color={'rgba(255, 255, 255, 0.7)'}
+              style={styles.inputIcon} />
+            <TextInput
+              style={styles.input}
+              placeholder={"Password"}
+              secureTextEntry={this.state.showPass}
+              placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+              onChangeText={(password) => this.setState({ password })}
+            />
+            <TouchableOpacity style={styles.btnEye}
+              onPress={this.showPass.bind(this)}>
+              <Icon name={this.state.press == false ? 'eye' : 'eye-off'} 
               size={26} color={'rgba(255, 255, 255, 0.7)'} />
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.inputContainer}>        
+            <TouchableOpacity style={styles.btnLogin} onPress={this.signin}>
+              <Text style={styles.text}>Login</Text>
+            </TouchableOpacity>
+          </View>
+          <Text style={{ marginTop: 20 }}>Dont have account?</Text>
+          <Text style={{fontWeight: "bold"}} onPress={() => navigate("Signup")}> Register</Text>
         </View>
-        <View style={styles.inputContainer}>
-          <TouchableOpacity style={styles.btnLogin} onPress={this.signin}>
-            <Text style={styles.text}>Login</Text>
-          </TouchableOpacity>
-        </View>
-        <Text style={{ marginTop: 20 }}>Dont have account?</Text>
-        <Text style={{ fontWeight: "bold" }} onPress={() => navigate("Signup")}> Register</Text>
-      </View>
+      </Gradient>
     )
   }
 }
@@ -112,7 +115,6 @@ const styles = StyleSheet.create({
     flex: 1,
     width: null,
     height: "100%",
-    backgroundColor: "#25d55f",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -120,7 +122,7 @@ const styles = StyleSheet.create({
     margin: 7,
   },
   input: {
-    width: WIDTH - 55,
+    width: width - 55,
     height: 45,
     borderRadius: 45,
     fontSize: 16,
@@ -134,8 +136,8 @@ const styles = StyleSheet.create({
     margin: 20
   },
   logo: {
-    width: WIDTH * 0.9,
-    height: HEIGHT / 5.75
+    width: width * 0.9,
+    height: height / 5.75
   },
   inputIcon: {
     position: 'absolute',
