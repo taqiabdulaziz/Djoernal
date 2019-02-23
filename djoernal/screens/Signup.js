@@ -13,12 +13,12 @@ import {
   TouchableOpacity
 } from 'react-native'
 
-var { baseUrl } = require(`../helpers/helpers`)
+var { baseUrl, gradient } = require(`../helpers/helpers`)
 import axios from 'axios'
-
+import Gradient from 'react-native-css-gradient'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
-const { width: WIDTH, height: HEIGHT } = Dimensions.get('window')
+const { width, height } = Dimensions.get('window')
 
 export default class signup extends Component {
   static navigationOptions = {
@@ -63,64 +63,65 @@ export default class signup extends Component {
   render() {
     const { navigation: { navigate } } = this.props
     return (
-      <View style={styles.container}>
-        <View style={styles.inputContainer}>
-          <Icon name={'email'} size={28} color={'rgba(255, 255, 255, 0.7)'}
-            style={styles.inputIcon} />
-          <TextInput
-            style={styles.input}
-            placeholder={"Email"}
-            placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
-            onChangeText={(email) => this.setState({ email })}
-          />
+      <Gradient gradient={gradient} style={{width: width, height: height}}>
+        <View style={styles.container}>
+          <View style={styles.inputContainer}>
+            <Icon name={'email'} size={28} color={'rgba(255, 255, 255, 0.7)'}
+              style={styles.inputIcon} />
+            <TextInput
+              style={styles.input}
+              placeholder={"Email"}
+              placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+              onChangeText={(email) => this.setState({ email })}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Icon name={'lock'} size={28} color={'rgba(255, 255, 255, 0.7)'}
+              style={styles.inputIcon} />
+            <TextInput
+              style={styles.input}
+              placeholder={"Password"}
+              secureTextEntry={this.state.showPass}
+              placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+              onChangeText={(password) => this.setState({ password })}
+            />
+            <TouchableOpacity style={styles.btnEye}
+              onPress={this.showPass.bind(this)}>
+              <Icon name={this.state.press == false ? 'eye' : 'eye-off'}
+                size={26} color={'rgba(255, 255, 255, 0.7)'} />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.inputContainer}>
+            <Icon name={'office-building'} size={28} color={'rgba(255, 255, 255, 0.7)'}
+              style={styles.inputIcon} />
+            <TextInput
+              style={styles.input}
+              placeholder={"Company"}
+              placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+              onChangeText={(company) => this.setState({ company })}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Icon name={'phone'} size={28} color={'rgba(255, 255, 255, 0.7)'}
+              style={styles.inputIcon} />
+            <TextInput
+              style={styles.input}
+              placeholder={"Phone"}
+              placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+              onChangeText={(phone) => this.setState({ phone })}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <TouchableOpacity style={styles.btnLogin} onPress={this.signup}>
+              <Text style={styles.text}>Signup </Text>
+            </TouchableOpacity>
+          </View>
+          
+          <Text style={{ marginTop: 20 }}>already have account?</Text>
+          <Text style={{fontWeight: "bold"}} onPress={() => navigate("Signin")}> Signin</Text>
+          
         </View>
-        <View style={styles.inputContainer}>
-          <Icon name={'lock'} size={28} color={'rgba(255, 255, 255, 0.7)'}
-            style={styles.inputIcon} />
-          <TextInput
-            style={styles.input}
-            placeholder={"Password"}
-            secureTextEntry={this.state.showPass}
-            placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
-            onChangeText={(password) => this.setState({ password })}
-          />
-          <TouchableOpacity style={styles.btnEye}
-            onPress={this.showPass.bind(this)}>
-            <Icon name={this.state.press == false ? 'eye' : 'eye-off'}
-              size={26} color={'rgba(255, 255, 255, 0.7)'} />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.inputContainer}>
-          <Icon name={'office-building'} size={28} color={'rgba(255, 255, 255, 0.7)'}
-            style={styles.inputIcon} />
-          <TextInput
-            style={styles.input}
-            placeholder={"Company"}
-            placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
-            onChangeText={(company) => this.setState({ company })}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Icon name={'phone'} size={28} color={'rgba(255, 255, 255, 0.7)'}
-            style={styles.inputIcon} />
-          <TextInput
-            style={styles.input}
-            placeholder={"Phone"}
-            placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
-            onChangeText={(phone) => this.setState({ phone })}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <TouchableOpacity style={styles.btnLogin} onPress={this.signup}>
-            <Text style={styles.text}>Signup </Text>
-          </TouchableOpacity>
-        </View>
-        
-        <Text style={{ marginTop: 20 }}>already have account?</Text>
-        <Text style={{fontWeight: "bold"}} onPress={() => navigate("Signin")}> Signin</Text>
-        
-      </View>
-
+      </Gradient>
     )
   }
 }
@@ -130,7 +131,6 @@ const styles = StyleSheet.create({
     flex: 1,
     width: null,
     height: null,
-    backgroundColor: "#25d55f",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   input: {
-    width: WIDTH - 55,
+    width: width - 55,
     height: 45,
     borderRadius: 45,
     fontSize: 16,
@@ -154,8 +154,8 @@ const styles = StyleSheet.create({
     margin: 20
   },
   logo: {
-    width: WIDTH * 0.9,
-    height: HEIGHT / 5.75
+    width: width * 0.9,
+    height: height / 5.75
   },
   inputIcon: {
     position: 'absolute',
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     right: 37
   },
   btnLogin: {
-    width: WIDTH - 55,
+    width: width - 55,
     height: 45,
     borderRadius: 25,
     backgroundColor: '#3CB371',

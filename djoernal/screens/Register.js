@@ -9,6 +9,8 @@ import {
   Image
 } from 'react-native';
 import {Header, Left, Right, Icon } from 'native-base'
+import Gradient from 'react-native-css-gradient'
+const {gradient} = require ('../helpers/helpers')
 const {width, height} = Dimensions.get('window')
 
 class Home extends React.Component {
@@ -23,25 +25,27 @@ class Home extends React.Component {
   }
   render() {
     return (
-      <View style={styles.container}>
-        <Image source={require(`../assets/logo_transparent.png`)} style={{width: "50%", height: "50%"}}></Image>
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={() => this.props.navigation.navigate('Signup')}
-        >
-          <Text style={styles.text}>
-            Signup
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={() => this.props.navigation.navigate('Signin')}
-        >
-          <Text style={styles.text}>
-            Signin
-          </Text>
-        </TouchableOpacity>
-      </View>
+      <Gradient gradient={gradient} style={{width: width, height: height}}>
+        <View style={styles.container}>
+          <Image source={require(`../assets/logo_transparent.png`)} style={{width: "50%", height: "50%"}}></Image>
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={() => this.props.navigation.navigate('Signup')}
+          >
+            <Text style={styles.text}>
+              Signup
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={() => this.props.navigation.navigate('Signin')}
+          >
+            <Text style={styles.text}>
+              Signin
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </Gradient>
     );
   }
 }
@@ -51,7 +55,6 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#25d55f',
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: Platform.OS === 'android' ? 25 : 0,
