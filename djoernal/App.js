@@ -1,21 +1,24 @@
 import React from 'react';
-import { 
-  StyleSheet, 
-  Text, 
+import {
+  StyleSheet,
+  Text,
   View,
   SafeAreaView,
   ScrollView,
   Dimensions,
   Image
 } from 'react-native';
-import {Provider} from 'react-redux'
+import { Provider } from 'react-redux'
+import store from './store'
 import RootNavigator from './navigators/RootNavigators'
 
-const {width} = Dimensions.get('window')
+const { width } = Dimensions.get('window')
 export default class App extends React.Component {
   render() {
     return (
-      <RootNavigator />
+      <Provider store={store}>
+        <RootNavigator />
+      </Provider>
     );
   }
 }

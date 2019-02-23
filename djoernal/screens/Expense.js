@@ -115,6 +115,17 @@ class Revenue extends React.Component {
     }
   }
 
+  capture = async () => {
+    let receiptPath = await capture()
+    if (receiptPath) {
+      this.setState({
+        receipt: receiptPath
+      }, () => {
+          console.log(this.state)
+      })
+    }
+  }
+
   uploadImage = async () => {
     let imageUrl = await uploadImage(this.state.receipt)
     return imageUrl
@@ -124,6 +135,7 @@ class Revenue extends React.Component {
     return (
       <View style={styles.container}>
         <Button onPress={() => this.imagePick()} title="Receipt Image"></Button>
+        <Button onPress={() => this.capture()} title="Take Photo"></Button>
         <View style={styles.boxWrapper}>
           <View style={styles.box}>
             <Text style={styles.text}>Pengeluaran: </Text>
