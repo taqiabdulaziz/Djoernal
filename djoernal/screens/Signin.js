@@ -10,12 +10,13 @@ import {
   Image,
   ImageBackground,
   Dimensions,
+  AsyncStorage,
   TouchableOpacity
 } from 'react-native'
-const {width, height} = Dimensions.get('window')
+const { width, height } = Dimensions.get('window')
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import axios from 'axios'
-var {baseUrl} = require('../helpers/helpers')
+var { baseUrl } = require('../helpers/helpers')
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('window')
 
 export default class signin extends Component {
@@ -30,32 +31,38 @@ export default class signin extends Component {
   state = {
     showPass: true,
     press: false,
-    email: '',
-    password: ''
+    email: 'T@mail.com',
+    password: 'T'
   }
 
   showPass = () => {
     if (this.state.press == false) {
-      this.setState({ showPass: false, press: true})
+      this.setState({ showPass: false, press: true })
     } else {
-      this.setState({ showPass: true, press: false})
+      this.setState({ showPass: true, press: false })
     }
   }
 
-  signin = () => {
+  signin = async () => {
     console.log(`login`);
-    
-    axios.post(`${baseUrl}/users/login`, {
-      email: this.state.email,
-      password: this.state.password
-    }).then((result) => {
-      console.log(result.data);
+    try {
+      var { data } = await axios.post(`${baseUrl}/users/login`, {
+        email: this.state.email,
+        password: this.state.password
+      })
+      console.log(data);
+      console.log(`bisa`);
       
+      await AsyncStorage.setItem("token", data.token)
+      await AsyncStorage.setItem("id", data._id)
       this.props.navigation.navigate("MainNavigation")
-    }).catch((err) => {
-      console.log(err.message);
-      
-    });
+    } catch (error) {
+      this.props.navigation.navigate("MainNavigation")
+      console.log(error);
+
+    }
+
+
   }
 
   render() {
@@ -84,17 +91,17 @@ export default class signin extends Component {
           />
           <TouchableOpacity style={styles.btnEye}
             onPress={this.showPass.bind(this)}>
-            <Icon name={this.state.press == false ? 'eye' : 'eye-off'} 
-            size={26} color={'rgba(255, 255, 255, 0.7)'} />
+            <Icon name={this.state.press == false ? 'eye' : 'eye-off'}
+              size={26} color={'rgba(255, 255, 255, 0.7)'} />
           </TouchableOpacity>
         </View>
-        <View style={styles.inputContainer}>        
+        <View style={styles.inputContainer}>
           <TouchableOpacity style={styles.btnLogin} onPress={this.signin}>
             <Text style={styles.text}>Login</Text>
           </TouchableOpacity>
         </View>
         <Text style={{ marginTop: 20 }}>Dont have account?</Text>
-        <Text style={{fontWeight: "bold"}} onPress={() => navigate("Signup")}> Register</Text>
+        <Text style={{ fontWeight: "bold" }} onPress={() => navigate("Signup")}> Register</Text>
       </View>
     )
   }
