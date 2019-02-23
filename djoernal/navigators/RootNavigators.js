@@ -37,7 +37,7 @@ const DrawerNavigator = createDrawerNavigator({
   Home: {
     screen: HomeNav
   },
-  "Kas Masuk": {
+  Penjualan: {
     screen: RevenueNav
   },
   Pengeluaran: {
