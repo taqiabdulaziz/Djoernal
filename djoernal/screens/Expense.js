@@ -18,7 +18,7 @@ import Receipt from '../components/receipt'
 import axios from 'axios'
 import Gradient from 'react-native-css-gradient'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-var {baseUrl, gradient} = require('../helpers/helpers')
+var { baseUrl, gradient } = require('../helpers/helpers')
 const { baseUrl, imagePick, capture, uploadImage } = require(`../helpers/helpers`)
 const { width, height } = Dimensions.get('window')
 
@@ -69,7 +69,13 @@ class Revenue extends React.Component {
       "Sewa",
       "Telepon & internet",
     ],
-    receipt: ''
+    receipt: '',
+    itemList: [{
+      name: "Mie Goreng",
+      amount: 10000
+    }],
+    itemName: '',
+    itemAmount: 0
   }
 
   submit = async () => {
@@ -97,7 +103,7 @@ class Revenue extends React.Component {
       })
     }
     console.log(transaksi);
-    
+
     try {
       let { data } = await axios.post(`${baseUrl}/othertransaction`, transaksi, {
         headers: {
@@ -127,7 +133,7 @@ class Revenue extends React.Component {
       this.setState({
         receipt: receiptPath
       }, () => {
-          console.log(this.state)
+        console.log(this.state)
       })
     }
   }
@@ -137,79 +143,115 @@ class Revenue extends React.Component {
     return imageUrl
   }
 
+  addItem = async () => {
+
+  }
+
   render() {
     return (
-      <Gradient gradient={gradient} style={{width: width, height: height}}>
-      <KeyboardAwareScrollView
-        resetScrollToCoords={{ x: 0, y: 0 }}
-        contentContainerStyle={styles.container}
-        scrollEnabled={true}
-      >
-        <Button style={styles.btn} onPress={() => this.imagePick()} title="Receipt Image"></Button>
-        <Button style={styles.btn} onPress={() => this.capture()} title="Capture Receipt"></Button>
-        <ScrollView>
-          <View style={styles.box}>
-            <Text style={styles.text}>Pengeluaran: </Text>
-            <Picker
-              selectedValue={this.state.expenseType}
-              style={styles.input}
-              onValueChange={(itemValue, itemIndex) =>
-                this.setState({ expenseType: itemValue })
-              }>
-              {this.state.expenseAccounts.map((item, index) => (
-                <Picker.Item label={item} value={item} key={index} />
-              ))}
-            </Picker>
-          </View>
-          <View style={styles.box}>
-            <Text style={styles.text}>Jumlah: </Text>
-            <TextInput
-              style={styles.input}
-              placeholder={"IDR"}
-              placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
-              onChangeText={(expenseAmount) => this.setState({ expenseAmount })}
-            />
-          </View>
-        
-          <View style={styles.box}>
-            <Text style={styles.text}>Sumber Dana: </Text>
-            <Picker
-              selectedValue={this.state.source}
-              style={styles.input}
-              onValueChange={(itemValue, itemIndex) =>
-                this.setState({ source: itemValue })
-              }>
-              {this.state.sourceAccounts.map((item, index) => (
-                <Picker.Item label={item} value={item} key={index} />
-              ))}
-            </Picker>
-          </View>
-          <View style={styles.box}>
-            <Text style={styles.text}>Jumlah: </Text>
-            <TextInput
-              style={styles.input}
-              placeholder={"IDR"}
-              placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
-              onChangeText={(sourceAmount) => this.setState({ sourceAmount, diff: (sourceAmount - this.state.expenseAmount) * -1 })}
-            />
-          </View>
-          <View style={styles.box}>
-            <Text style={styles.text}>Receipt: </Text>
-            <Text style={styles.input}>
-              {this.state.receipt}
-            </Text>
-          </View>
-          {(this.state.diff > 0)
-            ? (<View style={styles.box}>
-              <Text style={styles.text}>Utang: </Text>
-              <Text style={styles.input}>{(this.state.diff)} </Text>
-            </View>)
-            : <Text></Text>}
-        <TouchableOpacity style={styles.btn} onPress={this.submit}>
-          <Text style={styles.text}>Submit</Text>
-        </TouchableOpacity>
-        </ScrollView>
-      </KeyboardAwareScrollView>
+      <Gradient gradient={gradient} style={{ width: width, height: height }}>
+        <KeyboardAwareScrollView
+          resetScrollToCoords={{ x: 0, y: 0 }}
+          contentContainerStyle={styles.container}
+          scrollEnabled={true}
+        >
+          <Button style={styles.btn} onPress={() => this.imagePick()} title="Receipt Image"></Button>
+          <Button style={styles.btn} onPress={() => this.capture()} title="Capture Receipt"></Button>
+          <ScrollView>
+            <View style={styles.box}>
+              <Text style={styles.text}>Pengeluaran: </Text>
+              <Picker
+                selectedValue={this.state.expenseType}
+                style={styles.input}
+                onValueChange={(itemValue, itemIndex) =>
+                  this.setState({ expenseType: itemValue })
+                }>
+                {this.state.expenseAccounts.map((item, index) => (
+                  <Picker.Item label={item} value={item} key={index} />
+                ))}
+              </Picker>
+            </View>
+            <View style={styles.box}>
+              <Text style={styles.text}>Jumlah: </Text>
+              <TextInput
+                style={styles.input}
+                placeholder={"IDR"}
+                placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+                onChangeText={(expenseAmount) => this.setState({ expenseAmount })}
+              />
+            </View>
+
+            <View style={styles.box}>
+              <Text style={styles.text}>Sumber Dana: </Text>
+              <Picker
+                selectedValue={this.state.source}
+                style={styles.input}
+                onValueChange={(itemValue, itemIndex) =>
+                  this.setState({ source: itemValue })
+                }>
+                {this.state.sourceAccounts.map((item, index) => (
+                  <Picker.Item label={item} value={item} key={index} />
+                ))}
+              </Picker>
+            </View>
+            <View style={styles.box}>
+              <Text style={styles.text}>Jumlah: </Text>
+              <TextInput
+                style={styles.input}
+                placeholder={"IDR"}
+                placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+                onChangeText={(sourceAmount) => this.setState({ sourceAmount, diff: (sourceAmount - this.state.expenseAmount) * -1 })}
+              />
+            </View>
+            {(this.state.diff > 0)
+              ? (<View style={styles.box}>
+                <Text style={styles.text}>Utang: </Text>
+                <Text style={styles.input}>{(this.state.diff)} </Text>
+              </View>)
+              : <Text></Text>}
+            <View style={styles.box}>
+              <Text style={styles.text}>Receipt: </Text>
+              <Text style={styles.input}>
+                {this.state.receipt}
+              </Text>
+            </View>
+            <View style={styles.box}>
+              <View style={{ flex: 1 }}>
+                <Text>Items: </Text>
+              </View>
+              <View style={{ flex: 3 }}>
+                {
+                  this.state.itemList.map((item, index) => {
+                    return (
+                      <View key={index} style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                        <Text>{item.name}</Text>
+                        <Text>{item.amount}</Text>
+                      </View>
+                    )
+                  })
+                }
+              </View>
+            </View>
+            <View style={styles.box}>
+              <View style={{ flex: 1 }}>
+                <Text>ADD ITEM:</Text>
+              </View>
+              <View style={{ flex: 3 }}>
+                <View style={styles.input}>
+                  <TextInput placeholder={"item name"} onValueChange={(itemName) => this.setState({ itemName })}></TextInput>
+                </View>
+                <View style={styles.input}>
+                  <TextInput placeholder={"amount"} onValueChange={(itemName) => this.setState({ itemName })}></TextInput>
+                </View>
+                <Button title="Add Item"></Button>
+                <Button title="Scan"></Button>
+              </View>
+            </View>
+            <TouchableOpacity style={styles.btn} onPress={this.submit}>
+              <Text style={styles.text}>Submit</Text>
+            </TouchableOpacity>
+          </ScrollView>
+        </KeyboardAwareScrollView>
       </Gradient>
     );
   }
@@ -232,7 +274,6 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 4,
     width: width * 0.95,
-    height: 25,
     flexDirection: 'row',
     margin: 5
   },
@@ -244,7 +285,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10
   },
   text: {
-    
+
   },
   btn: {
     width: width - 55,
