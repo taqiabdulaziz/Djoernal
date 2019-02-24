@@ -15,7 +15,12 @@ class Test extends React.Component {
         diff: 0,
         imageUri: '',
         imageUrl: '',
-        imageData: []
+        imageData: [],
+        itemList: [{
+            name: "Mie",
+            amount: 20000
+        }],
+        totalAmount: 0
     }
 
     imagePick = async () => {
@@ -23,8 +28,9 @@ class Test extends React.Component {
         this.uploadImage(uri)
     }
 
-    capture = (uri) => {
-
+    capture = async () => {
+        let uri = await capture()
+        this.uploadImage(uri)
     }
 
     uploadImage = async (uri) => {
@@ -36,10 +42,14 @@ class Test extends React.Component {
         let result = await axios.post(`${baseUrl}/googlevision`, {
             url: url
         })
-        console.log(result.data);
+        this.process(result.data)
         this.setState({
-            imageData: result.data
+            totalAmount: result.data.totalAmount
         })
+    }
+
+    process = async (data) => {
+        console.log(data)
     }
 
     render() {
@@ -47,8 +57,18 @@ class Test extends React.Component {
           <View>
               <Text>{this.state.diff}</Text>
               <Button onPress={() => this.imagePick()} title="pick image"></Button>
-              <Text>{JSON.stringify(this.state.imageData)}</Text>
-              <Button title="SCAN!" onPress={this.scan}></Button>
+              <Text>Total: Rp. {this.state.totalAmount}</Text>
+              <Button title="SCAN!" onPress={this.capture}></Button>
+              {
+                  this.state.itemList.map((item) => {
+                      return (
+                          <View>
+                              <Text>{item.name}</Text>
+                              <Text>{item.amount}</Text>
+                          </View>
+                      )
+                  })
+              }
         </View>
       )
     }
