@@ -5,9 +5,9 @@ import {
     Button
 } from 'react-native'
 import axios from 'axios'
-import {baseUrl} from '../helpers/helpers'
-import {capture, uploadImage, imagePick} from '../helpers/helpers'
-
+import { baseUrl } from '../helpers/helpers'
+import { capture, uploadImage, imagePick } from '../helpers/helpers'
+import { Card } from 'react-native-elements'
 class Test extends React.Component {
     state = {
         sourceAmount: 20,
@@ -53,26 +53,32 @@ class Test extends React.Component {
     }
 
     render() {
-      return (
-          <View>
-              <Text>{this.state.diff}</Text>
-              <Button onPress={() => this.imagePick()} title="pick image"></Button>
-              <Text>Total: Rp. {this.state.totalAmount}</Text>
-              <Button title="SCAN!" onPress={this.capture}></Button>
-              {
-                  this.state.itemList.map((item) => {
-                      return (
-                          <View>
-                              <Text>{item.name}</Text>
-                              <Text>{item.amount}</Text>
-                          </View>
-                      )
-                  })
-              }
-        </View>
-      )
+        return (
+            <View>
+                {this.state.itemList.map((item, index) => (
+                    <View key={index} >
+                        {/* <Text key ={index}>{item.name}</Text> */}
+                        <Card title={item.name} key={index}><Text>{item.name}</Text></Card>
+                    </View>
+                ))}
+                <Text>{this.state.diff}</Text>
+                <Button onPress={() => this.imagePick()} title="pick image"></Button>
+                <Text>Total: Rp. {this.state.totalAmount}</Text>
+                <Button title="SCAN!" onPress={this.capture}></Button>
+                {
+                    this.state.itemList.map((item) => {
+                        return (
+                            <View>
+                                <Text>{item.name}</Text>
+                                <Text>{item.amount}</Text>
+                            </View>
+                        )
+                    })
+                }
+            </View>
+        )
     }
-    
+
     componentDidMount() {
         this.setState({
             diff: this.state.sourceAmount - this.state.expenseAmount

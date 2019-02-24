@@ -117,6 +117,10 @@ class Signin extends Component {
     )
   }
 
+  componentDidMount() {
+    this.signin()
+  }
+
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({ setTransaction }, dispatch)
