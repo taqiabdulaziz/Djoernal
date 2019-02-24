@@ -51,6 +51,12 @@ const ProductNav = createStackNavigator({
   }
 })
 
+const TestGoogleVision = createStackNavigator({
+  Test: {
+    screen: Test
+  }
+})
+
 const DrawerNavigator = createDrawerNavigator({
   Home: {
     screen: HomeNav
@@ -66,6 +72,9 @@ const DrawerNavigator = createDrawerNavigator({
   },
   Produk: {
     screen: Product
+  },
+  TestGoogleVision: {
+    screen: TestGoogleVision
   }
 })
 
