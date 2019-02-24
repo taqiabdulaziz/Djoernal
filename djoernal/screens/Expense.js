@@ -75,7 +75,7 @@ class Revenue extends React.Component {
       amount: 10000
     }],
     itemName: '',
-    itemAmount: 0
+    itemAmount: ''
   }
 
   submit = async () => {
@@ -144,7 +144,17 @@ class Revenue extends React.Component {
   }
 
   addItem = async () => {
-
+    const { itemName, itemAmount, itemList } = this.state
+    await this.setState({
+      itemList: itemList.concat({
+        name: itemName,
+        amount: itemAmount
+      })
+    })
+    await this.setState({
+      itemName: '',
+      itemAmount: ''
+    })
   }
 
   render() {
@@ -238,12 +248,15 @@ class Revenue extends React.Component {
               </View>
               <View style={{ flex: 3 }}>
                 <View style={styles.input}>
-                  <TextInput placeholder={"item name"} onValueChange={(itemName) => this.setState({ itemName })}></TextInput>
+                  <TextInput placeholder={"item name"} onChangeText={(text) => this.setState({ itemName: text })} value={ this.state.itemName }></TextInput>
                 </View>
                 <View style={styles.input}>
-                  <TextInput placeholder={"amount"} onValueChange={(itemName) => this.setState({ itemName })}></TextInput>
+                  <TextInput placeholder={"amount"} onChangeText={(text) => this.setState({ itemAmount: text })} keyboardType="number-pad" value={ this.state.itemAmount }></TextInput>
                 </View>
-                <Button title="Add Item"></Button>
+                <Button 
+                  title="Add Item"
+                  onPress={ this.addItem }
+                ></Button>
                 <Button title="Scan"></Button>
               </View>
             </View>
