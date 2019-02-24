@@ -24,8 +24,6 @@ const { width, height} = Dimensions.get('window')
 import Gradient from 'react-native-css-gradient'
 var {baseUrl, gradient} = require('../helpers/helpers')
 
-
-
 class Signin extends Component {
   static navigationOptions = {
     title: 'Signin',
