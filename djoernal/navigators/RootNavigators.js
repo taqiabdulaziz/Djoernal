@@ -12,6 +12,7 @@ import Test from '../screens/Test'
 import Signin from '../screens/Signin'
 import Revenue from '../screens/Revenue'
 import Expense from '../screens/Expense'
+import Product from '../screens/Product'
 import Home from '../screens/Home'
 import Transaction from '../screens/MyTransaction/MyTransaction'
 import Detail from '../screens/MyTransaction/Detail'
@@ -44,11 +45,17 @@ const MyTransaction = createStackNavigator({
   }
 })
 
+const ProductNav = createStackNavigator({
+  Product: {
+    screen: Product
+  }
+})
+
 const DrawerNavigator = createDrawerNavigator({
   Home: {
     screen: HomeNav
   },
-  Penjualan: {
+  Pendapatan: {
     screen: RevenueNav
   },
   Pengeluaran: {
@@ -56,6 +63,9 @@ const DrawerNavigator = createDrawerNavigator({
   },
   Transaksi: {
     screen: MyTransaction
+  },
+  Produk: {
+    screen: Product
   }
 })
 
@@ -68,8 +78,7 @@ const rootNav = createSwitchNavigator({
   Signup: Signup,
   Test: Test,
 }, {
-    initialRouteName: 'Signin'
-  
+  initialRouteName: 'Signin'
 })
 
 export default createAppContainer(rootNav)

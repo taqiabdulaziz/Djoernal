@@ -17,7 +17,7 @@ class Home extends React.Component {
   static navigationOptions = {
     headerStyle: {
       elevation: 0,
-      backgroundColor: "#25d55f"
+      backgroundColor: "white"
     },
     drawerIcon: ({tintColor}) => (
       <Icon name="home" style={{fontSize: 24, color: tintColor}} />
@@ -56,8 +56,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: Platform.OS === 'android' ? 25 : 0,
+    justifyContent: 'center'
   },
   text: {
     color: 'white',

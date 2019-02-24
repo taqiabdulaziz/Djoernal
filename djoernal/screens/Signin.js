@@ -38,8 +38,8 @@ class Signin extends Component {
   state = {
     showPass: true,
     press: false,
-    email: 'T',
-    password: 'T'
+    email: 'user1@mail.com',
+    password: '123456'
   }
 
   showPass = () => {
