@@ -8,11 +8,17 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  ScrollView,
+  SafeAreaView,
   Platform,
   AsyncStorage
 } from 'react-native';
 import Receipt from '../components/receipt'
 import axios from 'axios'
+import Gradient from 'react-native-css-gradient'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+var {baseUrl, gradient} = require('../helpers/helpers')
 const { baseUrl, imagePick, capture, uploadImage } = require(`../helpers/helpers`)
 const { width, height } = Dimensions.get('window')
 
@@ -29,7 +35,7 @@ class Revenue extends React.Component {
   state = {
     source: 'Kas',
     sourceAmount: 0,
-    expenseType: 'Harga pokok penjualan',
+    expenseType: 'Persediaan',
     expenseAmount: 0,
     diff: 0,
     sourceAccounts: [
@@ -47,7 +53,7 @@ class Revenue extends React.Component {
       "Depresiasi",
       "Entertainment",
       "Gaji karyawan",
-      "Harga pokok penjualan",
+      "Persediaan",
       "Iklan",
       "Kendaraan",
       "Konsultasi & akuntansi",
@@ -99,10 +105,8 @@ class Revenue extends React.Component {
         }
       })
       console.log(data);
-      
     } catch (error) {
       console.log(error);
-
     }
   }
 
@@ -135,10 +139,15 @@ class Revenue extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Button onPress={() => this.imagePick()} title="Receipt Image"></Button>
-        <Button onPress={() => this.capture()} title="Capture Receipt"></Button>
-        <View style={styles.boxWrapper}>
+      <Gradient gradient={gradient} style={{width: width, height: height}}>
+      <KeyboardAwareScrollView
+        resetScrollToCoords={{ x: 0, y: 0 }}
+        contentContainerStyle={styles.container}
+        scrollEnabled={true}
+      >
+        <Button style={styles.btn} onPress={() => this.imagePick()} title="Receipt Image"></Button>
+        <Button style={styles.btn} onPress={() => this.capture()} title="Capture Receipt"></Button>
+        <ScrollView>
           <View style={styles.box}>
             <Text style={styles.text}>Pengeluaran: </Text>
             <Picker
@@ -161,8 +170,7 @@ class Revenue extends React.Component {
               onChangeText={(expenseAmount) => this.setState({ expenseAmount })}
             />
           </View>
-        </View>
-        <View style={styles.boxWrapper} >
+        
           <View style={styles.box}>
             <Text style={styles.text}>Sumber Dana: </Text>
             <Picker
@@ -197,11 +205,12 @@ class Revenue extends React.Component {
               <Text style={styles.input}>{(this.state.diff)} </Text>
             </View>)
             : <Text></Text>}
-          <TouchableOpacity style={styles.btn} onPress={this.submit}>
-            <Text style={styles.text}>Submit</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+        <TouchableOpacity style={styles.btn} onPress={this.submit}>
+          <Text style={styles.text}>Submit</Text>
+        </TouchableOpacity>
+        </ScrollView>
+      </KeyboardAwareScrollView>
+      </Gradient>
     );
   }
 }
@@ -211,21 +220,21 @@ export default Revenue;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    margin: 20
+    width: width,
+    height: height,
+    justifyContent: 'space-around',
   },
   boxWrapper: {
     width: width,
-    height: height / 4
+    height: height / 3
   },
   box: {
     flex: 1,
     margin: 4,
     width: width * 0.95,
-    height: 5,
-    flexDirection: 'row'
+    height: 25,
+    flexDirection: 'row',
+    margin: 5
   },
   input: {
     flex: 2.5,
