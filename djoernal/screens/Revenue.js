@@ -15,6 +15,7 @@ import axios from 'axios'
 import Gradient from 'react-native-css-gradient'
 const {baseUrl, gradient} = require ('../helpers/helpers')
 const {width, height} = Dimensions.get('window')
+import { connect } from 'react-redux'
 
 class Revenue extends React.Component {
   static navigationOptions = {
@@ -23,6 +24,7 @@ class Revenue extends React.Component {
 
   async componentDidMount() {
     try  {
+      alert(JSON.stringify(this.props))
       let {data} = await axios.get(`${baseUrl}/product`, {
         headers: {
           token: await AsyncStorage.getItem("token")
@@ -161,7 +163,11 @@ class Revenue extends React.Component {
   }
 }
 
-export default Revenue;
+const stateToProps = (state) => ({
+  transactionData: state.mainReducer.transactionData
+})
+
+export default connect(stateToProps, null)(Revenue);
 
 const styles = StyleSheet.create({
   container: {
