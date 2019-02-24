@@ -4,11 +4,7 @@ import uuid from 'uuid'
 import { ref } from '../config/firebase'
 
 module.exports = {
-<<<<<<< HEAD
-    baseUrl: "http://127.0.0.1:3000",
-=======
-    baseUrl: "http://10.107.250.169:3000",
->>>>>>> Success detect total amount google vision
+    baseUrl: "http://192.168.0.12:3000",
     gradient: `linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%)`,
     imagePick: async () => {
       try {
