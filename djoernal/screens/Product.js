@@ -262,6 +262,7 @@ class Product extends React.Component {
               {this.state.list.map((item, index)=> (
                 <View key={index} style={styles.card}>
                   <Text style={{fontSize: 15, fontWeight: 'bold', textDecorationLine:'underline'}}>{item.name}</Text>
+                  <Text>id: {item._id}</Text>
                   <Text>Stock: {item.stock}</Text>
                   <Text>Price: {item.price}</Text>
                   <Text>Harga pokok penjualan: {item.hpp}</Text>

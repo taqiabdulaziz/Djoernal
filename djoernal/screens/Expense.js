@@ -575,7 +575,9 @@ class Revenue extends React.Component {
             height: 200,
           }}
           visible={this.state.modalVisible}
-        >
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+        }}>
           <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "rgba(0, 0, 0, 0.61)" }}>
             <View style={{
               backgroundColor: "white",

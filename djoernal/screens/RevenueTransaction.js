@@ -34,9 +34,12 @@ class Transaction extends React.Component {
           token: await AsyncStorage.getItem("token")
         }
       })
-      this.setState({ list: data.transactionList.filter(item => {
-          return item.transactionType.accountType === "Revenue"
-        })
+      let pilihan = data.transactionList.filter(item => {
+        return item.transactionType.accountType === "Revenue"
+      })
+      console.log(pilihan)
+      this.setState({ 
+        list: pilihan
       });
     } catch (err) {
       console.log(err.message)

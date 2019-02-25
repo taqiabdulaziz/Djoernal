@@ -71,11 +71,10 @@ class Revenue extends React.Component {
 
   submit = async () => {
     let incomeAmount = 0
-    {
-      this.state.revenue.map((item, index) => (
-        incomeAmount += ((item.q * -1) * item.price)
-      ))
-    }
+    console.log(this.state.revenue)
+    await this.state.revenue.map((item, index)=> {
+      incomeAmount += ((item.q*-1) * item.price)
+    })
     let transaction = {
       transactionType: {
         accountType: 'Revenue',

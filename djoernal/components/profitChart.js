@@ -67,7 +67,7 @@ export default class Profit extends Component {
 
   render() {
     const chart_wh = 250
-    const series = [this.state.expense, (this.state.revenue - this.state.expense)]
+    const series = [this.state.expense, 15000]
     const sliceColor = ['#F44336','#2196F3']
  
     return (
@@ -79,8 +79,7 @@ export default class Profit extends Component {
       >
       <ScrollView style={{flex: 1}}>
         <View style={styles.container}>
-          <Text>{JSON.stringify(series)}</Text>
-          {/* <StatusBar
+          <StatusBar
             hidden={true}
           />
           <Text style={styles.title}>Income</Text>
@@ -91,7 +90,7 @@ export default class Profit extends Component {
             chart_wh={chart_wh}
             series={series}
             sliceColor={sliceColor}
-          /> */}
+          />
         </View>
       </ScrollView>
       </KeyboardAvoidingView>
