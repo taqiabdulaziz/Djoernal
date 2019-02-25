@@ -11,8 +11,10 @@ import {
   Alert,
   ScrollView,
   KeyboardAvoidingView,
+  TouchableHighlight,
   StatusBar,
-  Platform
+  Platform,
+  Modal
 } from 'react-native';
 import axios from 'axios'
 import Gradient from 'react-native-css-gradient'
@@ -32,14 +34,24 @@ class Transaction extends React.Component {
           token: await AsyncStorage.getItem("token")
         }
       })
-      this.setState({ list: data.transactionList });
+      this.setState({ list: data.transactionList.filter(item => {
+          return item.transactionType.accountType === "Revenue"
+        })
+      });
     } catch (err) {
       console.log(err.message)
     }
   }
 
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
+
   state = {
-    list: []
+    list: [],
+    selectedItem: [],
+    profit: 0,
+    modalVisible: false,
   }
 
   render() {
@@ -52,14 +64,58 @@ class Transaction extends React.Component {
       >
         <View style={styles.container}>
           <ScrollView>
-            <Text>{JSON.stringify(this.state.list)}</Text>
-          {/* {this.state.list.map((item, index )=> (
-              <View key={index}>
-                <View style={styles.box}>
-                  <Text>{JSON.stringify(item)}</Text>
-                </View>
+            {/* <Text>{JSON.stringify(this.state.list)}</Text> */}
+            <Modal
+            animationType="slide"
+            transparent={true}
+            visible={this.state.modalVisible}
+            onRequestClose={() => {
+              Alert.alert('Modal has been closed.');
+            }}>
+            <View style={{
+              marginTop: height/6,
+              marginLeft: width*0.01,
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: 10,
+            }}>
+              <Gradient gradient='linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%)' style={{width: width*0.9, height: height/2, borderRadius: 60}}>
+              <TouchableHighlight
+                style={styles.smallBtn}
+                onPress={() => {
+                  this.setModalVisible(!this.state.modalVisible);
+                }}>
+                <Text>X</Text>
+              </TouchableHighlight>
+              <Text></Text>
+              <Text>HPP: </Text>
+                {this.state.selectedItem.map((element, i) => {                  
+                  return (<View key={i} style={{
+                    alignItems: 'flex-start',
+                    justifyContent: 'flex-start',
+                  }}>
+                    <Text >{element.product.name} ({element.q*-1}pcs):{element.product.hpp * (element.q*-1)}</Text>
+                  </View>)
+                })}
+              </Gradient>
+            </View>
+            </Modal>
+          
+            {this.state.list.map((item, index )=> (
+              <View key ={index} style={{backgroundColor: 'white', borderRadius: 20, width: width*0.8, alignItems:'flex-start', justifyContent: 'center', margin: 20}}>
+                <Text style={{paddingLeft:20}}>{item.debit.accountType}:{item.debit.nominal}</Text>
+                <Text style={{paddingLeft:50}}>Penjualan:{item.debit.nominal}</Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.setState({ selectedItem: item.kredit });
+                    this.setModalVisible(!this.state.modalVisible);
+                  }}
+                  style={styles.btn}
+                >
+                <Text>Detail</Text>
+                </TouchableOpacity>
               </View>
-            ))} */}
+            ))}
           </ScrollView>
         </View>
       </KeyboardAvoidingView>
@@ -78,7 +134,8 @@ const styles = StyleSheet.create({
     fontFamily: 'serif',
     fontSize: 14,
     width: width,
-    height: height
+    height: height,
+    paddingTop: Platform.OS === 'android' ? 25 : 0,
   },
   boxWrapper: {
     width: width,
@@ -106,7 +163,7 @@ const styles = StyleSheet.create({
   text: {
   },
   btn: {
-    width: width - 55,
+    width: width * 0.7,
     height: 45,
     borderRadius: 25,
     backgroundColor: '#3CB371',

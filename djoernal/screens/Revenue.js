@@ -39,9 +39,8 @@ class Revenue extends React.Component {
   }
 
   async componentDidMount() {
-    try {
-      alert(JSON.stringify(this.props))
-      let { data } = await axios.get(`${baseUrl}/product`, {
+    try  {
+      let {data} = await axios.get(`${baseUrl}/product`, {
         headers: {
           token: await AsyncStorage.getItem("token")
         }

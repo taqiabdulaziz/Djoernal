@@ -124,10 +124,10 @@ const DrawerNavigator = createDrawerNavigator({
 }, {
   contentComponent:(props) => (
     <View style={{flex:1}}>
-        <SafeAreaView forceInset={{ top: 'never', horizontal: 'never' }}>
-            <DrawerItems {...props} />
-            <Button title="Logout" onPress={() => props.navigation.navigate('Signin')}/>
-        </SafeAreaView>
+      <SafeAreaView forceInset={{ top: 'never', horizontal: 'never' }}>
+        <DrawerItems {...props} />
+        <Button title="Logout" onPress={() => props.navigation.navigate('Signin')}/>
+      </SafeAreaView>
     </View>
 ),
 })

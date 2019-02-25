@@ -7327,6 +7327,11 @@ react-native-maps@expo/react-native-maps#v0.22.1-exp.0:
   version "0.22.1"
   resolved "https://codeload.github.com/expo/react-native-maps/tar.gz/e6f98ff7272e5d0a7fe974a41f28593af2d77bb2"
 
+react-native-pie-chart@^1.0.13:
+  version "1.0.13"
+  resolved "https://registry.yarnpkg.com/react-native-pie-chart/-/react-native-pie-chart-1.0.13.tgz#2f456ea1aec831dba2de930235df3c6d2c478294"
+  integrity sha512-3SYGGDq3ZnL6kJNeaFxd7BHqBU1+umD9POYYlGMlYEE0sPpZ7Pw+kgiPcm70xUP9Kuj8/def3A2/0krOtNhohA==
+
 react-native-ratings@^6.3.0:
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/react-native-ratings/-/react-native-ratings-6.3.0.tgz#becda9379616776a81d9d90bfc95ea40b76286fb"
