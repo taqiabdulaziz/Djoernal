@@ -1,15 +1,33 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import {
   View,
-  Text
+  Text,
+  FlatList
 } from 'react-native'
 
-export default class MyOther extends React.Component {
+import OtherTransactionList from '../../../components/otherTransactionList'
+
+class MyOther extends React.Component {
+  componentDidMount () {
+  }
+
   render() {
+    const { transactionData } = this.props
     return (
       <View>
-        <Text>ini other transaction</Text>
+        <FlatList
+          data={ transactionData.otherTransactionList }
+          renderItem={ ({ item }) => <OtherTransactionList item={ item } /> }
+          keyExtractor={ (item) => item._id }
+        />
       </View>
     )
   }
 }
+
+const stateToProps = (state) => ({
+  transactionData: state.mainReducer.transactionData
+})
+
+export default connect(stateToProps, null)(MyOther)
