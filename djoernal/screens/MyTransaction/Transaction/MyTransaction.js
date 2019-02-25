@@ -7,9 +7,6 @@ import {
   TouchableNativeFeedback
 } from 'react-native'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import axios from 'axios'
-import { baseUrl } from '../../helpers/helpers'
 
 const styles = StyleSheet.create({
   card: {
@@ -38,7 +35,7 @@ class MyTransaction extends React.Component {
     
     return (
       <View>
-        
+        <Text>ini transaction</Text>
       </View>
     )
   }

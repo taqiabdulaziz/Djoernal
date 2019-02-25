@@ -14,9 +14,12 @@ import {
   SafeAreaView,
   Platform,
   Alert,
+  ActivityIndicator,
   AsyncStorage,
-  TouchableNativeFeedback
+  TouchableNativeFeedback,
+  Modal
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons'
 import Receipt from '../components/receipt'
 import { Header } from 'react-navigation';
 import axios from 'axios'
@@ -73,20 +76,41 @@ class Revenue extends React.Component {
       "Telepon & internet",
     ],
     receipt: '',
-    itemList: [{
-      name: "Mie Goreng",
-      amount: 10000
-    }],
+    receiptUrl: null,
+    itemList: [],
     itemName: '',
     itemAmount: '',
-    totalAmount: 0
+    totalAmount: 0,
+    loading: false,
+    modalVisible: false,
+    modalText: 'Uploading photos'
+  }
+
+  deleteItem = async (itemIndex) => {
+    let newItemList = []
+    this.state.itemList.forEach((item, index) => {
+      if (index != itemIndex) {
+        newItemList.push(item)
+      }
+    })
+    await this.setState({
+      itemList: newItemList
+    })
+
   }
 
   submit = async () => {
-    let receiptImageUrl = await this.uploadImage()
+    let receiptImageUrl = null
+    if (!this.state.receiptUrl) {
+      await this.setState({
+        modalVisible: true
+      })
+      receiptImageUrl = await this.uploadImage()
+    }
+
     let transaksi = {
       transactionType: {
-        accountType: "Expense",
+        accountType: "Pengeluaran",
         subAccount: this.state.expenseType
       },
       debit: {
@@ -98,18 +122,13 @@ class Revenue extends React.Component {
         nominal: this.state.sourceAmount
       }],
       items: this.state.itemList,
-      receipt: receiptImageUrl
+      receipt: receiptImageUrl || this.state.receiptUrl
     }
-
-    if (this.state.diff != 0) {
-      transaksi.kredit.push({
-        accountType: "Utang",
-        nominal: this.state.diff
-      })
-    }
-    console.log(transaksi);
 
     try {
+      await this.setState({
+        modalVisible: false
+      })
       let { data } = await axios.post(`${baseUrl}/othertransaction`, transaksi, {
         headers: {
           token: await AsyncStorage.getItem("token")
@@ -129,6 +148,9 @@ class Revenue extends React.Component {
         receipt: receiptPath
       }, () => {
         if (action) {
+          this.setState({
+            modalVisible: true
+          })
           this.uploadImage(action)
         }
       })
@@ -149,6 +171,9 @@ class Revenue extends React.Component {
   uploadImage = async (action) => {
     let imageUrl = await uploadImage(this.state.receipt)
     if (action) {
+      await this.setState({
+        receiptUrl: imageUrl
+      })
       this.scan(imageUrl)
     } else {
       return imageUrl
@@ -157,12 +182,26 @@ class Revenue extends React.Component {
 
   scan = async (url) => {
     console.log(url);
+    await this.setState({
+      modalText: "Generating items..."
+    })
     let result = await axios.post(`${baseUrl}/googlevision`, {
       url: url
+    })
+    console.log(result.data);
+    
+
+    await this.setState({
+      modalVisible: false
     })
     await this.setState({
       itemList: result.data
     })
+
+    await this.setState({
+      loading: false
+    })
+
     let total = 0
     result.data.forEach((data) => {
       total += Number(data.amount)
@@ -173,7 +212,7 @@ class Revenue extends React.Component {
       sourceAmount: total,
       expenseAmount: total
     })
-    
+
 
   }
 
@@ -225,7 +264,7 @@ class Revenue extends React.Component {
                     value={this.state.expenseAmount}
                     placeholderTextColor="black"
                     onChangeText={(expenseAmount) => this.setState({ expenseAmount })}
-                  />
+                  ></TextInput>
                 </View>
               </View>
             </View>
@@ -295,7 +334,7 @@ class Revenue extends React.Component {
               borderRadius: 4,
               elevation: 3,
               padding: 8,
-              marginTop: 4
+              marginTop: 4,
             }}>
               <View>
                 <Text style={{
@@ -306,18 +345,29 @@ class Revenue extends React.Component {
                 {
                   (this.state.receipt == '') ?
                     (
-                      <View>
+                      <View style={{ flexDirection: "row" }}>
                         <View style={{ margin: 4 }}>
-                          <Button style={styles.btn} onPress={() => this.imagePick()} title="Receipt Image"></Button>
+                          <TouchableHighlight style={{ width: 50, height: 50, backgroundColor: "#25d55f", elevation: 2, padding: 6, borderRadius: 4 }} onPress={() => this.imagePick()}>
+                            <View style={{ height: "100%", width: "100%", justifyContent: "center", alignItems: "center" }}>
+                              <Ionicons name="md-photos" size={20}></Ionicons>
+                            </View>
+                          </TouchableHighlight>
+                          {/* <Button style={styles.btn} onPress={() => this.imagePick()} title="Receipt Image"></Button> */}
                         </View>
                         <View style={{ margin: 4 }}>
-                          <Button style={styles.btn} onPress={() => this.capture()} title="Capture Receipt"></Button>
+                          <TouchableHighlight style={{ width: 50, height: 50, backgroundColor: "#25d55f", elevation: 2, padding: 6, borderRadius: 4 }} onPress={() => this.capture()}>
+                            <View style={{ height: "100%", width: "100%", justifyContent: "center", alignItems: "center" }}>
+                              <Ionicons name="md-camera" size={20}></Ionicons>
+                            </View>
+                          </TouchableHighlight>
+                          {/* <Button style={styles.btn} onPress={() => this.capture()} title="Capture Receipt"></Button> */}
                         </View>
                       </View>
                     ) : (
                       <View style={{ margin: 4 }}>
                         <Button style={styles.btn} onPress={() => this.setState({
-                          receipt: ''
+                          receipt: '',
+                          receiptUrl: null
                         })} title="Delete"></Button>
                       </View>
                     )
@@ -337,24 +387,27 @@ class Revenue extends React.Component {
               }}>Item</Text>
 
               {
-                this.state.itemList.map((data) => {
-                  return (
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", margin: 8 }}>
-                      <Text>{data.name}</Text>
-                      <Text>{data.amount}</Text>
-                      <TouchableNativeFeedback>
+                this.state.loading == false ?
+                  this.state.itemList.map((data, index) => {
+                    return (
+                      <View style={{ flexDirection: "row", justifyContent: "space-between", margin: 8 }} key={index}>
+                        <Text>{data.name}</Text>
+                        <Text>{data.amount}</Text>
                         <TouchableHighlight style={{
                           backgroundColor: "red",
                           borderRadius: 4,
                           elevation: 2,
-                          padding: 4
-                        }}>
+                          padding: 4,
+                        }}
+                          onPress={() => this.deleteItem(index)}
+                        >
                           <Text style={{ color: "white" }}>delete</Text>
                         </TouchableHighlight>
-                      </TouchableNativeFeedback>
-                    </View>
+                      </View>
+                    )
+                  }) : (
+                    <ActivityIndicator></ActivityIndicator>
                   )
-                })
               }
               <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 8 }}>
                 <View style={{
@@ -365,7 +418,7 @@ class Revenue extends React.Component {
                   margin: 4,
                   flex: 1
                 }}>
-                  <TextInput placeholder="Name" style={{ flex: 1 }}></TextInput>
+                  <TextInput placeholder="Name" onChangeText={(text) => this.setState({ itemName: text })} style={{ flex: 1, padding: 4 }}></TextInput>
                 </View>
                 <View style={{
                   borderWidth: 0.25,
@@ -375,7 +428,7 @@ class Revenue extends React.Component {
                   margin: 4,
                   flex: 1
                 }}>
-                  <TextInput placeholder="Price" style={{ flex: 1 }}></TextInput>
+                  <TextInput placeholder="Price" onChangeText={(text) => this.setState({ itemAmount: text })} style={{ flex: 1, padding: 4 }}></TextInput>
                 </View>
                 <View style={{
                   flexDirection: "row-reverse",
@@ -387,8 +440,10 @@ class Revenue extends React.Component {
                     elevation: 2,
                     padding: 4,
                     justifyContent: "center",
-                    alignItems: "center"
-                  }}>
+                    alignItems: "center",
+                  }}
+                    onPress={this.addItem}
+                  >
                     <Text style={{ color: "white", width: 30, textAlign: "center" }}>+</Text>
                   </TouchableHighlight>
                 </View>
@@ -399,6 +454,30 @@ class Revenue extends React.Component {
             </View>
           </View>
         </Gradient>
+        <Button title="SUBMIT" onPress={this.submit}></Button>
+        <Modal
+          animationType="fade"
+          transparent={true}
+          style={{
+            height: 200,
+          }}
+          visible={this.state.modalVisible}
+        >
+          <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "rgba(0, 0, 0, 0.61)" }}>
+            <View style={{
+              backgroundColor: "white",
+              width: "80%",
+              height: "40%",
+              borderRadius: 20,
+              justifyContent: "center",
+              alignItems: "center"
+            }}>
+              <ActivityIndicator></ActivityIndicator>
+              <Text>{this.state.modalText}</Text>
+
+            </View>
+          </View>
+        </Modal>
       </ScrollView>
     );
   }
