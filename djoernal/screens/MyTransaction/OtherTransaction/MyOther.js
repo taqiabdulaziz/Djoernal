@@ -12,6 +12,13 @@ class MyOther extends React.Component {
   componentDidMount () {
   }
 
+  static navigationOptions = {
+    title: 'Expense',
+    tabBarStyle: {
+      backgroundColor: "white"
+    }
+}
+
   render() {
     const { transactionData } = this.props
     return (

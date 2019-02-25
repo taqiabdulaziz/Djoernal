@@ -1,5 +1,5 @@
 import {
-  createAppContainer, 
+  createAppContainer,
   createSwitchNavigator,
   createDrawerNavigator,
   createStackNavigator,
@@ -16,7 +16,7 @@ import Expense from '../screens/Expense'
 import Product from '../screens/Product'
 import Home from '../screens/Home'
 import Transaction from '../screens/MyTransaction/Transaction/MyTransaction'
-import OtherTransaction from  '../screens/MyTransaction/OtherTransaction/MyOther'
+import OtherTransaction from '../screens/MyTransaction/OtherTransaction/MyOther'
 import RevenueTransaction from '../screens/RevenueTransaction'
 import Detail from '../screens/MyTransaction/Detail'
 import { Drawer } from 'native-base';
@@ -46,7 +46,20 @@ const TransactionList = createMaterialTopTabNavigator({
   Pengeluaran: {
     screen: OtherTransaction
   }
-})
+}, {
+    navigationOptions: {
+      headerStyle: {
+        backgroundColor: "#3CB371",
+        elevation: 0
+      },
+      title: "Transactions"
+    },
+    tabBarOptions: {
+      style: {
+        backgroundColor: "#3CB371"
+      }
+    }
+  })
 
 const MyTransaction = createStackNavigator({
   Transactions: {
@@ -102,7 +115,7 @@ const rootNav = createSwitchNavigator({
   Signup: Signup,
   Test: Test,
 }, {
-  initialRouteName: 'Signin'
-})
+    initialRouteName: 'Signin'
+  })
 
 export default createAppContainer(rootNav)

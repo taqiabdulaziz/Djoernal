@@ -35,7 +35,11 @@ class Revenue extends React.Component {
   }
 
   static navigationOptions = {
-    title: 'Expense'
+    title: 'Expense',
+    headerStyle: {
+      elevation: 2,
+      backgroundColor: "#3CB371"
+    }
   }
 
   state = {
@@ -100,6 +104,7 @@ class Revenue extends React.Component {
   }
 
   submit = async () => {
+    console.log(this.state)
     let receiptImageUrl = null
     if (!this.state.receiptUrl) {
       await this.setState({
@@ -125,6 +130,8 @@ class Revenue extends React.Component {
       receipt: receiptImageUrl || this.state.receiptUrl
     }
 
+    console.log(transaksi);
+
     try {
       await this.setState({
         modalVisible: false
@@ -134,8 +141,18 @@ class Revenue extends React.Component {
           token: await AsyncStorage.getItem("token")
         }
       })
+      console.log(data)
       Alert.alert('Berhasil memasukkan data pengeluaran')
-      this.props.navigation.navigate('Expense') 
+      await this.setState({
+        itemList: [],
+        sourceAmount: 0,
+        expenseAmount: 0,
+        receiptUrl: '',
+        receipt: '',
+        itemName: '',
+        itemAmount: ''
+      })
+      this.props.navigation.navigate('Expense')
     } catch (error) {
       console.log(error);
     }
@@ -185,17 +202,33 @@ class Revenue extends React.Component {
     await this.setState({
       modalText: "Generating items..."
     })
-    let result = await axios.post(`${baseUrl}/googlevision`, {
-      url: url
-    })
+    let result = null
+    try {
+      result = await axios.post(`${baseUrl}/googlevision`, {
+        url: url
+      })
+    } catch (error) {
+      console.log(error)
+    }
+    let newData = []
+    console.log(`di scan nih`);
     console.log(result.data);
-    
+
+
+
+    result.data.forEach((data) => {
+      newData.push({
+        name: data.name,
+        nominal: Number(data.nominal)
+      })
+    })
+    console.log(newData);
 
     await this.setState({
       modalVisible: false
     })
     await this.setState({
-      itemList: result.data
+      itemList: newData
     })
 
     await this.setState({
@@ -203,8 +236,8 @@ class Revenue extends React.Component {
     })
 
     let total = 0
-    result.data.forEach((data) => {
-      total += Number(data.amount)
+    newData.forEach((data) => {
+      total += Number(data.nominal)
     })
     console.log(total);
     total = String(total)
@@ -221,7 +254,7 @@ class Revenue extends React.Component {
     await this.setState({
       itemList: itemList.concat({
         name: itemName,
-        amount: itemAmount
+        nominal: Number(itemAmount)
       })
     })
     await this.setState({
@@ -418,7 +451,7 @@ class Revenue extends React.Component {
                   margin: 4,
                   flex: 1
                 }}>
-                  <TextInput placeholder="Name" onChangeText={(text) => this.setState({ itemName: text })} style={{ flex: 1, padding: 4 }}></TextInput>
+                  <TextInput value={this.state.itemName} placeholder="Name" onChangeText={(text) => this.setState({ itemName: text })} style={{ flex: 1, padding: 4 }}></TextInput>
                 </View>
                 <View style={{
                   borderWidth: 0.25,
@@ -428,7 +461,7 @@ class Revenue extends React.Component {
                   margin: 4,
                   flex: 1
                 }}>
-                  <TextInput placeholder="Price" onChangeText={(text) => this.setState({ itemAmount: text })} style={{ flex: 1, padding: 4 }}></TextInput>
+                  <TextInput value={this.state.itemAmount} placeholder="Price" onChangeText={(text) => this.setState({ itemAmount: text })} style={{ flex: 1, padding: 4 }}></TextInput>
                 </View>
                 <View style={{
                   flexDirection: "row-reverse",
