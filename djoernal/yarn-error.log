@@ -1,5 +1,9 @@
 Arguments: 
+<<<<<<< HEAD
   /usr/bin/node /usr/bin/yarn install react-native-keyboard-aware-scroll-view
+=======
+  /usr/bin/node /usr/local/bin/yarn add react-native-elements
+>>>>>>> add google vision test screen
 
 PATH: 
   /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/ribka/Android/Sdk/emulator:/home/ribka/Android/Sdk/tools:/home/ribka/Android/Sdk/tools/bin:/home/ribka/Android/Sdk/platform-tools:/home/ribka/Android/Sdk/emulator:/home/ribka/Android/Sdk/tools:/home/ribka/Android/Sdk/tools/bin:/home/ribka/Android/Sdk/platform-tools
@@ -14,6 +18,7 @@ Platform:
   linux x64
 
 Trace: 
+<<<<<<< HEAD
   SyntaxError: Invalid value type 41:12 in /home/ribka/Documents/hacktiv8/phase 3/Djournal/client/djoernal/yarn.lock
       at Parser.unexpected (/usr/lib/node_modules/yarn/lib/cli.js:63211:11)
       at Parser.parse (/usr/lib/node_modules/yarn/lib/cli.js:63339:16)
@@ -24,6 +29,19 @@ Trace:
       at Generator.next (<anonymous>)
       at step (/usr/lib/node_modules/yarn/lib/cli.js:304:30)
       at /usr/lib/node_modules/yarn/lib/cli.js:315:13
+=======
+  SyntaxError: Invalid value type 41:12 in /home/taqi/Documents/Hacktiv8/phase3/final/client/djoernal/yarn.lock
+      at Parser.unexpected (/usr/local/lib/node_modules/yarn/lib/cli.js:63211:11)
+      at Parser.parse (/usr/local/lib/node_modules/yarn/lib/cli.js:63339:16)
+      at Parser.parse (/usr/local/lib/node_modules/yarn/lib/cli.js:63296:26)
+      at parse (/usr/local/lib/node_modules/yarn/lib/cli.js:63413:17)
+      at module.exports.exports.default (/usr/local/lib/node_modules/yarn/lib/cli.js:62982:96)
+      at Function.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:3035:63)
+      at Generator.next (<anonymous>)
+      at step (/usr/local/lib/node_modules/yarn/lib/cli.js:304:30)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:315:13
+      at <anonymous>
+>>>>>>> add google vision test screen
 
 npm manifest: 
   {

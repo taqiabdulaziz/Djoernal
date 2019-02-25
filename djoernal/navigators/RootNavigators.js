@@ -58,6 +58,12 @@ const ProductNav = createStackNavigator({
   }
 })
 
+const TestGoogleVision = createStackNavigator({
+  Test: {
+    screen: Test
+  }
+})
+
 const DrawerNavigator = createDrawerNavigator({
   Home: {
     screen: HomeNav
@@ -72,10 +78,10 @@ const DrawerNavigator = createDrawerNavigator({
     screen: MyTransaction
   },
   Produk: {
-    screen: ProductNav
+    screen: Product
   },
-  "Transaksi Pendapatan": {
-    screen: RevTransNav
+  TestGoogleVision: {
+    screen: TestGoogleVision
   }
 })
 

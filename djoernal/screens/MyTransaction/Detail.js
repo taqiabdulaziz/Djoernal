@@ -18,7 +18,7 @@ class Detail extends React.Component {
                             (<Text style={{color: "red"}}>Belum Lunas</Text>) :
                             (<Text style={{color: "green"}}>Lunas</Text>)
                         }
-                        
+                        <Text>Rp. {}</Text>
                     </View>
                 </View>
             </View>

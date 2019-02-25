@@ -39,8 +39,8 @@ class Signin extends Component {
   state = {
     showPass: true,
     press: false,
-    email: 'user1@mail.com',
-    password: '123456'
+    email: 'T',
+    password: 'T'
   }
 
   showPass = () => {
@@ -130,6 +130,10 @@ class Signin extends Component {
       </KeyboardAvoidingView>
       </Gradient>
     )
+  }
+
+  componentDidMount() {
+    this.signin()
   }
 
 }

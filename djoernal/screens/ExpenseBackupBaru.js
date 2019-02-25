@@ -13,18 +13,16 @@ import {
   TouchableHighlight,
   SafeAreaView,
   Platform,
-  Alert,
-  AsyncStorage,
-  TouchableNativeFeedback
+  AsyncStorage
 } from 'react-native';
 import Receipt from '../components/receipt'
-import { Header } from 'react-navigation';
 import axios from 'axios'
 import Gradient from 'react-native-css-gradient'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 var { baseUrl, gradient } = require('../helpers/helpers')
 const { baseUrl, imagePick, capture, uploadImage } = require(`../helpers/helpers`)
 const { width, height } = Dimensions.get('window')
+
 
 class Revenue extends React.Component {
   componentDidMount() {
@@ -75,7 +73,7 @@ class Revenue extends React.Component {
     receipt: '',
     itemList: [{
       name: "Mie Goreng",
-      amount: 10000
+      nominal: 10000
     }],
     itemName: '',
     itemAmount: '',
@@ -86,7 +84,7 @@ class Revenue extends React.Component {
     let receiptImageUrl = await this.uploadImage()
     let transaksi = {
       transactionType: {
-        accountType: "Expense",
+        accountType: "Pengeluaran",
         subAccount: this.state.expenseType
       },
       debit: {
@@ -115,8 +113,7 @@ class Revenue extends React.Component {
           token: await AsyncStorage.getItem("token")
         }
       })
-      Alert.alert('Berhasil memasukkan data pengeluaran')
-      this.props.navigation.navigate('Expense') 
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -160,21 +157,11 @@ class Revenue extends React.Component {
     let result = await axios.post(`${baseUrl}/googlevision`, {
       url: url
     })
+    console.log(result.data.totalAmount);
     await this.setState({
-      itemList: result.data
+      sourceAmount: String(result.data.totalAmount),
     })
-    let total = 0
-    result.data.forEach((data) => {
-      total += Number(data.amount)
-    })
-    console.log(total);
-    total = String(total)
-    await this.setState({
-      sourceAmount: total,
-      expenseAmount: total
-    })
-    
-
+    console.log(this.state)
   }
 
   addItem = async () => {
@@ -193,8 +180,8 @@ class Revenue extends React.Component {
 
   render() {
     return (
-      <ScrollView>
-        <Gradient gradient={gradient} style={{ width: width, height: height }}>
+      <Gradient gradient={gradient} style={{ width: width, height: height }}>
+        <ScrollView>
           <View style={{ padding: 10 }}>
             <View style={{
               backgroundColor: "white",
@@ -332,74 +319,13 @@ class Revenue extends React.Component {
               marginTop: 4
             }}>
               <Text style={{
-                fontSize: 16,
-                fontWeight: "bold"
-              }}>Item</Text>
-
-              {
-                this.state.itemList.map((data) => {
-                  return (
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", margin: 8 }}>
-                      <Text>{data.name}</Text>
-                      <Text>{data.amount}</Text>
-                      <TouchableNativeFeedback>
-                        <TouchableHighlight style={{
-                          backgroundColor: "red",
-                          borderRadius: 4,
-                          elevation: 2,
-                          padding: 4
-                        }}>
-                          <Text style={{ color: "white" }}>delete</Text>
-                        </TouchableHighlight>
-                      </TouchableNativeFeedback>
-                    </View>
-                  )
-                })
-              }
-              <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 8 }}>
-                <View style={{
-                  borderWidth: 0.25,
-                  borderColor: "black",
-                  borderRadius: 4,
-                  flexDirection: "row",
-                  margin: 4,
-                  flex: 1
-                }}>
-                  <TextInput placeholder="Name" style={{ flex: 1 }}></TextInput>
-                </View>
-                <View style={{
-                  borderWidth: 0.25,
-                  borderColor: "black",
-                  borderRadius: 4,
-                  flexDirection: "row",
-                  margin: 4,
-                  flex: 1
-                }}>
-                  <TextInput placeholder="Price" style={{ flex: 1 }}></TextInput>
-                </View>
-                <View style={{
-                  flexDirection: "row-reverse",
-                  flex: 1
-                }}>
-                  <TouchableHighlight style={{
-                    backgroundColor: "green",
-                    borderRadius: 4,
-                    elevation: 2,
-                    padding: 4,
-                    justifyContent: "center",
-                    alignItems: "center"
-                  }}>
-                    <Text style={{ color: "white", width: 30, textAlign: "center" }}>+</Text>
-                  </TouchableHighlight>
-                </View>
-              </View>
-            </View>
-            <View style={{ margin: 4 }}>
-              <Button style={{ color: "green" }} onPress={() => this.imagePick(true)} title="Quick Mode"></Button>
+                  fontSize: 16,
+                  fontWeight: "bold"
+                }}>Item</Text>
             </View>
           </View>
-        </Gradient>
-      </ScrollView>
+        </ScrollView>
+      </Gradient>
     );
   }
 }
