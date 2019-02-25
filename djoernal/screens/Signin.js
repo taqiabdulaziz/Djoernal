@@ -11,7 +11,9 @@ import {
   ImageBackground,
   Dimensions,
   AsyncStorage,
-  TouchableOpacity
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  ScrollView
 } from 'react-native'
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -19,6 +21,7 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { setTransaction } from '../store/action'
+import { Header } from 'react-navigation';
 const { width, height} = Dimensions.get('window')
 
 import Gradient from 'react-native-css-gradient'
@@ -57,7 +60,11 @@ class Signin extends Component {
       })
       console.log(data);
       
-      var transactions = await axios.get(`${baseUrl}/users/${data._id}`)
+      var transactions = await axios.get(`${baseUrl}/users`, {
+        headers: {
+          token: data.token
+        }
+      })
       
       setTransaction({
         transactionList: transactions.data.transactionList,
@@ -78,6 +85,12 @@ class Signin extends Component {
     const { navigation: { navigate } } = this.props
     return (
       <Gradient gradient={gradient} style={{width: width, height: height}}>
+      <KeyboardAvoidingView
+        keyboardVerticalOffset = {Header.HEIGHT + 20} // adjust the value here if you need more padding
+        style = {styles.container}
+        behavior = "padding" 
+      >
+        <ScrollView>
         <View style={styles.container}>
           <View style={styles.inputContainer}>
             <Icon name={'email'} size={28} color={'rgba(255, 255, 255, 0.7)'}
@@ -113,6 +126,8 @@ class Signin extends Component {
           <Text style={{ marginTop: 20 }}>Dont have account?</Text>
           <Text style={{fontWeight: "bold"}} onPress={() => navigate("Signup")}> Register</Text>
         </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
       </Gradient>
     )
   }
@@ -125,9 +140,8 @@ export default connect(null, mapDispatchToProps)(Signin)
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    width: null,
-    height: "100%",
+    width: width,
+    height: height,
     alignItems: "center",
     justifyContent: "center",
   },

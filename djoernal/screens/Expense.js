@@ -12,16 +12,17 @@ import {
   ScrollView,
   SafeAreaView,
   Platform,
+  Alert,
   AsyncStorage
 } from 'react-native';
 import Receipt from '../components/receipt'
+import { Header } from 'react-navigation';
 import axios from 'axios'
 import Gradient from 'react-native-css-gradient'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 var {baseUrl, gradient} = require('../helpers/helpers')
 const { baseUrl, imagePick, capture, uploadImage } = require(`../helpers/helpers`)
 const { width, height } = Dimensions.get('window')
-
 
 class Revenue extends React.Component {
   componentDidMount() {
@@ -76,7 +77,7 @@ class Revenue extends React.Component {
     let receiptImageUrl = await this.uploadImage()
     let transaksi = {
       transactionType: {
-        accountType: "Pengeluaran",
+        accountType: "Expense",
         subAccount: this.state.expenseType
       },
       debit: {
@@ -104,7 +105,8 @@ class Revenue extends React.Component {
           token: await AsyncStorage.getItem("token")
         }
       })
-      console.log(data);
+      Alert.alert('Berhasil memasukkan data pengeluaran')
+      this.props.navigation.navigate('Expense') 
     } catch (error) {
       console.log(error);
     }
@@ -140,10 +142,10 @@ class Revenue extends React.Component {
   render() {
     return (
       <Gradient gradient={gradient} style={{width: width, height: height}}>
-      <KeyboardAwareScrollView
-        resetScrollToCoords={{ x: 0, y: 0 }}
-        contentContainerStyle={styles.container}
-        scrollEnabled={true}
+      <KeyboardAvoidingView
+        keyboardVerticalOffset = {Header.HEIGHT + 20} // adjust the value here if you need more padding
+        style = {styles.container}
+        behavior = "padding" 
       >
         <Button style={styles.btn} onPress={() => this.imagePick()} title="Receipt Image"></Button>
         <Button style={styles.btn} onPress={() => this.capture()} title="Capture Receipt"></Button>
@@ -205,11 +207,11 @@ class Revenue extends React.Component {
               <Text style={styles.input}>{(this.state.diff)} </Text>
             </View>)
             : <Text></Text>}
-        <TouchableOpacity style={styles.btn} onPress={this.submit}>
-          <Text style={styles.text}>Submit</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.btn} onPress={this.submit}>
+            <Text style={styles.text}>Submit</Text>
+          </TouchableOpacity>
         </ScrollView>
-      </KeyboardAwareScrollView>
+      </KeyboardAvoidingView>
       </Gradient>
     );
   }

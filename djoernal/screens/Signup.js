@@ -10,10 +10,13 @@ import {
   Image,
   ImageBackground,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  ScrollView
 } from 'react-native'
 
 var { baseUrl, gradient } = require(`../helpers/helpers`)
+import { Header } from 'react-navigation';
 import axios from 'axios'
 import Gradient from 'react-native-css-gradient'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -64,6 +67,12 @@ export default class signup extends Component {
     const { navigation: { navigate } } = this.props
     return (
       <Gradient gradient={gradient} style={{width: width, height: height}}>
+      <KeyboardAvoidingView
+        keyboardVerticalOffset = {Header.HEIGHT + 20} // adjust the value here if you need more padding
+        style = {styles.container}
+        behavior = "padding" 
+      >
+        <ScrollView>
         <View style={styles.container}>
           <View style={styles.inputContainer}>
             <Icon name={'email'} size={28} color={'rgba(255, 255, 255, 0.7)'}
@@ -121,6 +130,8 @@ export default class signup extends Component {
           <Text style={{fontWeight: "bold"}} onPress={() => navigate("Signin")}> Signin</Text>
           
         </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
       </Gradient>
     )
   }
@@ -128,9 +139,8 @@ export default class signup extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    width: null,
-    height: null,
+    width: width,
+    height: height,
     alignItems: "center",
     justifyContent: "center",
   },
