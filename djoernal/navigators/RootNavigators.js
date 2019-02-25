@@ -2,7 +2,8 @@ import {
   createAppContainer, 
   createSwitchNavigator,
   createDrawerNavigator,
-  createStackNavigator
+  createStackNavigator,
+  createMaterialTopTabNavigator
 } from 'react-navigation'
 
 //screens
@@ -14,7 +15,8 @@ import Revenue from '../screens/Revenue'
 import Expense from '../screens/Expense'
 import Product from '../screens/Product'
 import Home from '../screens/Home'
-import Transaction from '../screens/MyTransaction/MyTransaction'
+import Transaction from '../screens/MyTransaction/Transaction/MyTransaction'
+import OtherTransaction from  '../screens/MyTransaction/OtherTransaction/MyOther'
 import RevenueTransaction from '../screens/RevenueTransaction'
 import Detail from '../screens/MyTransaction/Detail'
 import { Drawer } from 'native-base';
@@ -37,12 +39,18 @@ const ExpenseNav = createStackNavigator({
   }
 })
 
-const MyTransaction = createStackNavigator({
+const TransactionList = createMaterialTopTabNavigator({
   MyTransaction: {
     screen: Transaction
   },
   Detail: {
-    screen: Detail
+    screen: OtherTransaction
+  }
+})
+
+const MyTransaction = createStackNavigator({
+  Transactions: {
+    screen: TransactionList
   }
 })
 
