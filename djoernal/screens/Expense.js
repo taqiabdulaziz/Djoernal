@@ -13,17 +13,18 @@ import {
   TouchableHighlight,
   SafeAreaView,
   Platform,
+  Alert,
   AsyncStorage,
   TouchableNativeFeedback
 } from 'react-native';
 import Receipt from '../components/receipt'
+import { Header } from 'react-navigation';
 import axios from 'axios'
 import Gradient from 'react-native-css-gradient'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 var { baseUrl, gradient } = require('../helpers/helpers')
 const { baseUrl, imagePick, capture, uploadImage } = require(`../helpers/helpers`)
 const { width, height } = Dimensions.get('window')
-
 
 class Revenue extends React.Component {
   componentDidMount() {
@@ -85,7 +86,7 @@ class Revenue extends React.Component {
     let receiptImageUrl = await this.uploadImage()
     let transaksi = {
       transactionType: {
-        accountType: "Pengeluaran",
+        accountType: "Expense",
         subAccount: this.state.expenseType
       },
       debit: {
@@ -114,7 +115,8 @@ class Revenue extends React.Component {
           token: await AsyncStorage.getItem("token")
         }
       })
-      console.log(data);
+      Alert.alert('Berhasil memasukkan data pengeluaran')
+      this.props.navigation.navigate('Expense') 
     } catch (error) {
       console.log(error);
     }

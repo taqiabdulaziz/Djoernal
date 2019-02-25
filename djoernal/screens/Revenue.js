@@ -8,11 +8,15 @@ import {
   TextInput,
   TouchableOpacity,
   AsyncStorage,
+  Alert,
+  ScrollView,
+  KeyboardAvoidingView,
   StatusBar,
   Platform
 } from 'react-native';
 import axios from 'axios'
 import Gradient from 'react-native-css-gradient'
+import { Header } from 'react-navigation';
 const {baseUrl, gradient} = require ('../helpers/helpers')
 const {width, height} = Dimensions.get('window')
 import { connect } from 'react-redux'
@@ -38,23 +42,27 @@ class Revenue extends React.Component {
 
   state = {
     incomeType: 'Kas',
-    incomeAmount: 0,
     incomeAccounts: [
       "Kas",
       "Piutang"
     ],
     revenue: [],
     revenueName: '',
-    revenueId: '5c7138e91c52404514e43b8d',
+    revenueId: '',
+    revenuePrice: 0,
     revenueAmount: 0,
     revenueAccounts: []
   }
 
   submitRevenue = () => {
-    this.setState({ revenue: [...this.state.revenue, {id: this.state.revenueId, name: this.state.revenueName, q: this.state.revenueAmount}] }) 
+    this.setState({ revenue: [...this.state.revenue, {id: this.state.revenueId, name: this.state.revenueName, q: this.state.revenueAmount, price: this.state.revenuePrice}] }) 
   }
 
   submit = async() => {
+    let incomeAmount = 0
+    {this.state.revenue.map((item, index)=> (
+      incomeAmount += ((item.q*-1) * item.price)
+    ))}
     let transaction = {
       transactionType: {
         accountType: 'Revenue',
@@ -62,7 +70,7 @@ class Revenue extends React.Component {
       },
       debit: {
         accountType: this.state.incomeType,
-        nominal: this.state.incomeAmount
+        nominal: incomeAmount
       },
       kredit: this.state.revenue
     }
@@ -72,7 +80,9 @@ class Revenue extends React.Component {
           token: await AsyncStorage.getItem("token")
         }
       })
-      console.log("sudah di add ke database", data)
+      Alert.alert('Berhasil memasukkan data pendapatan')
+      this.props.navigation.navigate('Revenue') 
+      this.setState({revenue: []})
     } catch (error){
       console.log(error)
     }
@@ -86,10 +96,14 @@ class Revenue extends React.Component {
   render() {
     return (
       <Gradient gradient={gradient} style={{width: width, height: height}}>
+      <KeyboardAvoidingView
+        keyboardVerticalOffset = {Header.HEIGHT + 20}
+        style = {styles.container}
+        behavior = "padding" 
+      >
         <View style={styles.container}>
-          <View style= {styles.boxWrapper} >
+          <ScrollView>
             <View style={styles.box}>
-              <Text>{this.state.incomeType}:{this.state.incomeAmount}</Text>
               <Text style={styles.text}>Debet: </Text>
               <View style={styles.input}>
                 <Picker
@@ -104,17 +118,7 @@ class Revenue extends React.Component {
                 </Picker>
               </View>
             </View>
-            <View style={styles.box}>
-              <Text style={styles.text}>Jumlah: </Text>
-              <TextInput
-                style={styles.input}
-                placeholder={"Jumlah"}
-                placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
-                onChangeText={(incomeAmount) => this.setState({ incomeAmount })}
-              />
-            </View>
-          </View>
-          <View style={styles.boxWrapper}>
+          
             {this.state.revenue.map((item, index )=> (
               <View key={index}>
                 <Text>{item.name}:{item.q * -1}</Text>
@@ -130,7 +134,7 @@ class Revenue extends React.Component {
                   selectedValue={this.state.revenueName}
                   style={styles.pickerItem} 
                   onValueChange={(itemValue, itemIndex) =>
-                    this.setState({revenueName: itemValue, revenueId: this.state.revenueAccounts[itemIndex]._id})
+                    this.setState({revenueName: itemValue, revenueId: this.state.revenueAccounts[itemIndex]._id, revenuePrice: this.state.revenueAccounts[itemIndex].price})
                   }>
                   {this.state.revenueAccounts.map((item, index)=> (
                     <Picker.Item style={styles.pickerItem} label={item.name} value={item.name} key={index} />
@@ -140,7 +144,6 @@ class Revenue extends React.Component {
             </View>
             <View style={styles.box}>
               <Text style={styles.text}>Jumlah(pcs): </Text>
-              <TextInput ref={input => { this.textInput = input }} />
               <TextInput
                 style={styles.input}
                 placeholder={"Jumlah"}
@@ -153,11 +156,12 @@ class Revenue extends React.Component {
                 <Text style={styles.text}>Input</Text>
               </TouchableOpacity> 
             </View>
-          </View>
-          <TouchableOpacity style={styles.btn} onPress={this.submit}>
-            <Text style={styles.text}>Submit</Text>
-          </TouchableOpacity> 
+            <TouchableOpacity style={styles.btn} onPress={this.submit}>
+              <Text style={styles.text}>Submit</Text>
+            </TouchableOpacity> 
+          </ScrollView>
         </View>
+      </KeyboardAvoidingView>
       </Gradient>
     );
   }
@@ -174,9 +178,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
-    margin: 20,
     fontFamily: 'serif',
     fontSize: 14,
+    width: width,
+    height: height
   },
   boxWrapper: {
     width: width,
@@ -185,12 +190,13 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   box: {
-    flex: 1,
     width: width * 0.95,
-    flexDirection: 'row'
+    height: 30,
+    flexDirection: 'row',
+    margin: 5
   },
   input: {
-    flex:2.5, 
+    width: width *0.7,
     height: 30, 
     borderRadius: 60,
     paddingLeft: 20,
@@ -201,9 +207,6 @@ const styles = StyleSheet.create({
     marginLeft: -10
   },
   text: {
-    flex: 1, 
-    paddingTop: 5, 
-    paddingLeft: 20
   },
   btn: {
     width: width - 55,

@@ -6,7 +6,8 @@ import {
   Platform,
   TouchableOpacity,
   Dimensions,
-  Image
+  Image,
+  KeyboardAvoidingView,
 } from 'react-native';
 import {Header, Left, Right, Icon } from 'native-base'
 import Gradient from 'react-native-css-gradient'

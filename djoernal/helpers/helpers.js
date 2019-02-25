@@ -4,8 +4,7 @@ import uuid from 'uuid'
 import { ref } from '../config/firebase'
 
 module.exports = {
-    baseUrl: "http://127.0.0.1:3000",
-
+    baseUrl: "http://172.16.2.154:3000",
     gradient: `linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%)`,
     imagePick: async () => {
       try {

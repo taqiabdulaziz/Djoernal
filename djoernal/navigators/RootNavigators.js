@@ -15,6 +15,7 @@ import Expense from '../screens/Expense'
 import Product from '../screens/Product'
 import Home from '../screens/Home'
 import Transaction from '../screens/MyTransaction/MyTransaction'
+import RevenueTransaction from '../screens/RevenueTransaction'
 import Detail from '../screens/MyTransaction/Detail'
 import { Drawer } from 'native-base';
 
@@ -42,6 +43,12 @@ const MyTransaction = createStackNavigator({
   },
   Detail: {
     screen: Detail
+  }
+})
+
+const RevTransNav = createStackNavigator({
+  RevenueTransaction: {
+    screen: RevenueTransaction
   }
 })
 
