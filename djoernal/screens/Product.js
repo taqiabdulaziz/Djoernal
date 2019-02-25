@@ -28,7 +28,11 @@ const {width, height} = Dimensions.get('window')
 
 class Product extends React.Component {
   static navigationOptions = {
-    title: 'List Produk / Jasa'
+    title: 'List Produk / Jasa',
+    headerStyle: {
+      elevation: 2,
+      backgroundColor: "#3CB371"
+    }
   }
 
   async componentDidMount() {

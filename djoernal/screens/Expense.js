@@ -130,7 +130,12 @@ class Revenue extends React.Component {
       receipt: receiptImageUrl || this.state.receiptUrl
     }
 
-    console.log(transaksi);
+    if (this.state.diff > 0) {
+      transaksi.kredit.push({
+        accountType: "Utang",
+        nominal: this.state.diff
+      })
+    }
 
     try {
       await this.setState({

@@ -18,7 +18,7 @@ import Home from '../screens/Home'
 import Transaction from '../screens/MyTransaction/Transaction/MyTransaction'
 import OtherTransaction from '../screens/MyTransaction/OtherTransaction/MyOther'
 import RevenueTransaction from '../screens/RevenueTransaction'
-import Detail from '../screens/MyTransaction/Detail'
+import OtherTransactionDtl from '../screens/MyTransaction/OtherTransaction/Detail'
 import { Drawer } from 'native-base';
 
 const HomeNav = createStackNavigator({
@@ -61,6 +61,12 @@ const TransactionList = createMaterialTopTabNavigator({
     }
   })
 
+const OtherTransactionDetail = createStackNavigator({
+  OtherTransactionDtl: {
+    screen: OtherTransactionDtl
+  }
+})
+
 const MyTransaction = createStackNavigator({
   Transactions: {
     screen: TransactionList
@@ -99,7 +105,7 @@ const DrawerNavigator = createDrawerNavigator({
     screen: MyTransaction
   },
   Produk: {
-    screen: Product
+    screen: ProductNav
   },
   TestGoogleVision: {
     screen: TestGoogleVision

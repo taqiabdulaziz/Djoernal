@@ -133,7 +133,7 @@ class Signin extends Component {
   }
 
   componentDidMount() {
-    this.signin()
+    // this.signin()
   }
 
 }
