@@ -82,7 +82,8 @@ class Revenue extends React.Component {
     itemAmount: '',
     totalAmount: 0,
     loading: false,
-    modalVisible: false
+    modalVisible: false,
+    modalText: 'Uploading photos'
   }
 
   deleteItem = async (itemIndex) => {
@@ -100,34 +101,34 @@ class Revenue extends React.Component {
 
   submit = async () => {
     let receiptImageUrl = null
-    await this.setState({
-      modalVisible: true
-    })
     if (!this.state.receiptUrl) {
+      await this.setState({
+        modalVisible: true
+      })
       receiptImageUrl = await this.uploadImage()
     }
-    await this.setState({
-      modalVisible: false
-    })
 
-    // let transaksi = {
-    //   transactionType: {
-    //     accountType: "Pengeluaran",
-    //     subAccount: this.state.expenseType
-    //   },
-    //   debit: {
-    //     accountType: this.state.expenseType,
-    //     nominal: this.state.expenseAmount
-    //   },
-    //   kredit: [{
-    //     accountType: this.state.source,
-    //     nominal: this.state.sourceAmount
-    //   }],
-    //   items: this.state.itemList,
-    //   receipt: "receiptImageUrl"
-    // }
+    let transaksi = {
+      transactionType: {
+        accountType: "Pengeluaran",
+        subAccount: this.state.expenseType
+      },
+      debit: {
+        accountType: this.state.expenseType,
+        nominal: this.state.expenseAmount
+      },
+      kredit: [{
+        accountType: this.state.source,
+        nominal: this.state.sourceAmount
+      }],
+      items: this.state.itemList,
+      receipt: receiptImageUrl || this.state.receiptUrl
+    }
 
     try {
+      await this.setState({
+        modalVisible: false
+      })
       let { data } = await axios.post(`${baseUrl}/othertransaction`, transaksi, {
         headers: {
           token: await AsyncStorage.getItem("token")
@@ -148,7 +149,7 @@ class Revenue extends React.Component {
       }, () => {
         if (action) {
           this.setState({
-            loading: true
+            modalVisible: true
           })
           this.uploadImage(action)
         }
@@ -181,8 +182,17 @@ class Revenue extends React.Component {
 
   scan = async (url) => {
     console.log(url);
+    await this.setState({
+      modalText: "Generating items..."
+    })
     let result = await axios.post(`${baseUrl}/googlevision`, {
       url: url
+    })
+    console.log(result.data);
+    
+
+    await this.setState({
+      modalVisible: false
     })
     await this.setState({
       itemList: result.data
@@ -463,6 +473,7 @@ class Revenue extends React.Component {
               alignItems: "center"
             }}>
               <ActivityIndicator></ActivityIndicator>
+              <Text>{this.state.modalText}</Text>
 
             </View>
           </View>
