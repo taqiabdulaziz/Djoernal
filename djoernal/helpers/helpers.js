@@ -4,7 +4,11 @@ import uuid from 'uuid'
 import { ref } from '../config/firebase'
 
 module.exports = {
+<<<<<<< HEAD
     baseUrl: "http://172.16.2.154:3000",
+=======
+    baseUrl: "http://172.16.0.145:3000",
+>>>>>>> Add acitivity indicator signin
     gradient: `linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%)`,
     imagePick: async () => {
       try {
