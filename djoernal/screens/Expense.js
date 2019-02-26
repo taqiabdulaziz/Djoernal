@@ -97,6 +97,7 @@ class Revenue extends React.Component {
     loading: false,
     modalVisible: false,
     modalVisibleItem: false,
+    modalVisibleSubmit: false,
     modalText: 'Uploading photos'
   }
 
@@ -114,62 +115,69 @@ class Revenue extends React.Component {
   }
 
   submit = async () => {
-    console.log(this.state)
-    let receiptImageUrl = null
-    if (!this.state.receiptUrl) {
-      await this.setState({
-        modalVisible: true
+    if (this.state.receipt == '' && this.state.receiptUrl == null) {
+      this.setState({
+        modalVisibleSubmit: true
       })
-      receiptImageUrl = await this.uploadImage()
-    }
+    } else {
+      console.log(this.state)
+      let receiptImageUrl = null
+      if (!this.state.receiptUrl) {
+        await this.setState({
+          modalVisible: true
+        })
+        receiptImageUrl = await this.uploadImage()
+      }
 
-    let transaksi = {
-      transactionType: {
-        accountType: "Pengeluaran",
-        subAccount: this.state.expenseType
-      },
-      debit: {
-        accountType: this.state.expenseType,
-        nominal: this.state.expenseAmount
-      },
-      kredit: [{
-        accountType: this.state.source,
-        nominal: this.state.sourceAmount
-      }],
-      items: this.state.itemList,
-      receipt: receiptImageUrl || this.state.receiptUrl
-    }
+      let transaksi = {
+        transactionType: {
+          accountType: "Pengeluaran",
+          subAccount: this.state.expenseType
+        },
+        debit: {
+          accountType: this.state.expenseType,
+          nominal: this.state.expenseAmount
+        },
+        kredit: [{
+          accountType: this.state.source,
+          nominal: this.state.sourceAmount
+        }],
+        items: this.state.itemList,
+        receipt: receiptImageUrl || this.state.receiptUrl
+      }
 
-    if (this.state.diff > 0) {
-      transaksi.kredit.push({
-        accountType: "Utang",
-        nominal: this.state.diff
-      })
-    }
+      if (this.state.diff > 0) {
+        transaksi.kredit.push({
+          accountType: "Utang",
+          nominal: this.state.diff
+        })
+      }
 
-    try {
-      await this.setState({
-        modalVisible: false
-      })
-      let { data } = await axios.post(`${baseUrl}/othertransaction`, transaksi, {
-        headers: {
-          token: await AsyncStorage.getItem("token")
-        }
-      })
-      console.log(data)
-      Alert.alert('Berhasil memasukkan data pengeluaran')
-      await this.setState({
-        itemList: [],
-        sourceAmount: 0,
-        expenseAmount: 0,
-        receiptUrl: '',
-        receipt: '',
-        itemName: '',
-        itemAmount: ''
-      })
-      this.props.navigation.navigate('Expense')
-    } catch (error) {
-      console.log(error);
+      try {
+        await this.setState({
+          modalVisible: false
+        })
+        let { data } = await axios.post(`${baseUrl}/othertransaction`, transaksi, {
+          headers: {
+            token: await AsyncStorage.getItem("token")
+          }
+        })
+        console.log(data)
+        Alert.alert('Berhasil memasukkan data pengeluaran')
+        await this.setState({
+          itemList: [],
+          sourceAmount: 0,
+          expenseAmount: 0,
+          receiptUrl: '',
+          receipt: '',
+          itemName: '',
+          itemAmount: '',
+          diff: 0
+        })
+        this.props.navigation.navigate('Expense')
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 
@@ -248,7 +256,8 @@ class Revenue extends React.Component {
     console.log(newData);
 
     await this.setState({
-      modalVisible: false
+      modalVisible: false,
+      modalText: "Uploading photos"
     })
     await this.setState({
       itemList: newData
@@ -574,10 +583,33 @@ class Revenue extends React.Component {
           style={{
             height: 200,
           }}
+          visible={this.state.modalVisibleSubmit}
+        >
+          <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "rgba(0, 0, 0, 0.61)" }}>
+            <View style={{
+              backgroundColor: "white",
+              width: "80%",
+              height: "40%",
+              borderRadius: 20,
+              justifyContent: "center",
+              alignItems: "center"
+            }}>
+              <Text>Please input receipt proof</Text>
+              <Button title="OK" onPress={() => this.setState({
+                modalVisibleSubmit: false
+              })}></Button>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal
+          animationType="fade"
+          transparent={true}
+          style={{
+            height: 200,
+          }}
           visible={this.state.modalVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-        }}>
+        >
           <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "rgba(0, 0, 0, 0.61)" }}>
             <View style={{
               backgroundColor: "white",

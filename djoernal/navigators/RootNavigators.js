@@ -19,10 +19,8 @@ import Revenue from '../screens/Revenue'
 import Expense from '../screens/Expense'
 import Product from '../screens/Product'
 import Home from '../screens/Home'
-import Transaction from '../screens/MyTransaction/Transaction/MyTransaction'
 import OtherTransaction from '../screens/MyTransaction/OtherTransaction/MyOther'
 import RevenueTransaction from '../screens/RevenueTransaction'
-import OtherTransactionDtl from '../screens/MyTransaction/OtherTransaction/Detail'
 import LogoutScreen from '../screens/Logout'
 import BalanceSheet from '../screens/BalanceSheet'
 import { Drawer } from 'native-base';
@@ -67,11 +65,6 @@ const TransactionList = createMaterialTopTabNavigator({
     }
   })
 
-const OtherTransactionDetail = createStackNavigator({
-  OtherTransactionDtl: {
-    screen: OtherTransactionDtl
-  }
-})
 
 const Logout = createStackNavigator({
   Logout: {
