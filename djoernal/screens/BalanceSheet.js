@@ -19,14 +19,16 @@ class BalanceSheet extends React.Component {
         hutang: 0
     }
 
-    async componentDidMount () {
+    async componentDidMount() {
         try {
+
+            //DARI TRANSACTION LIST
             const { transactionList, otherTransactionList } = this.props.transactionData
-            let {data} = await axios.get(`${baseUrl}/product`, {
+            let { data } = await axios.get(`${baseUrl}/product`, {
                 headers: {
-                  token: await AsyncStorage.getItem("token")
+                    token: await AsyncStorage.getItem("token")
                 }
-              })
+            })
             let productCount = 0
             data.map(e => {
                 productCount += e.hpp * e.stock
@@ -40,12 +42,16 @@ class BalanceSheet extends React.Component {
             let kasCount = 0
             let piutangCount = 0
             transactionList.map(e => {
-                if (e.debit.accountType === 'Kas') {
+                if (e.transactionType.accountType === 'Revenue') {
                     kasCount += e.debit.nominal
                 } else if (e.debit.accountType === 'Piutang') {
                     piutangCount += e.debit.nominal
                 }
             })
+
+            //DARI KEUNTUNGAN SALES                                       
+
+            //SUBMIT
             await this.setState({
                 kas: kasCount,
                 piutang: piutangCount,
@@ -53,6 +59,7 @@ class BalanceSheet extends React.Component {
                 product: productCount,
                 hutang: hutangCount
             })
+            console.log(this.state)
         } catch (err) {
             console.log(err)
         }
@@ -62,19 +69,19 @@ class BalanceSheet extends React.Component {
         const { kas, piutang, product, productList, hutang } = this.state
         return (
             <View
-                style={ styles.container }
+                style={styles.container}
             >
                 <Text>Products</Text>
                 {
                     productList.map(e => {
-                        return <Text>{ e.name } ------ { e.hpp } * { e.stock }</Text>
+                        return <Text>{e.name} ------ {e.hpp} * {e.stock}</Text>
                     })
                 }
-                <Text>Kas: { kas }</Text>
-                <Text>Piutang: { piutang }</Text>
+                <Text>Kas: {kas}</Text>
+                <Text>Piutang: {piutang}</Text>
                 <Text>________________________</Text>
-                <Text>Total: { kas + piutang + product }</Text>
-                <Text>Hutang: { hutang }</Text>
+                <Text>Total: {kas + piutang + product}</Text>
+                <Text>Hutang: {hutang}</Text>
             </View>
         )
     }
@@ -82,7 +89,7 @@ class BalanceSheet extends React.Component {
 
 const stateProps = (state) => ({
     transactionData: state.mainReducer.transactionData
-}) 
+})
 
 export default connect(stateProps, null)(BalanceSheet)
 

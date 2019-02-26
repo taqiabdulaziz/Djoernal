@@ -22,10 +22,10 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { setTransaction } from '../store/action'
 import { Header } from 'react-navigation';
-const { width, height} = Dimensions.get('window')
+const { width, height } = Dimensions.get('window')
 
 import Gradient from 'react-native-css-gradient'
-var {baseUrl, gradient} = require('../helpers/helpers')
+var { baseUrl, gradient } = require('../helpers/helpers')
 
 class Signin extends Component {
   static navigationOptions = {
@@ -59,20 +59,21 @@ class Signin extends Component {
         password: this.state.password
       })
       console.log(data);
-      
+
       var transactions = await axios.get(`${baseUrl}/users`, {
         headers: {
           token: data.token
         }
       })
-      
+
       setTransaction({
         transactionList: transactions.data.transactionList,
         otherTransactionList: transactions.data.otherTransactionList
       })
-    
+
       await AsyncStorage.setItem("token", data.token)
       await AsyncStorage.setItem("id", data._id)
+      await AsyncStorage.setItem("kas", String(data.kas))
 
       this.props.navigation.navigate("MainNavigation")
     } catch (error) {
@@ -84,51 +85,51 @@ class Signin extends Component {
   render() {
     const { navigation: { navigate } } = this.props
     return (
-      <Gradient gradient={gradient} style={{width: width, height: height}}>
-      <KeyboardAvoidingView
-        keyboardVerticalOffset = {Header.HEIGHT + 20} // adjust the value here if you need more padding
-        style = {styles.container}
-        behavior = "padding" 
-      >
-        <ScrollView>
-        <View style={styles.container}>
-          <View style={styles.inputContainer}>
-            <Icon name={'email'} size={28} color={'rgba(255, 255, 255, 0.7)'}
-              style={styles.inputIcon} />
-            <TextInput
-              style={styles.input}
-              placeholder={"Email"}
-              placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
-              onChangeText={(email) => this.setState({ email })}
-            />
-          </View>
-          <View style={styles.inputContainer}>
-            <Icon name={'lock'} size={28} color={'rgba(255, 255, 255, 0.7)'}
-              style={styles.inputIcon} />
-            <TextInput
-              style={styles.input}
-              placeholder={"Password"}
-              secureTextEntry={this.state.showPass}
-              placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
-              onChangeText={(password) => this.setState({ password })}
-            />
-            <TouchableOpacity style={styles.btnEye}
-              onPress={this.showPass.bind(this)}>
-              <Icon name={this.state.press == false ? 'eye' : 'eye-off'} 
-              size={26} color={'rgba(255, 255, 255, 0.7)'} />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.inputContainer}>        
-            <TouchableOpacity style={styles.btnLogin} onPress={this.signin}>
-              <Text style={styles.text}>Login</Text>
-            </TouchableOpacity>
-          </View>
-          <Text style={{ marginTop: 20 }}>Dont have account?</Text>
-          <Text style={{fontWeight: "bold"}} onPress={() => navigate("Signup")}> Register</Text>
-        </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
-      </Gradient>
+      <View style={{ backgroundColor: "#33CA7F" }}>
+        <KeyboardAvoidingView
+          keyboardVerticalOffset={Header.HEIGHT + 20} // adjust the value here if you need more padding
+          style={styles.container}
+          behavior="padding"
+        >
+          <ScrollView>
+            <View style={styles.container}>
+              <View style={styles.inputContainer}>
+                <Icon name={'email'} size={28} color={'rgba(255, 255, 255, 0.7)'}
+                  style={styles.inputIcon} />
+                <TextInput
+                  style={styles.input}
+                  placeholder={"Email"}
+                  placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+                  onChangeText={(email) => this.setState({ email })}
+                />
+              </View>
+              <View style={styles.inputContainer}>
+                <Icon name={'lock'} size={28} color={'rgba(255, 255, 255, 0.7)'}
+                  style={styles.inputIcon} />
+                <TextInput
+                  style={styles.input}
+                  placeholder={"Password"}
+                  secureTextEntry={this.state.showPass}
+                  placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+                  onChangeText={(password) => this.setState({ password })}
+                />
+                <TouchableOpacity style={styles.btnEye}
+                  onPress={this.showPass.bind(this)}>
+                  <Icon name={this.state.press == false ? 'eye' : 'eye-off'}
+                    size={26} color={'rgba(255, 255, 255, 0.7)'} />
+                </TouchableOpacity>
+              </View>
+              <View style={styles.inputContainer}>
+                <TouchableOpacity style={styles.btnLogin} onPress={this.signin}>
+                  <Text style={styles.text}>Login</Text>
+                </TouchableOpacity>
+              </View>
+              <Text style={{ marginTop: 20, color: "black" }}>Dont have account?</Text>
+              <Text style={{ fontWeight: "bold", color: "black" }} onPress={() => navigate("Signup")}> Register</Text>
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </View >
     )
   }
 
