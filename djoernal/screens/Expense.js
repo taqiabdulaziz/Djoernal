@@ -19,11 +19,7 @@ import {
   TouchableNativeFeedback,
   Modal
 } from 'react-native';
-<<<<<<< HEAD
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
-=======
-import { Ionicons} from '@expo/vector-icons'
->>>>>>> 9d108b1d8c798e07a1603a52824bb30eab8700e4
 import Receipt from '../components/receipt'
 import { Header } from 'react-navigation';
 import axios from 'axios'
@@ -100,6 +96,7 @@ class Revenue extends React.Component {
     totalAmount: 0,
     loading: false,
     modalVisible: false,
+    modalVisibleItem: false,
     modalText: 'Uploading photos'
   }
 
@@ -197,8 +194,16 @@ class Revenue extends React.Component {
     if (receiptPath) {
       this.setState({
         receipt: receiptPath
-      }, () => {
-        console.log(this.state)
+      }, async () => {
+        if (action) {
+          await this.setState({
+            modalVisibleItem: false
+          })
+          await this.setState({
+            modalVisible: true
+          })
+          this.uploadImage(action)
+        }
       })
     }
   }
@@ -502,7 +507,9 @@ class Revenue extends React.Component {
               </View>
             </View>
             <View style={{ margin: 4 }}>
-              <TouchableHighlight onPress={() => this.imagePick(true)} style={{ width: "100%", height: 50, backgroundColor: "yellow", elevation: 2, padding: 6, borderRadius: 4 }}>
+              <TouchableHighlight onPress={() => this.setState({
+                modalVisibleItem: true
+              })} style={{ width: "100%", height: 50, backgroundColor: "yellow", elevation: 2, padding: 6, borderRadius: 4 }}>
                 <View style={{ height: "100%", width: "100%", justifyContent: "center", alignItems: "center" }}>
                   <MaterialCommunityIcons name="clock-fast" size={20}></MaterialCommunityIcons>
                 </View>
@@ -512,6 +519,55 @@ class Revenue extends React.Component {
           </View>
         </Gradient>
         <Button title="SUBMIT" onPress={this.submit}></Button>
+
+        <Modal
+          animationType="fade"
+          transparent={true}
+          style={{
+            height: 200,
+          }}
+          visible={this.state.modalVisibleItem}
+        >
+          <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "rgba(0, 0, 0, 0.61)" }}>
+            <View style={{
+              backgroundColor: "white",
+              width: "80%",
+              height: "40%",
+              borderRadius: 20,
+              justifyContent: "center",
+              alignItems: "center"
+            }}>
+              <Text>Quick Mode</Text>
+              <View style={{ flexDirection: "row" }}>
+                <View style={{ margin: 4 }}>
+                  <TouchableHighlight style={{ width: 50, height: 50, backgroundColor: "#25d55f", elevation: 2, padding: 6, borderRadius: 4 }} onPress={() => this.imagePick(true)}>
+                    <View style={{ height: "100%", width: "100%", justifyContent: "center", alignItems: "center" }}>
+                      <Ionicons name="md-photos" size={20}></Ionicons>
+                    </View>
+                  </TouchableHighlight>
+                  {/* <Button style={styles.btn} onPress={() => this.imagePick()} title="Receipt Image"></Button> */}
+                </View>
+                <View style={{ margin: 4 }}>
+                  <TouchableHighlight style={{ width: 50, height: 50, backgroundColor: "#25d55f", elevation: 2, padding: 6, borderRadius: 4 }} onPress={() => this.capture(true)}>
+                    <View style={{ height: "100%", width: "100%", justifyContent: "center", alignItems: "center" }}>
+                      <Ionicons name="md-camera" size={20}></Ionicons>
+                    </View>
+                  </TouchableHighlight>
+                  {/* <Button style={styles.btn} onPress={() => this.capture()} title="Capture Receipt"></Button> */}
+                </View>
+                <View style={{
+                  marginTop: 10
+                }}>
+                  <Button title="Close" onPress={() => this.setState({
+                    modalVisibleItem: false
+                  })}></Button>
+                </View>
+              </View>
+
+            </View>
+          </View>
+        </Modal>
+
         <Modal
           animationType="fade"
           transparent={true}
