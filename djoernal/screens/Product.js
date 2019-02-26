@@ -322,7 +322,8 @@ const styles = StyleSheet.create({
     fontFamily: 'serif',
     fontSize: 14,
     width: width,
-    height: height*0.85
+    height: height*0.85,
+    paddingTop: Platform.OS === 'android' ? 25 : 0,
   },
   boxWrapper: {
     width: width,

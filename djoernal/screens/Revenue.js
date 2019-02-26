@@ -22,7 +22,7 @@ const { baseUrl, gradient } = require('../helpers/helpers')
 const { width, height } = Dimensions.get('window')
 import { connect } from 'react-redux'
 
-class Revenue extends React.Component {
+export default class Revenue extends React.Component {
   static navigationOptions(props) {
     return {
       title: 'Pendapatan',
@@ -39,9 +39,8 @@ class Revenue extends React.Component {
   }
 
   async componentDidMount() {
-    try {
-      alert(JSON.stringify(this.props))
-      let { data } = await axios.get(`${baseUrl}/product`, {
+    try  {
+      let {data} = await axios.get(`${baseUrl}/product`, {
         headers: {
           token: await AsyncStorage.getItem("token")
         }
@@ -62,21 +61,36 @@ class Revenue extends React.Component {
     revenueName: '',
     revenueId: '',
     revenuePrice: 0,
-    revenueAmount: 0,
+    revenueAmount: '',
     revenueAccounts: []
   }
 
-  submitRevenue = () => {
-    this.setState({ revenue: [...this.state.revenue, { id: this.state.revenueId, name: this.state.revenueName, q: this.state.revenueAmount, price: this.state.revenuePrice }] })
+  submitRevenue = async() => {
+    let price = 0
+    this.state.revenueAccounts.forEach(async (data) => {
+      if (data.name == this.state.revenueName) {
+        price = data.price
+      }
+    })
+
+    await this.setState({ 
+      revenue: [...this.state.revenue, 
+        {
+          id: this.state.revenueId, 
+          name: this.state.revenueName, 
+          q: this.state.revenueAmount *-1, 
+          price: price
+        }
+      ] 
+    }) 
   }
 
   submit = async () => {
     let incomeAmount = 0
-    {
-      this.state.revenue.map((item, index) => (
-        incomeAmount += ((item.q * -1) * item.price)
-      ))
-    }
+    console.log(this.state.revenue)
+    await this.state.revenue.map((item, index)=> {
+      incomeAmount += ((item.q*-1) * item.price)
+    })
     let transaction = {
       transactionType: {
         accountType: 'Revenue',
@@ -95,9 +109,9 @@ class Revenue extends React.Component {
         }
       })
       Alert.alert('Berhasil memasukkan data pendapatan')
-      this.props.navigation.navigate('Revenue')
-      this.setState({ revenue: [] })
-    } catch (error) {
+      this.props.navigation.navigate('Revenue') 
+      this.setState({revenue: [], revenueAmount: ''})
+    } catch (error){
       console.log(error)
     }
   }
@@ -108,6 +122,11 @@ class Revenue extends React.Component {
   }
 
   render() {
+    const pickerItems = this.state.revenueAccounts.map((item, index) => {
+      return (
+        <Picker.Item key={index} label={item.name} value={item.name} />
+      )
+    })
     return (
       <Gradient gradient={gradient} style={{ width: width, height: height }}>
         <KeyboardAvoidingView
@@ -135,7 +154,7 @@ class Revenue extends React.Component {
 
               {this.state.revenue.map((item, index) => (
                 <View key={index}>
-                  <Text>{item.name}:{item.q * -1}</Text>
+                  <Text>{item.name}:{item.q *-1}</Text>
                   <TouchableOpacity style={styles.smallBtn} onPress={() => this.delete(index)}>
                     <Text style={styles.text}>Delete</Text>
                   </TouchableOpacity>
@@ -162,7 +181,8 @@ class Revenue extends React.Component {
                   style={styles.input}
                   placeholder={"Jumlah"}
                   placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
-                  onChangeText={(revenueAmount) => this.setState({ revenueAmount: revenueAmount * -1 })}
+                  value={this.state.revenueAmount}
+                  onChangeText={(revenueAmount) => this.setState({ revenueAmount })}
                 />
               </View>
               <View style={styles.box}>
@@ -180,12 +200,6 @@ class Revenue extends React.Component {
     );
   }
 }
-
-const stateToProps = (state) => ({
-  transactionData: state.mainReducer.transactionData
-})
-
-export default connect(stateToProps, null)(Revenue);
 
 const styles = StyleSheet.create({
   container: {

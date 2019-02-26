@@ -46,7 +46,7 @@ const ExpenseNav = createStackNavigator({
 
 const TransactionList = createMaterialTopTabNavigator({
   Pendapatan: {
-    screen: Transaction
+    screen: RevenueTransaction
   },
   PengeluaranList: {
     screen: OtherTransaction
@@ -110,7 +110,7 @@ const DrawerNavigator = createDrawerNavigator({
     screen: Logout
   },
   Pendapatan: {
-    screen: RevenueNav
+    screen: Revenue
   },
   Pengeluaran: {
     screen: ExpenseNav
@@ -124,10 +124,10 @@ const DrawerNavigator = createDrawerNavigator({
 }, {
   contentComponent:(props) => (
     <View style={{flex:1}}>
-        <SafeAreaView forceInset={{ top: 'never', horizontal: 'never' }}>
-            <DrawerItems {...props} />
-            <Button title="Logout" onPress={() => props.navigation.navigate('Signin')}/>
-        </SafeAreaView>
+      <SafeAreaView forceInset={{ top: 'never', horizontal: 'never' }}>
+        <DrawerItems {...props} />
+        <Button title="Logout" onPress={() => props.navigation.navigate('Signin')}/>
+      </SafeAreaView>
     </View>
 ),
 })
