@@ -10,6 +10,7 @@ import {
   Dimensions,
   AsyncStorage,
   TouchableOpacity,
+  ActivityIndicator,
   Alert
 } from 'react-native';
 import PieChart from 'react-native-pie-chart';
@@ -47,21 +48,27 @@ export default class Profit extends Component {
       let revenue= data.transactionList.filter(item => {
         return item.transactionType.accountType === "Revenue"
       })
-      let expense = data.transactionList.filter(item => {
-        return item.transactionType.accountType === "Expense"
+      let expense = data.otherTransactionList.filter(item => {
+        return item.transactionType.accountType === "Pengeluaran"
       })
       let totalRevenue = 0
+      let totalHPP = 0
       let totalExpense = 0
       await revenue.map(item => {
-        totalRevenue += item.debit.nominal
+        return totalRevenue += item.debit.nominal
+      })
+      await revenue.map(item => {
+        return item.kredit.map(element => {
+          return totalHPP += ((element.q*-1) * element.product.hpp)
+        })
       })
       await expense.map(item => {
-        totalExpense += item.debit.nominal
+        return totalExpense += item.debit.nominal
       })
       this.setState({ 
         revenue: totalRevenue,
-        expense: totalExpense,
-        profit: totalRevenue - totalExpense
+        expense: totalExpense + totalHPP,
+        profit: totalRevenue - (totalExpense + totalHPP)
       });
     } catch (err) {
       console.log(err.message)
@@ -76,11 +83,9 @@ export default class Profit extends Component {
 
   render() {
     const chart_wh = 250
-    let chartData = [this.state.expense, 26000]
-    const series = chartData
+    const series = [this.state.expense,this.state.profit]
     const sliceColor = ['#F44336','#2196F3']
- 
-    return (
+    return this.state.profit > 0 ? (
       <Gradient gradient={gradient} style={{width: width, height: height}}>
       <KeyboardAvoidingView
         keyboardVerticalOffset = {Header.HEIGHT + 20} // adjust the value here if you need more padding
@@ -92,7 +97,7 @@ export default class Profit extends Component {
           <StatusBar
             hidden={true}
           />
-          <Text style={styles.title}>Income</Text>
+          <Text style={styles.title}>Profit Chart</Text>
           <View style= {styles. box}>
             <Text>Revenue:{this.state.revenue}</Text>
           </View>
@@ -113,7 +118,7 @@ export default class Profit extends Component {
       </ScrollView>
       </KeyboardAvoidingView>
       </Gradient>
-    );
+    ) : <ActivityIndicator />
   }
 }
  
