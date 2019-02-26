@@ -24,6 +24,7 @@ import OtherTransaction from '../screens/MyTransaction/OtherTransaction/MyOther'
 import RevenueTransaction from '../screens/RevenueTransaction'
 import OtherTransactionDtl from '../screens/MyTransaction/OtherTransaction/Detail'
 import LogoutScreen from '../screens/Logout'
+import BalanceSheet from '../screens/BalanceSheet'
 import { Drawer } from 'native-base';
 
 const HomeNav = createStackNavigator({
@@ -96,6 +97,12 @@ const ProductNav = createStackNavigator({
   }
 })
 
+const BalanceSheetNav = createStackNavigator({
+  BalanceSheet: {
+    screen: BalanceSheet
+  }
+})
+
 const TestGoogleVision = createStackNavigator({
   Test: {
     screen: Test
@@ -106,17 +113,17 @@ const DrawerNavigator = createDrawerNavigator({
   Home: {
     screen: HomeNav
   },
-  Logout: {
-    screen: Logout
-  },
   Pendapatan: {
-    screen: Revenue
+    screen: RevenueNav
   },
   Pengeluaran: {
     screen: ExpenseNav
   },
   Transaksi: {
     screen: MyTransaction
+  },
+  BalanceSheet: {
+    screen: BalanceSheetNav
   },
   Produk: {
     screen: ProductNav
