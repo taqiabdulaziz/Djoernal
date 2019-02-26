@@ -19,7 +19,7 @@ import {
   TouchableNativeFeedback,
   Modal
 } from 'react-native';
-import { Ionicons} from '@expo/vector-icons'
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import Receipt from '../components/receipt'
 import { Header } from 'react-navigation';
 import axios from 'axios'
@@ -481,6 +481,7 @@ class Revenue extends React.Component {
                   flexDirection: "row-reverse",
                   flex: 1
                 }}>
+
                   <TouchableHighlight style={{
                     backgroundColor: "green",
                     borderRadius: 4,
@@ -497,6 +498,11 @@ class Revenue extends React.Component {
               </View>
             </View>
             <View style={{ margin: 4 }}>
+              <TouchableHighlight onPress={() => this.imagePick(true)} style={{ width: "100%", height: 50, backgroundColor: "yellow", elevation: 2, padding: 6, borderRadius: 4 }}>
+                <View style={{ height: "100%", width: "100%", justifyContent: "center", alignItems: "center" }}>
+                  <MaterialCommunityIcons name="clock-fast" size={20}></MaterialCommunityIcons>
+                </View>
+              </TouchableHighlight>
               <Button style={{ color: "green" }} onPress={() => this.imagePick(true)} title="Quick Mode"></Button>
             </View>
           </View>
