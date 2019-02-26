@@ -46,7 +46,7 @@ const ExpenseNav = createStackNavigator({
 
 const TransactionList = createMaterialTopTabNavigator({
   Pendapatan: {
-    screen: Transaction
+    screen: RevenueTransaction
   },
   PengeluaranList: {
     screen: OtherTransaction

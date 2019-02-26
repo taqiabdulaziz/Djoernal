@@ -22,6 +22,7 @@ const { baseUrl, gradient } = require('../helpers/helpers')
 const { width, height } = Dimensions.get('window')
 import { connect } from 'react-redux'
 
+<<<<<<< HEAD
 class Revenue extends React.Component {
   static navigationOptions(props) {
     return {
@@ -36,6 +37,11 @@ class Revenue extends React.Component {
         }} onPress={() => props.navigation.openDrawer()}></Icon>
       )
     }
+=======
+export default class Revenue extends React.Component {
+  static navigationOptions = {
+    title: 'Pendapatan'
+>>>>>>> benerin revenue
   }
 
   async componentDidMount() {
@@ -61,12 +67,33 @@ class Revenue extends React.Component {
     revenueName: '',
     revenueId: '',
     revenuePrice: 0,
-    revenueAmount: 0,
+    revenueAmount: '',
     revenueAccounts: []
   }
 
+<<<<<<< HEAD
   submitRevenue = () => {
     this.setState({ revenue: [...this.state.revenue, { id: this.state.revenueId, name: this.state.revenueName, q: this.state.revenueAmount, price: this.state.revenuePrice }] })
+=======
+  submitRevenue = async() => {
+    let price = 0
+    this.state.revenueAccounts.forEach(async (data) => {
+      if (data.name == this.state.revenueName) {
+        price = data.price
+      }
+    })
+
+    await this.setState({ 
+      revenue: [...this.state.revenue, 
+        {
+          id: this.state.revenueId, 
+          name: this.state.revenueName, 
+          q: this.state.revenueAmount *-1, 
+          price: price
+        }
+      ] 
+    }) 
+>>>>>>> benerin revenue
   }
 
   submit = async () => {
@@ -93,9 +120,15 @@ class Revenue extends React.Component {
         }
       })
       Alert.alert('Berhasil memasukkan data pendapatan')
+<<<<<<< HEAD
       this.props.navigation.navigate('Revenue')
       this.setState({ revenue: [] })
     } catch (error) {
+=======
+      this.props.navigation.navigate('Revenue') 
+      this.setState({revenue: [], revenueAmount: ''})
+    } catch (error){
+>>>>>>> benerin revenue
       console.log(error)
     }
   }
@@ -106,6 +139,11 @@ class Revenue extends React.Component {
   }
 
   render() {
+    const pickerItems = this.state.revenueAccounts.map((item, index) => {
+      return (
+        <Picker.Item key={index} label={item.name} value={item.name} />
+      )
+    })
     return (
       <Gradient gradient={gradient} style={{ width: width, height: height }}>
         <KeyboardAvoidingView
@@ -154,6 +192,7 @@ class Revenue extends React.Component {
                   </Picker>
                 </View>
               </View>
+<<<<<<< HEAD
               <View style={styles.box}>
                 <Text style={styles.text}>Jumlah(pcs): </Text>
                 <TextInput
@@ -174,16 +213,47 @@ class Revenue extends React.Component {
             </ScrollView>
           </View>
         </KeyboardAvoidingView>
+=======
+            ))}
+            <View style={styles.box}>
+              <Text style={styles.text}>Credit: </Text>
+              <View style={styles.input}>
+                <Picker
+                  selectedValue={this.state.revenueName}
+                  style={styles.pickerItem} 
+                  onValueChange={(itemValue, itemIndex) =>
+                    this.setState({revenueName: itemValue, revenueId: this.state.revenueAccounts[itemIndex]._id, revenuePrice: this.state.revenueAccounts[itemIndex].price})
+                  }>
+                  {pickerItems}
+                </Picker> 
+              </View>
+            </View>
+            <View style={styles.box}>
+              <Text style={styles.text}>Jumlah(pcs): </Text>
+              <TextInput
+                style={styles.input}
+                placeholder={"Jumlah"}
+                placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+                value={String(this.state.revenueAmount)}
+                onChangeText={(revenueAmount) => this.setState({ revenueAmount })}
+              />
+            </View>
+            <View style={styles.box}>
+              <TouchableOpacity style={styles.smallBtn} onPress={this.submitRevenue}>
+                <Text style={styles.text}>Input</Text>
+              </TouchableOpacity> 
+            </View>
+            <TouchableOpacity style={styles.btn} onPress={this.submit}>
+              <Text style={styles.text}>Submit</Text>
+            </TouchableOpacity> 
+          </ScrollView>
+        </View>
+      </KeyboardAvoidingView>
+>>>>>>> benerin revenue
       </Gradient>
     );
   }
 }
-
-const stateToProps = (state) => ({
-  transactionData: state.mainReducer.transactionData
-})
-
-export default connect(stateToProps, null)(Revenue);
 
 const styles = StyleSheet.create({
   container: {
