@@ -121,6 +121,7 @@ const DrawerNavigator = createDrawerNavigator({
   Produk: {
     screen: ProductNav
   },
+<<<<<<< HEAD
 }, {
   contentComponent:(props) => (
     <View style={{flex:1}}>
@@ -130,6 +131,8 @@ const DrawerNavigator = createDrawerNavigator({
         </SafeAreaView>
     </View>
 ),
+=======
+>>>>>>> 9d108b1d8c798e07a1603a52824bb30eab8700e4
 })
 
 const rootNav = createSwitchNavigator({

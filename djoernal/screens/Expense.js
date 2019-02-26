@@ -19,7 +19,11 @@ import {
   TouchableNativeFeedback,
   Modal
 } from 'react-native';
+<<<<<<< HEAD
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
+=======
+import { Ionicons} from '@expo/vector-icons'
+>>>>>>> 9d108b1d8c798e07a1603a52824bb30eab8700e4
 import Receipt from '../components/receipt'
 import { Header } from 'react-navigation';
 import axios from 'axios'
