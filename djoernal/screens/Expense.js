@@ -298,13 +298,14 @@ class Revenue extends React.Component {
   render() {
     return (
       <ScrollView>
-        <Gradient gradient={gradient} style={{ width: width, height: height }}>
+        <View style={{ backgroundColor: "#e1e2e1" }}>
           <View style={{ padding: 10 }}>
             <View style={{
               backgroundColor: "white",
               borderRadius: 4,
               elevation: 3,
-              padding: 8
+              padding: 8,
+              margin: 5
             }}>
               <View>
                 <Picker
@@ -338,7 +339,7 @@ class Revenue extends React.Component {
               borderRadius: 4,
               elevation: 3,
               padding: 8,
-              marginTop: 4
+              margin: 5
             }}>
               <View>
                 <Text style={{
@@ -399,9 +400,11 @@ class Revenue extends React.Component {
               borderRadius: 4,
               elevation: 3,
               padding: 8,
-              marginTop: 4,
+              margin: 5
             }}>
-              <View>
+              <View style={{
+                margin: 5
+              }}>
                 <Text style={{
                   fontSize: 16,
                   fontWeight: "bold"
@@ -444,7 +447,7 @@ class Revenue extends React.Component {
               borderRadius: 4,
               elevation: 3,
               padding: 8,
-              marginTop: 4
+              margin: 5
             }}>
               <Text style={{
                 fontSize: 16,
@@ -523,11 +526,13 @@ class Revenue extends React.Component {
                   <MaterialCommunityIcons name="clock-fast" size={20}></MaterialCommunityIcons>
                 </View>
               </TouchableHighlight>
-              <Button style={{ color: "green" }} onPress={() => this.imagePick(true)} title="Quick Mode"></Button>
+              {/* <Button style={{ color: "green" }} onPress={() => this.imagePick(true)} title="Quick Mode"></Button> */}
             </View>
           </View>
-        </Gradient>
-        <Button title="SUBMIT" onPress={this.submit}></Button>
+        </View>
+        <View>
+          <Button title="SUBMIT" onPress={this.submit} style={{ margin: 5 }}></Button>
+        </View>
 
         <Modal
           animationType="fade"
