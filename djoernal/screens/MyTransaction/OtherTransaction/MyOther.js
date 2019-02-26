@@ -18,7 +18,7 @@ class MyOther extends React.Component {
   }
 
   static navigationOptions = {
-    title: 'Expense',
+    title: 'Pengeluaran',
     tabBarStyle: {
       backgroundColor: "white"
     }

@@ -43,7 +43,7 @@ const TransactionList = createMaterialTopTabNavigator({
   Pendapatan: {
     screen: Transaction
   },
-  Pengeluaran: {
+  PengeluaranList: {
     screen: OtherTransaction
   }
 }, {
