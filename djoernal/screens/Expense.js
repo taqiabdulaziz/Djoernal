@@ -448,7 +448,7 @@ class Revenue extends React.Component {
                     return (
                       <View style={{ flexDirection: "row", justifyContent: "space-between", margin: 8 }} key={index}>
                         <Text>{data.name}</Text>
-                        <Text>{data.amount}</Text>
+                        <Text>{data.nominal}</Text>
                         <TouchableHighlight style={{
                           backgroundColor: "red",
                           borderRadius: 4,
