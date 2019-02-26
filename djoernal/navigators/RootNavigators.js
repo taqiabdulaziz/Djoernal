@@ -107,9 +107,6 @@ const DrawerNavigator = createDrawerNavigator({
   Produk: {
     screen: ProductNav
   },
-  TestGoogleVision: {
-    screen: TestGoogleVision
-  }
 })
 
 const rootNav = createSwitchNavigator({
