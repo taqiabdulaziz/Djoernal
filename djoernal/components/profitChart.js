@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   Dimensions,
   AsyncStorage,
+  TouchableOpacity,
   Alert
 } from 'react-native';
 import PieChart from 'react-native-pie-chart';
@@ -26,7 +27,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     margin: 10
-  }
+  },
+  box: {
+    width: width * 0.95,
+    height: 30,
+    flexDirection: 'row',
+    margin: 5
+  },
 });
  
 export default class Profit extends Component {
@@ -53,7 +60,8 @@ export default class Profit extends Component {
       })
       this.setState({ 
         revenue: totalRevenue,
-        expense: totalExpense
+        expense: totalExpense,
+        profit: totalRevenue - totalExpense
       });
     } catch (err) {
       console.log(err.message)
@@ -62,12 +70,14 @@ export default class Profit extends Component {
 
   state = {
     revenue: 0,
-    expense: 0
+    expense: 0,
+    profit: 0
   }
 
   render() {
     const chart_wh = 250
-    const series = [this.state.expense, 15000]
+    let chartData = [this.state.expense, this.state.profit]
+    const series = chartData
     const sliceColor = ['#F44336','#2196F3']
  
     return (
@@ -83,9 +93,17 @@ export default class Profit extends Component {
             hidden={true}
           />
           <Text style={styles.title}>Income</Text>
-          <Text>Revenue:{this.state.revenue}</Text>
-          <Text>Expense:{this.state.expense}</Text>
-          <Text>Profit:{(this.state.revenue - this.state.expense)}</Text>
+          <View style= {styles. box}>
+            <Text>Revenue:{this.state.revenue}</Text>
+          </View>
+          <View style= {styles. box}>
+            <TouchableOpacity style={{backgroundColor: '#F44336', width: 10, height:10}}></TouchableOpacity>
+            <Text>Expense:{this.state.expense}</Text>
+          </View>
+          <View style= {styles. box}>
+            <TouchableOpacity style={{backgroundColor: '#2196F3', width: 10, height:10}}></TouchableOpacity>
+            <Text>Profit:{this.state.profit}</Text>
+          </View>
           <PieChart
             chart_wh={chart_wh}
             series={series}
