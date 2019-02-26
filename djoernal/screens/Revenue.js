@@ -1,7 +1,7 @@
 import React from 'react';
-import { 
-  StyleSheet, 
-  Text, 
+import {
+  StyleSheet,
+  Text,
   View,
   Picker,
   Dimensions,
@@ -14,22 +14,34 @@ import {
   StatusBar,
   Platform
 } from 'react-native';
+import { Ionicons as Icon } from '@expo/vector-icons'
 import axios from 'axios'
 import Gradient from 'react-native-css-gradient'
 import { Header } from 'react-navigation';
-const {baseUrl, gradient} = require ('../helpers/helpers')
-const {width, height} = Dimensions.get('window')
+const { baseUrl, gradient } = require('../helpers/helpers')
+const { width, height } = Dimensions.get('window')
 import { connect } from 'react-redux'
 
 class Revenue extends React.Component {
-  static navigationOptions = {
-    title: 'Pendapatan'
+  static navigationOptions(props) {
+    return {
+      title: 'Pendapatan',
+      headerStyle: {
+        elevation: 2,
+        backgroundColor: "#3CB371"
+      },
+      headerLeft: (
+        <Icon name="md-menu" size={28} style={{
+          margin: 17
+        }} onPress={() => props.navigation.openDrawer()}></Icon>
+      )
+    }
   }
 
   async componentDidMount() {
-    try  {
+    try {
       alert(JSON.stringify(this.props))
-      let {data} = await axios.get(`${baseUrl}/product`, {
+      let { data } = await axios.get(`${baseUrl}/product`, {
         headers: {
           token: await AsyncStorage.getItem("token")
         }
@@ -55,14 +67,16 @@ class Revenue extends React.Component {
   }
 
   submitRevenue = () => {
-    this.setState({ revenue: [...this.state.revenue, {id: this.state.revenueId, name: this.state.revenueName, q: this.state.revenueAmount, price: this.state.revenuePrice}] }) 
+    this.setState({ revenue: [...this.state.revenue, { id: this.state.revenueId, name: this.state.revenueName, q: this.state.revenueAmount, price: this.state.revenuePrice }] })
   }
 
-  submit = async() => {
+  submit = async () => {
     let incomeAmount = 0
-    {this.state.revenue.map((item, index)=> (
-      incomeAmount += ((item.q*-1) * item.price)
-    ))}
+    {
+      this.state.revenue.map((item, index) => (
+        incomeAmount += ((item.q * -1) * item.price)
+      ))
+    }
     let transaction = {
       transactionType: {
         accountType: 'Revenue',
@@ -75,93 +89,93 @@ class Revenue extends React.Component {
       kredit: this.state.revenue
     }
     try {
-      let {data} = axios.post(`${baseUrl}/transaction`, transaction, { 
+      let { data } = axios.post(`${baseUrl}/transaction`, transaction, {
         headers: {
           token: await AsyncStorage.getItem("token")
         }
       })
       Alert.alert('Berhasil memasukkan data pendapatan')
-      this.props.navigation.navigate('Revenue') 
-      this.setState({revenue: []})
-    } catch (error){
+      this.props.navigation.navigate('Revenue')
+      this.setState({ revenue: [] })
+    } catch (error) {
       console.log(error)
     }
   }
   delete = (index) => {
-    var array = [...this.state.revenue]; 
+    var array = [...this.state.revenue];
     array.splice(index, 1);
-    this.setState({revenue: array});
+    this.setState({ revenue: array });
   }
 
   render() {
     return (
-      <Gradient gradient={gradient} style={{width: width, height: height}}>
-      <KeyboardAvoidingView
-        keyboardVerticalOffset = {Header.HEIGHT + 20}
-        style = {styles.container}
-        behavior = "padding" 
-      >
-        <View style={styles.container}>
-          <ScrollView>
-            <View style={styles.box}>
-              <Text style={styles.text}>Debet: </Text>
-              <View style={styles.input}>
-                <Picker
-                  selectedValue={this.state.incomeType}
-                  style={styles.pickerItem} 
-                  onValueChange={(itemValue, itemIndex) =>
-                    this.setState({incomeType: itemValue})
-                  }>
-                  {this.state.incomeAccounts.map((item, index)=> (
-                    <Picker.Item style={styles.pickerItem} label={item} value={item} key={index} />
-                  ))}
-                </Picker>
+      <Gradient gradient={gradient} style={{ width: width, height: height }}>
+        <KeyboardAvoidingView
+          keyboardVerticalOffset={Header.HEIGHT + 20}
+          style={styles.container}
+          behavior="padding"
+        >
+          <View style={styles.container}>
+            <ScrollView>
+              <View style={styles.box}>
+                <Text style={styles.text}>Debet: </Text>
+                <View style={styles.input}>
+                  <Picker
+                    selectedValue={this.state.incomeType}
+                    style={styles.pickerItem}
+                    onValueChange={(itemValue, itemIndex) =>
+                      this.setState({ incomeType: itemValue })
+                    }>
+                    {this.state.incomeAccounts.map((item, index) => (
+                      <Picker.Item style={styles.pickerItem} label={item} value={item} key={index} />
+                    ))}
+                  </Picker>
+                </View>
               </View>
-            </View>
-          
-            {this.state.revenue.map((item, index )=> (
-              <View key={index}>
-                <Text>{item.name}:{item.q * -1}</Text>
-                <TouchableOpacity style={styles.smallBtn} onPress={()=> this.delete(index)}>
-                  <Text style={styles.text}>Delete</Text>
-                </TouchableOpacity> 
+
+              {this.state.revenue.map((item, index) => (
+                <View key={index}>
+                  <Text>{item.name}:{item.q * -1}</Text>
+                  <TouchableOpacity style={styles.smallBtn} onPress={() => this.delete(index)}>
+                    <Text style={styles.text}>Delete</Text>
+                  </TouchableOpacity>
+                </View>
+              ))}
+              <View style={styles.box}>
+                <Text style={styles.text}>Credit: </Text>
+                <View style={styles.input}>
+                  <Picker
+                    selectedValue={this.state.revenueName}
+                    style={styles.pickerItem}
+                    onValueChange={(itemValue, itemIndex) =>
+                      this.setState({ revenueName: itemValue, revenueId: this.state.revenueAccounts[itemIndex]._id, revenuePrice: this.state.revenueAccounts[itemIndex].price })
+                    }>
+                    {this.state.revenueAccounts.map((item, index) => (
+                      <Picker.Item style={styles.pickerItem} label={item.name} value={item.name} key={index} />
+                    ))}
+                  </Picker>
+                </View>
               </View>
-            ))}
-            <View style={styles.box}>
-              <Text style={styles.text}>Credit: </Text>
-              <View style={styles.input}>
-                <Picker
-                  selectedValue={this.state.revenueName}
-                  style={styles.pickerItem} 
-                  onValueChange={(itemValue, itemIndex) =>
-                    this.setState({revenueName: itemValue, revenueId: this.state.revenueAccounts[itemIndex]._id, revenuePrice: this.state.revenueAccounts[itemIndex].price})
-                  }>
-                  {this.state.revenueAccounts.map((item, index)=> (
-                    <Picker.Item style={styles.pickerItem} label={item.name} value={item.name} key={index} />
-                  ))}
-                </Picker> 
+              <View style={styles.box}>
+                <Text style={styles.text}>Jumlah(pcs): </Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder={"Jumlah"}
+                  placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+                  onChangeText={(revenueAmount) => this.setState({ revenueAmount: revenueAmount * -1 })}
+                />
               </View>
-            </View>
-            <View style={styles.box}>
-              <Text style={styles.text}>Jumlah(pcs): </Text>
-              <TextInput
-                style={styles.input}
-                placeholder={"Jumlah"}
-                placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
-                onChangeText={(revenueAmount) => this.setState({ revenueAmount: revenueAmount * -1 })}
-              />
-            </View>
-            <View style={styles.box}>
-              <TouchableOpacity style={styles.smallBtn} onPress={this.submitRevenue}>
-                <Text style={styles.text}>Input</Text>
-              </TouchableOpacity> 
-            </View>
-            <TouchableOpacity style={styles.btn} onPress={this.submit}>
-              <Text style={styles.text}>Submit</Text>
-            </TouchableOpacity> 
-          </ScrollView>
-        </View>
-      </KeyboardAvoidingView>
+              <View style={styles.box}>
+                <TouchableOpacity style={styles.smallBtn} onPress={this.submitRevenue}>
+                  <Text style={styles.text}>Input</Text>
+                </TouchableOpacity>
+              </View>
+              <TouchableOpacity style={styles.btn} onPress={this.submit}>
+                <Text style={styles.text}>Submit</Text>
+              </TouchableOpacity>
+            </ScrollView>
+          </View>
+        </KeyboardAvoidingView>
       </Gradient>
     );
   }
@@ -185,7 +199,7 @@ const styles = StyleSheet.create({
   },
   boxWrapper: {
     width: width,
-    height: height/4,
+    height: height / 4,
     alignItems: 'flex-start',
     margin: 5,
   },
@@ -196,8 +210,8 @@ const styles = StyleSheet.create({
     margin: 5
   },
   input: {
-    width: width *0.7,
-    height: 30, 
+    width: width * 0.7,
+    height: 30,
     borderRadius: 60,
     paddingLeft: 20,
     backgroundColor: 'azure'
@@ -219,7 +233,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 25
   },
   smallBtn: {
-    width: width/4,
+    width: width / 4,
     height: 30,
     borderRadius: 25,
     backgroundColor: 'skyblue',

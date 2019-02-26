@@ -3,8 +3,12 @@ import {
   createSwitchNavigator,
   createDrawerNavigator,
   createStackNavigator,
-  createMaterialTopTabNavigator
+  createMaterialTopTabNavigator,
+  DrawerItems
 } from 'react-navigation'
+import React from 'react'
+import { View, SafeAreaView, Button} from 'react-native'
+
 
 //screens
 import Register from '../screens/Register'
@@ -19,6 +23,7 @@ import Transaction from '../screens/MyTransaction/Transaction/MyTransaction'
 import OtherTransaction from '../screens/MyTransaction/OtherTransaction/MyOther'
 import RevenueTransaction from '../screens/RevenueTransaction'
 import OtherTransactionDtl from '../screens/MyTransaction/OtherTransaction/Detail'
+import LogoutScreen from '../screens/Logout'
 import { Drawer } from 'native-base';
 
 const HomeNav = createStackNavigator({
@@ -67,6 +72,12 @@ const OtherTransactionDetail = createStackNavigator({
   }
 })
 
+const Logout = createStackNavigator({
+  Logout: {
+    screen: LogoutScreen
+  }
+})
+
 const MyTransaction = createStackNavigator({
   Transactions: {
     screen: TransactionList
@@ -95,6 +106,9 @@ const DrawerNavigator = createDrawerNavigator({
   Home: {
     screen: HomeNav
   },
+  Logout: {
+    screen: Logout
+  },
   Pendapatan: {
     screen: RevenueNav
   },
@@ -107,9 +121,18 @@ const DrawerNavigator = createDrawerNavigator({
   Produk: {
     screen: ProductNav
   },
-  TestGoogleVision: {
-    screen: TestGoogleVision
-  }
+<<<<<<< HEAD
+}, {
+  contentComponent:(props) => (
+    <View style={{flex:1}}>
+        <SafeAreaView forceInset={{ top: 'never', horizontal: 'never' }}>
+            <DrawerItems {...props} />
+            <Button title="Logout" onPress={() => props.navigation.navigate('Signin')}/>
+        </SafeAreaView>
+    </View>
+),
+=======
+>>>>>>> 9d108b1d8c798e07a1603a52824bb30eab8700e4
 })
 
 const rootNav = createSwitchNavigator({
