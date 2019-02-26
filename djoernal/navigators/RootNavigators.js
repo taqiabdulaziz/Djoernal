@@ -110,7 +110,7 @@ const DrawerNavigator = createDrawerNavigator({
     screen: Logout
   },
   Pendapatan: {
-    screen: RevenueNav
+    screen: Revenue
   },
   Pengeluaran: {
     screen: ExpenseNav

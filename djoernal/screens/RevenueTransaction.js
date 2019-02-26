@@ -22,7 +22,7 @@ import { Header } from 'react-navigation';
 const {baseUrl, gradient} = require ('../helpers/helpers')
 const {width, height} = Dimensions.get('window')
 
-class Transaction extends React.Component {
+export default class Transaction extends React.Component {
   static navigationOptions = {
     title: 'Transaksi Penjualan'
   }
@@ -41,6 +41,27 @@ class Transaction extends React.Component {
       this.setState({ 
         list: pilihan
       });
+    } catch (err) {
+      console.log(err.message)
+    }
+  }
+  syncData= async() => {
+    try  {
+      let {data} = await axios.get(`${baseUrl}/users`, {
+        headers: {
+          token: await AsyncStorage.getItem("token")
+        }
+      })
+      let pilihan = data.transactionList.filter(item => {
+        return item.transactionType.accountType === "Revenue"
+      })
+      console.log(pilihan)
+      let done = await this.setState({ 
+        list: pilihan
+      });
+      if(done) {
+        this.forceUpdate()
+      }
     } catch (err) {
       console.log(err.message)
     }
@@ -104,6 +125,9 @@ class Transaction extends React.Component {
             </View>
             </Modal>
           
+            <TouchableOpacity onPress={this.syncData} style={styles.btn}>
+              <Text>Sync Data</Text>
+            </TouchableOpacity>
             {this.state.list.map((item, index )=> (
               <View key ={index} style={{backgroundColor: 'white', borderRadius: 20, width: width*0.8, alignItems:'flex-start', justifyContent: 'center', margin: 20}}>
                 <Text style={{paddingLeft:20}}>{item.debit.accountType}:{item.debit.nominal}</Text>
@@ -126,8 +150,6 @@ class Transaction extends React.Component {
     );
   }
 }
-
-export default Transaction;
 
 const styles = StyleSheet.create({
   container: {

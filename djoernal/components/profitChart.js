@@ -76,7 +76,7 @@ export default class Profit extends Component {
 
   render() {
     const chart_wh = 250
-    let chartData = [this.state.expense, this.state.profit]
+    let chartData = [this.state.expense, 26000]
     const series = chartData
     const sliceColor = ['#F44336','#2196F3']
  
