@@ -19,6 +19,7 @@ import {
   Platform
 } from 'react-native';
 import axios from 'axios'
+import { Ionicons as Icon} from '@expo/vector-icons'
 import Gradient from 'react-native-css-gradient'
 import { Card } from 'react-native-elements'
 import { Header } from 'react-navigation';
@@ -27,11 +28,18 @@ const {baseUrl, gradient} = require ('../helpers/helpers')
 const {width, height} = Dimensions.get('window')
 
 class Product extends React.Component {
-  static navigationOptions = {
-    title: 'List Produk / Jasa',
-    headerStyle: {
-      elevation: 2,
-      backgroundColor: "#3CB371"
+  static navigationOptions (props) {
+    return {
+      title: 'List Produk / Jasa',
+      headerStyle: {
+        elevation: 2,
+        backgroundColor: "#3CB371"
+      },
+      headerLeft: (
+        <Icon name="md-menu" size={28} style={{
+          margin: 17
+        }} onPress={() => props.navigation.openDrawer()}></Icon>
+      )
     }
   }
 

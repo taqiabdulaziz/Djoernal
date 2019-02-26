@@ -19,7 +19,7 @@ import {
   TouchableNativeFeedback,
   Modal
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons'
+import { Ionicons} from '@expo/vector-icons'
 import Receipt from '../components/receipt'
 import { Header } from 'react-navigation';
 import axios from 'axios'
@@ -34,11 +34,20 @@ class Revenue extends React.Component {
     this.state.diff = this.state.sourceAmount - this.state.expenseAmount
   }
 
-  static navigationOptions = {
-    title: 'Expense',
-    headerStyle: {
-      elevation: 2,
-      backgroundColor: "#3CB371"
+  static navigationOptions(props) {
+    return {
+      title: 'Expense',
+      headerStyle: {
+        elevation: 2,
+        backgroundColor: "#3CB371"
+      },
+      headerLeft: (
+        <Ionicons name="md-menu" size={28} style={{
+          paddingLeft: 17,
+          paddingTop: 17,
+          paddingBottom: 17
+        }} onPress={() => props.navigation.openDrawer()}></Ionicons>
+      )
     }
   }
 
