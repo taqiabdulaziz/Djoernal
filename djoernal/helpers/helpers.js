@@ -1,6 +1,6 @@
 import { ImagePicker, Permissions } from 'expo'
 import uuid from 'uuid'
-
+import Compressor from 'compressorjs'
 import { ref } from '../config/firebase'
 
 module.exports = {
@@ -44,6 +44,24 @@ module.exports = {
         xhr.send(null);
       });
       let child = ref.child(uuid.v4())
+
+      // console.log(`mau compress`);
+      
+      // let data = new Compressor(blob, {
+      //   quality: 0.8,
+      //   success(result) {
+      //     console.log(result);
+      //     console.log(`hehehe`);
+          
+          
+      //     return result
+      //   }
+      // })
+      // console.log(`masuk sini`);
+      // console.log(data);
+      
+      
+
       let snapshot = await child.put(blob)
       blob.close()
       let url = await snapshot.ref.getDownloadURL();
