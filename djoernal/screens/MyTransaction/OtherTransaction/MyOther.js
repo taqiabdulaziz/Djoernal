@@ -5,26 +5,18 @@ import {
   Text,
   FlatList,
   Button,
-<<<<<<< HEAD:djoernal/screens/MyTransaction/OtherTransaction/MyOther.js
-  AsyncStorage
-=======
   AsyncStorage,
   ScrollView,
   RefreshControl,
   Dimensions
->>>>>>> benerin display pendapatan:djoernal/screens/MyTransaction/Transaction/MyTransaction.js
 } from 'react-native'
 import { setTransaction } from '../../../store/action'
 import { bindActionCreators } from 'redux'
 import OtherTransactionList from '../../../components/otherTransactionList'
 import axios from 'axios'
-<<<<<<< HEAD:djoernal/screens/MyTransaction/OtherTransaction/MyOther.js
-import {baseUrl} from '../../../helpers/helpers'
-=======
 import { baseUrl } from '../../../helpers/helpers'
 import TransactionList from '../../../components/transactionList'
 const { width, height } = Dimensions.get('window')
->>>>>>> benerin display pendapatan:djoernal/screens/MyTransaction/Transaction/MyTransaction.js
 
 class MyOther extends React.Component {
   componentDidMount () {

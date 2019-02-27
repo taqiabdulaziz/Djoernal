@@ -8,8 +8,7 @@ import {
   withNavigation
 } from 'react-navigation'
 import React from 'react'
-import { View, SafeAreaView, Button} from 'react-native'
-import { Ionicons as Icon } from '@expo/vector-icons'
+import { View, SafeAreaView, Button, Text, TouchableOpacity } from 'react-native'
 
 //screens
 import Register from '../screens/Register'
