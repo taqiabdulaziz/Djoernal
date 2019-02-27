@@ -20,23 +20,6 @@ import { Header } from 'react-navigation';
 const {baseUrl, gradient} = require ('../helpers/helpers')
 const {width, height} = Dimensions.get('window')
  
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center'
-  },
-  title: {
-    fontSize: 24,
-    margin: 10
-  },
-  box: {
-    width: width * 0.95,
-    height: 30,
-    flexDirection: 'row',
-    margin: 5
-  },
-});
- 
 export default class Profit extends Component {
   async componentDidMount() {
     try  {
@@ -81,45 +64,93 @@ export default class Profit extends Component {
     profit: 0
   }
 
+  formatMoney(n, c, d, t) {
+    var c = isNaN(c = Math.abs(c)) ? 2 : c,
+        d = d == undefined ? "." : d,
+        t = t == undefined ? "," : t,
+        s = n < 0 ? "-" : "",
+        i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))),
+        j = (j = i.length) > 3 ? j % 3 : 0;
+
+    let result = s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "")
+    return result
+  }
+
   render() {
-    const chart_wh = 250
+    const chart_wh = 155
     const series = [this.state.expense,this.state.profit]
     const sliceColor = ['#F44336','#2196F3']
     return this.state.profit > 0 ? (
-      <Gradient gradient={gradient} style={{width: width, height: height}}>
-      <KeyboardAvoidingView
-        keyboardVerticalOffset = {Header.HEIGHT + 20} // adjust the value here if you need more padding
-        style = {styles.container}
-        behavior = "padding" 
-      >
-      <ScrollView style={{flex: 1}}>
-        <View style={styles.container}>
+      <ScrollView>
+        <View style={styles.containerWhite}>
           <StatusBar
             hidden={true}
           />
           <Text style={styles.title}>Profit Chart</Text>
-          <View style= {styles. box}>
-            <Text>Revenue:{this.state.revenue}</Text>
+          <View style={{
+            flexDirection: 'row',
+            padding: 15,
+            margin: 10,
+            borderWidth: 1,
+            borderRadius: 20,
+            width: width * 0.85
+          }}>
+            <View>
+              <PieChart
+                chart_wh={chart_wh}
+                series={series}
+                sliceColor={sliceColor}
+              />
+            </View>
+            <View style={{marginLeft: 10}}>
+              <Text style={{paddingLeft: 5, fontSize: 12}}>Revenue: </Text>
+              <Text style={{marginBottom: 8}}>Rp.{this.formatMoney(this.state.revenue)}</Text>
+              <View style= {styles. box}>
+                <TouchableOpacity style={{backgroundColor: '#F44336', width: 10, height:10}}></TouchableOpacity>
+                <Text style={{paddingLeft: 5, fontSize: 12}}>Expense:</Text>
+              </View>
+              <Text>Rp. {this.formatMoney(this.state.expense)}</Text>
+              <View style= {styles. box}>
+                <TouchableOpacity style={{backgroundColor: '#2196F3', width: 10, height:10}}></TouchableOpacity>
+                <Text style={{paddingLeft: 5, fontSize: 12}}>Profit: </Text>
+              </View>
+              <Text>Rp.{this.formatMoney(this.state.profit)}</Text>
+            </View>
           </View>
-          <View style= {styles. box}>
-            <TouchableOpacity style={{backgroundColor: '#F44336', width: 10, height:10}}></TouchableOpacity>
-            <Text>Expense:{this.state.expense}</Text>
-          </View>
-          <View style= {styles. box}>
-            <TouchableOpacity style={{backgroundColor: '#2196F3', width: 10, height:10}}></TouchableOpacity>
-            <Text>Profit:{this.state.profit}</Text>
-          </View>
-          <PieChart
-            chart_wh={chart_wh}
-            series={series}
-            sliceColor={sliceColor}
-          />
+          
         </View>
       </ScrollView>
-      </KeyboardAvoidingView>
-      </Gradient>
-    ) : <ActivityIndicator />
+    ) : <Text style={{
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        borderWidth: 1, 
+        width: width * 0.8, 
+        padding: 10,
+        backgroundColor: 'white'
+      }}>Anda belum memiliki data untuk diolah kedalam chart</Text>
   }
 }
+
+const styles = StyleSheet.create({
+  containerWhite: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    margin: 10,
+    width: width -20,
+    borderRadius: 4,
+    padding: 10
+  },
+  title: {
+    fontSize: 23,
+  },
+  box: {
+    width: width * 0.95,
+    height: 15,
+    flexDirection: 'row',
+    margin: 5
+  },
+});
  
 AppRegistry.registerComponent('Profit', () => Profit);

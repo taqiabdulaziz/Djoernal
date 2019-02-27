@@ -73,83 +73,73 @@ export default class signup extends Component {
   render() {
     const { navigation: { navigate } } = this.props
     return (
-      <View style={{ backgroundColor: "#33CA7F" }}>
-        <KeyboardAvoidingView
-          keyboardVerticalOffset={Header.HEIGHT + 20} // adjust the value here if you need more padding
-          style={styles.container}
-          behavior="padding"
-        >
-          <ScrollView>
-            <View style={styles.container}>
-              <View style={styles.inputContainer}>
-                <Icon name={'email'} size={28} color={'rgba(255, 255, 255, 0.7)'}
-                  style={styles.inputIcon} />
-                <TextInput
-                  style={styles.input}
-                  placeholder={"Email"}
-                  placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
-                  onChangeText={(email) => this.setState({ email })}
-                />
-              </View>
-              <View style={styles.inputContainer}>
-                <Icon name={'lock'} size={28} color={'rgba(255, 255, 255, 0.7)'}
-                  style={styles.inputIcon} />
-                <TextInput
-                  style={styles.input}
-                  placeholder={"Password"}
-                  secureTextEntry={this.state.showPass}
-                  placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
-                  onChangeText={(password) => this.setState({ password })}
-                />
-                <TouchableOpacity style={styles.btnEye}
-                  onPress={this.showPass.bind(this)}>
-                  <Icon name={this.state.press == false ? 'eye' : 'eye-off'}
-                    size={26} color={'rgba(255, 255, 255, 0.7)'} />
-                </TouchableOpacity>
-              </View>
-              <View style={styles.inputContainer}>
-                <Icon name={'office-building'} size={28} color={'rgba(255, 255, 255, 0.7)'}
-                  style={styles.inputIcon} />
-                <TextInput
-                  style={styles.input}
-                  placeholder={"Company"}
-                  placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
-                  onChangeText={(company) => this.setState({ company })}
-                />
-              </View>
-              <View style={styles.inputContainer}>
-                <MaterialIcons name="attach-money" size={28} color={'rgba(255, 255, 255, 0.7)'}
-                  style={styles.inputIcon} />
-                <TextInput
-                  style={styles.input}
-                  keyboardType="numeric"
-                  placeholder={"Modal Awal"}
-                  placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
-                  onChangeText={(kas) => this.setState({ kas })}
-                />
-              </View>
-              <View style={styles.inputContainer}>
-                <Icon name={'phone'} size={28} color={'rgba(255, 255, 255, 0.7)'}
-                  style={styles.inputIcon} />
-                <TextInput
-                  style={styles.input}
-                  placeholder={"Phone"}
-                  placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
-                  onChangeText={(phone) => this.setState({ phone })}
-                />
-              </View>
-              <View style={styles.inputContainer}>
-                <TouchableOpacity style={styles.btnLogin} onPress={this.signup}>
-                  <Text style={styles.text}>Signup </Text>
-                </TouchableOpacity>
-              </View>
-              <Text style={{ marginTop: 20, color: "black" }}>already have account?</Text>
-              <Text style={{ fontWeight: "bold", color: "black" }} onPress={() => navigate("Signin")}> Signin</Text>
-
-            </View>
-          </ScrollView>
-        </KeyboardAvoidingView>
-      </View>
+      <Gradient gradient={gradient} style={{width: width, height: height}}>
+      <KeyboardAvoidingView
+        keyboardVerticalOffset = {Header.HEIGHT - 60} // adjust the value here if you need more padding
+        style = {styles.container}
+        behavior = "padding" 
+      >
+        <ScrollView>
+        <View style={styles.container}>
+          <View style={styles.inputContainer}>
+            <Icon name={'email'} size={28} color={'rgba(255, 255, 255, 0.7)'}
+              style={styles.inputIcon} />
+            <TextInput
+              style={styles.input}
+              placeholder={"Email"}
+              placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+              onChangeText={(email) => this.setState({ email })}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Icon name={'lock'} size={28} color={'rgba(255, 255, 255, 0.7)'}
+              style={styles.inputIcon} />
+            <TextInput
+              style={styles.input}
+              placeholder={"Password"}
+              secureTextEntry={this.state.showPass}
+              placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+              onChangeText={(password) => this.setState({ password })}
+            />
+            <TouchableOpacity style={styles.btnEye}
+              onPress={this.showPass.bind(this)}>
+              <Icon name={this.state.press == false ? 'eye' : 'eye-off'}
+                size={26} color={'rgba(255, 255, 255, 0.7)'} />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.inputContainer}>
+            <Icon name={'office-building'} size={28} color={'rgba(255, 255, 255, 0.7)'}
+              style={styles.inputIcon} />
+            <TextInput
+              style={styles.input}
+              placeholder={"Company"}
+              placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+              onChangeText={(company) => this.setState({ company })}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Icon name={'phone'} size={28} color={'rgba(255, 255, 255, 0.7)'}
+              style={styles.inputIcon} />
+            <TextInput
+              style={styles.input}
+              placeholder={"Phone"}
+              placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+              onChangeText={(phone) => this.setState({ phone })}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <TouchableOpacity style={styles.btnLogin} onPress={this.signup}>
+              <Text style={styles.text}>Signup </Text>
+            </TouchableOpacity>
+          </View>
+          
+          <Text style={{ marginTop: 20 }}>already have account?</Text>
+          <Text style={{fontWeight: "bold"}} onPress={() => navigate("Signin")}> Signin</Text>
+          
+        </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
+      </Gradient>
     )
   }
 }
@@ -157,7 +147,7 @@ export default class signup extends Component {
 const styles = StyleSheet.create({
   container: {
     width: width,
-    height: height,
+    height: height * 0.8,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -198,7 +188,7 @@ const styles = StyleSheet.create({
     width: width - 55,
     height: 45,
     borderRadius: 25,
-    backgroundColor: '#3CB371',
+    backgroundColor: '#006699',
     justifyContent: 'center',
     marginTop: 10,
     marginHorizontal: 25

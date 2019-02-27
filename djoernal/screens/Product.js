@@ -155,80 +155,100 @@ class Product extends React.Component {
 
   render() {
     return (
-      <Gradient gradient={gradient} style={{ width: width, height: height }}>
-        <KeyboardAvoidingView
-          keyboardVerticalOffset={Header.HEIGHT + 20}
-          style={styles.container}
-          behavior="padding"
-        >
-          <View style={styles.container}>
-            <Modal
-              animationType="slide"
-              transparent={true}
-              visible={this.state.modalVisible}
-              onRequestClose={() => {
-                Alert.alert('Modal has been closed.');
-              }}>
+      <KeyboardAvoidingView
+        keyboardVerticalOffset={Header.HEIGHT + 20}
+        style={styles.containerGrey}
+        behavior="padding"
+      >
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+          }}>
+          <View style={{
+            marginTop: height / 6,
+            marginLeft: width * 0.01,
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 10,
+          }}>
+            <Gradient gradient='linear-gradient(to right, #868f96 0%, #596164 100%)' style={{ width: width * 0.9, height: height / 2, borderRadius: 20 }}>
+              <TouchableHighlight
+                style={styles.smallBtn}
+                onPress={() => {
+                  this.setModalVisible(!this.state.modalVisible);
+                }}>
+                <Text style={{color: 'white', fontWeight: 'bold'}}>X</Text>
+              </TouchableHighlight>
+              <Text></Text>
               <View style={{
-                marginTop: height / 6,
-                marginLeft: width * 0.01,
                 alignItems: 'center',
                 justifyContent: 'center',
-                padding: 10,
               }}>
-                <Gradient gradient='linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%)' style={{ width: width * 0.9, height: height / 2, borderRadius: 60 }}>
-                  <TouchableHighlight
-                    style={styles.smallBtn}
-                    onPress={() => {
-                      this.setModalVisible(!this.state.modalVisible);
-                    }}>
-                    <Text>X</Text>
-                  </TouchableHighlight>
-                  <Text></Text>
-                  <View style={{
-                    alignItems: 'center',
+                <View style={{flexDirection:'row'}}>
+                  <Text style={styles.text}>Nama:</Text>
+                  <TextInput
+                    style={styles.inputModal}
+                    onChangeText={(name) => this.setState({ name: name })}
+                    value={this.state.name}
+                  />
+                </View>
+                <View style={{flexDirection:'row'}}>
+                  <Text style={styles.text}>Stock:</Text>
+                  <TextInput
+                    style={styles.inputModal}
+                    onChangeText={(stock) => this.setState({ stock: stock })}
+                    value={String(this.state.stock)}
+                  />
+                </View>
+                <View style={{flexDirection:'row'}}>
+                  <Text style={styles.text}>Harga:</Text>
+                  <TextInput
+                    style={styles.inputModal}
+                    onChangeText={(price) => this.setState({ price: price })}
+                    value={String(this.state.price)}
+                  />
+                </View>
+                <View style={{flexDirection:'row'}}>
+                  <Text style={styles.text}>HPP:</Text>
+                  <TextInput
+                    style={styles.inputModal}
+                    onChangeText={(hpp) => this.setState({ hpp: hpp })}
+                    value={String(this.state.hpp)}
+                  />
+                </View>
+                <Text></Text>
+                <TouchableHighlight
+                  style={{
+                    width: width *0.8,
+                    height: 40,
+                    borderRadius: 25,
+                    backgroundColor: '#009efd',
                     justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop: 10,
+                  }}
+                  onPress={() => {
+                    this.edit(this.state.id);
+                    this.setModalVisible(!this.state.modalVisible);
                   }}>
-                    <TextInput
-                      style={styles.inputModal}
-                      onChangeText={(name) => this.setState({ name: name })}
-                      value={this.state.name}
-                    />
-                    <TextInput
-                      style={styles.inputModal}
-                      onChangeText={(stock) => this.setState({ stock: stock })}
-                      value={String(this.state.stock)}
-                    />
-                    <TextInput
-                      style={styles.inputModal}
-                      onChangeText={(price) => this.setState({ price: price })}
-                      value={String(this.state.price)}
-                    />
-                    <TextInput
-                      style={styles.inputModal}
-                      onChangeText={(hpp) => this.setState({ hpp: hpp })}
-                      value={String(this.state.hpp)}
-                    />
-                    <Text></Text>
-                    <TouchableHighlight
-                      style={styles.smallBtn}
-                      onPress={() => {
-                        this.edit(this.state.id);
-                        this.setModalVisible(!this.state.modalVisible);
-                      }}>
-                      <Text>Submit</Text>
-                    </TouchableHighlight>
-                  </View>
-                </Gradient>
+                  <Text style={{color: 'white', fontWeight: 'bold'}}>Submit</Text>
+                </TouchableHighlight>
               </View>
-            </Modal>
-            <ScrollView>
+            </Gradient>
+          </View>
+        </Modal>
+        <ScrollView>
+          <View style={styles.containerGrey}>
+            <View style={styles.containerWhite}>
               <View style={styles.box}>
                 <Text style={styles.text}>Nama: </Text>
                 <TextInput
                   style={styles.input}
                   placeholder={"nama"}
-                  placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+                  placeholderTextColor={'grey'}
                   value={this.state.newName}
                   onChangeText={(newName) => this.setState({ newName })}
                 />
@@ -237,8 +257,8 @@ class Product extends React.Component {
                 <Text style={styles.text}>Stok: </Text>
                 <TextInput
                   style={styles.input}
-                  placeholder={"stock"}
-                  placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+                  placeholder={"pcs.."}
+                  placeholderTextColor={'grey'}
                   type='numeric'
                   value={this.state.newStock}
                   onChangeText={(newStock) => this.setState({ newStock })}
@@ -248,79 +268,85 @@ class Product extends React.Component {
                 <Text style={styles.text}>Harga: </Text>
                 <TextInput
                   style={styles.input}
-                  placeholder={"harga"}
-                  placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+                  placeholder={"IDR"}
+                  placeholderTextColor={'grey'}
                   type='numeric'
                   value={this.state.newPrice}
                   onChangeText={(newPrice) => this.setState({ newPrice })}
                 />
               </View>
               <View style={styles.box}>
-                <Text style={styles.text}>Harga Pokok Penjualan: </Text>
+                <Text style={styles.text}>HPP: </Text>
                 <TextInput
                   style={styles.input}
-                  placeholder={"hpp"}
-                  placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+                  placeholder={"IDR"}
+                  placeholderTextColor={'grey'}
                   value={this.state.newHpp}
                   onChangeText={(newHpp) => this.setState({ newHpp })}
                 />
               </View>
               <View style={styles.box}>
-                <TouchableOpacity style={styles.btn} onPress={this.submit}>
-                  <Text style={styles.text}>Submit</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                {this.state.list.map((item, index) => (
-                  <View key={index} style={styles.card}>
-                    <Text style={{ fontSize: 15, fontWeight: 'bold', textDecorationLine: 'underline' }}>{item.name}</Text>
-                    <Text>Stock: {item.stock}</Text>
-                    <Text>Price: {item.price}</Text>
-                    <Text>Harga pokok penjualan: {item.hpp}</Text>
-                    <View style={styles.box}>
-                      <TouchableOpacity
-                        onPress={() => {
-                          this.setState({ id: item._id, name: item.name, stock: item.stock, price: item.price, hpp: item.hpp });
-                          this.setModalVisible(!this.state.modalVisible);
-                        }}
-                        style={styles.btn}
-                      >
-                        <Text>Update</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        onPress={() => { this.delete(item._id) }}
-                        style={styles.btn}
-                      >
-                        <Text>Delete</Text>
-                      </TouchableOpacity>
-                    </View>
+              <TouchableOpacity style={{
+                width: width *0.8,
+                height: 45,
+                borderRadius: 25,
+                backgroundColor: '#009efd',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 5,
+                marginBottom: 10,
+                marginLeft: 25
+              }} onPress={this.submit}>
+                <Text style={{color: 'white', fontWeight: 'bold'}}>Submit</Text>
+              </TouchableOpacity>
+            </View>
+            </View>
+            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+              {this.state.list.map((item, index) => (
+                <View key={index} style={styles.card}>
+                  <Text style={{ fontSize: 15, fontWeight: 'bold', textDecorationLine: 'underline' }}>{item.name}</Text>
+                  <Text>Stock: {item.stock}</Text>
+                  <Text>Price: {item.price}</Text>
+                  <Text>HPP: {item.hpp}</Text>
+                  <View style={styles.box}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.setState({ id: item._id, name: item.name, stock: item.stock, price: item.price, hpp: item.hpp });
+                        this.setModalVisible(!this.state.modalVisible);
+                      }}
+                      style={{
+                        width: width / 3,
+                        height: 30,
+                        borderRadius: 25,
+                        backgroundColor: '#009efd',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginRight: 10
+                      }}
+                    >
+                      <Text style={{color: 'white', fontWeight: 'bold'}}>Update</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => { this.delete(item._id) }}
+                      style={{
+                        width: width / 3,
+                        height: 30,
+                        borderRadius: 25,
+                        backgroundColor: '#A80000',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginRight: 10
+                      }}
+                    >
+                      <Text style={{color: 'white', fontWeight: 'bold'}}>Delete</Text>
+                    </TouchableOpacity>
                   </View>
-                  // <Card title={item.name} key={index} >
-                  //   <Text>Stock: {item.stock}</Text>
-                  //   <Text>Price: {item.price}</Text>
-                  //   <Text>Harga pokok penjualan: {item.hpp}</Text>
-                  //   <Button
-                  //     onPress={() => {
-                  //       this.setState({ id: item._id, name: item.name, stock: item.stock, price: item.price, hpp: item.hpp });
-                  //       this.setModalVisible(!this.state.modalVisible);
-                  //     }}
-                  //     title="Edit"
-                  //     color="#841584"
-                  //     accessibilityLabel="Edit"
-                  //   />
-                  //   <Button
-                  //     onPress={() => { this.delete(item._id) }}
-                  //     title="Delete"
-                  //     color="#841584"
-                  //     accessibilityLabel="Delete"
-                  //   />
-                  // </Card>
-                ))}
-              </View>
-            </ScrollView>
+                </View>
+              ))}
+            </View>
           </View>
-        </KeyboardAvoidingView>
-      </Gradient>
+        </ScrollView>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -328,51 +354,51 @@ class Product extends React.Component {
 export default Product;
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    fontFamily: 'serif',
-    fontSize: 14,
-    width: width,
-    height: height * 0.85,
-    paddingTop: Platform.OS === 'android' ? 25 : 0,
+  containerGrey: {
+    flex: 1,
+    backgroundColor: '#e1e2e1',
   },
-  boxWrapper: {
-    width: width,
-    height: height / 4,
+  containerWhite: {
+    flex: 1,
     alignItems: 'flex-start',
-    margin: 5,
+    justifyContent: 'center',
+    fontSize: 14,
+    backgroundColor: 'white',
+    margin: 10,
+    borderRadius: 4,
+    paddingTop: 10
   },
   box: {
     flex: 1,
-    width: width * 0.95,
     flexDirection: 'row',
-    margin: 5
+    margin: 5,
   },
   card: {
     flex: 1,
-    width: width * 0.9,
-    height: height / 4,
-    margin: 5,
+    width: width * 0.95,
     backgroundColor: 'white',
-    borderRadius: 40,
+    borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 5,
+    padding: 10,
   },
   input: {
-    flex: 2.5,
+    width: width * 0.7,
     height: 30,
     borderRadius: 60,
     paddingLeft: 20,
-    backgroundColor: 'azure'
+    backgroundColor: '#ccebff',
+    marginRight: 10,
+    marginTop: 5,
   },
   inputModal: {
-    width: width * 0.8,
+    width: width * 0.6,
     height: 30,
     borderRadius: 60,
     paddingLeft: 20,
-    backgroundColor: 'white'
+    backgroundColor: '#ccebff',
+    margin: 5,
+    marginRight: 10,
   },
   pickerItem: {
     marginTop: -10,
@@ -384,23 +410,22 @@ const styles = StyleSheet.create({
     paddingLeft: 20
   },
   btn: {
-    width: width / 3,
-    height: 45,
+    width: width *0.9,
+    height: 35,
     borderRadius: 25,
-    backgroundColor: 'skyblue',
+    backgroundColor: '#009efd',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10,
-    marginLeft: 35,
+    marginRight: 10,
   },
   smallBtn: {
-    width: width / 5,
+    width: width / 6,
     height: 30,
     borderRadius: 25,
-    backgroundColor: 'skyblue',
+    backgroundColor: '#009efd',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10,
-    marginHorizontal: width * 0.6
+    marginTop: 20,
+    marginLeft: width *0.7
   },
 });

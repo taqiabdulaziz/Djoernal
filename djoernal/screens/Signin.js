@@ -86,51 +86,51 @@ class Signin extends Component {
   render() {
     const { navigation: { navigate } } = this.props
     return (
-      <View style={{ backgroundColor: "#33CA7F" }}>
-        <KeyboardAvoidingView
-          keyboardVerticalOffset={Header.HEIGHT + 20} // adjust the value here if you need more padding
-          style={styles.container}
-          behavior="padding"
-        >
-          <ScrollView>
-            <View style={styles.container}>
-              <View style={styles.inputContainer}>
-                <Icon name={'email'} size={28} color={'rgba(255, 255, 255, 0.7)'}
-                  style={styles.inputIcon} />
-                <TextInput
-                  style={styles.input}
-                  placeholder={"Email"}
-                  placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
-                  onChangeText={(email) => this.setState({ email })}
-                />
-              </View>
-              <View style={styles.inputContainer}>
-                <Icon name={'lock'} size={28} color={'rgba(255, 255, 255, 0.7)'}
-                  style={styles.inputIcon} />
-                <TextInput
-                  style={styles.input}
-                  placeholder={"Password"}
-                  secureTextEntry={this.state.showPass}
-                  placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
-                  onChangeText={(password) => this.setState({ password })}
-                />
-                <TouchableOpacity style={styles.btnEye}
-                  onPress={this.showPass.bind(this)}>
-                  <Icon name={this.state.press == false ? 'eye' : 'eye-off'}
-                    size={26} color={'rgba(255, 255, 255, 0.7)'} />
-                </TouchableOpacity>
-              </View>
-              <View style={styles.inputContainer}>
-                <TouchableOpacity style={styles.btnLogin} onPress={this.signin}>
-                  <Text style={styles.text}>Login</Text>
-                </TouchableOpacity>
-              </View>
-              <Text style={{ marginTop: 20, color: "black" }}>Dont have account?</Text>
-              <Text style={{ fontWeight: "bold", color: "black" }} onPress={() => navigate("Signup")}> Register</Text>
-            </View>
-          </ScrollView>
-        </KeyboardAvoidingView>
-      </View >
+      <Gradient gradient={gradient} style={{width: width, height: height}}>
+      <KeyboardAvoidingView
+        keyboardVerticalOffset = {Header.HEIGHT -60} // adjust the value here if you need more padding
+        style = {styles.container}
+        behavior = "padding" 
+      >
+        <ScrollView>
+        <View style={styles.container}>
+          <View style={styles.inputContainer}>
+            <Icon name={'email'} size={28} color={'rgba(255, 255, 255, 0.7)'}
+              style={styles.inputIcon} />
+            <TextInput
+              style={styles.input}
+              placeholder={"Email"}
+              placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+              onChangeText={(email) => this.setState({ email })}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Icon name={'lock'} size={28} color={'rgba(255, 255, 255, 0.7)'}
+              style={styles.inputIcon} />
+            <TextInput
+              style={styles.input}
+              placeholder={"Password"}
+              secureTextEntry={this.state.showPass}
+              placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+              onChangeText={(password) => this.setState({ password })}
+            />
+            <TouchableOpacity style={styles.btnEye}
+              onPress={this.showPass.bind(this)}>
+              <Icon name={this.state.press == false ? 'eye' : 'eye-off'} 
+              size={26} color={'rgba(255, 255, 255, 0.7)'} />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.inputContainer}>        
+            <TouchableOpacity style={styles.btnLogin} onPress={this.signin}>
+              <Text style={styles.text}>Login</Text>
+            </TouchableOpacity>
+          </View>
+          <Text style={{ marginTop: 20 }}>Dont have account?</Text>
+          <Text style={{fontWeight: "bold"}} onPress={() => navigate("Signup")}> Register</Text>
+        </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
+      </Gradient>
     )
   }
 
@@ -147,7 +147,7 @@ export default connect(null, mapDispatchToProps)(Signin)
 const styles = StyleSheet.create({
   container: {
     width: width,
-    height: height,
+    height: height * 0.9,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
     width: width - 55,
     height: 45,
     borderRadius: 25,
-    backgroundColor: '#3CB371',
+    backgroundColor: '#006699',
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 10,

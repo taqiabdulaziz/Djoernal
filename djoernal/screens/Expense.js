@@ -107,13 +107,17 @@ class Revenue extends React.Component {
 
   deleteItem = async (itemIndex) => {
     let newItemList = []
+    let expenseNow = this.state.expenseAmount
     this.state.itemList.forEach((item, index) => {
       if (index != itemIndex) {
         newItemList.push(item)
+      } else {
+        expenseNow -= item.nominal
       }
     })
     await this.setState({
-      itemList: newItemList
+      itemList: newItemList,
+      expenseAmount: expenseNow
     })
 
   }
@@ -286,8 +290,10 @@ class Revenue extends React.Component {
   }
 
   addItem = async () => {
-    const { itemName, itemAmount, itemList } = this.state
+    const { itemName, itemAmount, itemList, expenseAmount } = this.state
+    let expenseNow = (expenseAmount + Number(itemAmount))
     await this.setState({
+      expenseAmount: expenseNow,
       itemList: itemList.concat({
         name: itemName,
         nominal: Number(itemAmount)
@@ -312,13 +318,17 @@ class Revenue extends React.Component {
               margin: 5
             }}>
               <View>
+                <Text style={{
+                  fontSize: 16,
+                  fontWeight: "bold"
+                }}>Debet</Text>
                 <Picker
                   selectedValue={this.state.expenseType}
                   onValueChange={(itemValue, itemIndex) =>
                     this.setState({ expenseType: itemValue })
                   }>
                   {this.state.expenseAccounts.map((item, index) => (
-                    <Picker.Item label={item} value={item} key={index} />
+                    <Picker.Item label={item} value={item} key={index} style={styles.input}/>
                   ))}
                 </Picker>
                 <View style={{
@@ -331,8 +341,8 @@ class Revenue extends React.Component {
                       padding: 8,
                     }}
                     placeholder={"IDR"}
-                    value={this.state.expenseAmount}
-                    placeholderTextColor="black"
+                    value={(this.state.expenseAmount == 0) ? 'IDR' : String(this.state.expenseAmount)}
+                    placeholderTextColor="grey"
                     onChangeText={(expenseAmount) => this.setState({ expenseAmount })}
                   ></TextInput>
                 </View>
@@ -349,7 +359,7 @@ class Revenue extends React.Component {
                 <Text style={{
                   fontSize: 16,
                   fontWeight: "bold"
-                }}>Sumber Dana</Text>
+                }}>Credit</Text>
                 <Picker
                   selectedValue={this.state.source}
                   onValueChange={(itemValue, itemIndex) =>
@@ -370,7 +380,7 @@ class Revenue extends React.Component {
                     }}
                     placeholder={"IDR"}
                     value={this.state.sourceAmount}
-                    placeholderTextColor="black"
+                    placeholderTextColor="grey"
                     onChangeText={(sourceAmount) => this.setState({ sourceAmount, diff: (sourceAmount - this.state.expenseAmount) * -1 })}
                   />
                 </View>
@@ -544,6 +554,9 @@ class Revenue extends React.Component {
           style={{
             height: 200,
           }}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+          }}
           visible={this.state.modalVisibleItem}
         >
           <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "rgba(0, 0, 0, 0.61)" }}>
@@ -593,6 +606,9 @@ class Revenue extends React.Component {
             height: 200,
           }}
           visible={this.state.modalVisibleSubmit}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+          }}
         >
           <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "rgba(0, 0, 0, 0.61)" }}>
             <View style={{
@@ -618,6 +634,9 @@ class Revenue extends React.Component {
             height: 200,
           }}
           visible={this.state.modalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+          }}
         >
           <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "rgba(0, 0, 0, 0.61)" }}>
             <View style={{
@@ -660,11 +679,11 @@ const styles = StyleSheet.create({
     margin: 5
   },
   input: {
-    flex: 2.5,
+    width: width * 0.8,
     height: 30,
-    width: width,
-    borderWidth: 1,
-    paddingLeft: 10
+    borderRadius: 60,
+    paddingLeft: 20,
+    backgroundColor: '#ccebff'
   },
   text: {
 

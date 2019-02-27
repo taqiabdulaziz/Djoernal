@@ -5,13 +5,18 @@ import {
   Text,
   FlatList,
   Button,
-  AsyncStorage
+  AsyncStorage,
+  ScrollView,
+  RefreshControl,
+  Dimensions
 } from 'react-native'
 import { setTransaction } from '../../../store/action'
 import { bindActionCreators } from 'redux'
 import OtherTransactionList from '../../../components/otherTransactionList'
 import axios from 'axios'
-import {baseUrl} from '../../../helpers/helpers'
+import { baseUrl } from '../../../helpers/helpers'
+import TransactionList from '../../../components/transactionList'
+const { width, height } = Dimensions.get('window')
 
 class MyOther extends React.Component {
   componentDidMount () {

@@ -129,88 +129,110 @@ export default class Revenue extends React.Component {
       )
     })
     return (
-      <Gradient gradient={gradient} style={{ width: width, height: height }}>
-        <KeyboardAvoidingView
-          keyboardVerticalOffset={Header.HEIGHT + 20}
-          style={styles.container}
-          behavior="padding"
-        >
-          <View style={styles.container}>
-            <ScrollView>
-              <View style={styles.box}>
-                <Text style={styles.text}>Debet: </Text>
-                <View style={styles.input}>
-                  <Picker
-                    selectedValue={this.state.incomeType}
-                    style={styles.pickerItem}
-                    onValueChange={(itemValue, itemIndex) =>
-                      this.setState({ incomeType: itemValue })
-                    }>
-                    {this.state.incomeAccounts.map((item, index) => (
-                      <Picker.Item style={styles.pickerItem} label={item} value={item} key={index} />
-                    ))}
-                  </Picker>
-                </View>
+      <KeyboardAvoidingView
+        keyboardVerticalOffset={Header.HEIGHT - 60}
+        style={styles.containerGrey}
+        behavior="padding"
+      >
+        <ScrollView>
+          <View style={styles.containerGrey}>
+          <View style={styles.containerWhite}>
+            <View style={styles.box}>
+              <Text style={styles.text}>Debet: </Text>
+              <View style={styles.input}>
+                <Picker
+                  selectedValue={this.state.incomeType}
+                  style={styles.pickerItem}
+                  onValueChange={(itemValue, itemIndex) =>
+                    this.setState({ incomeType: itemValue })
+                  }>
+                  {this.state.incomeAccounts.map((item, index) => (
+                    <Picker.Item style={styles.pickerItem} label={item} value={item} key={index} />
+                  ))}
+                </Picker>
               </View>
-
-              {this.state.revenue.map((item, index) => (
-                <View key={index}>
-                  <Text>{item.name}:{item.q *-1}</Text>
-                  <TouchableOpacity style={styles.smallBtn} onPress={() => this.delete(index)}>
-                    <Text style={styles.text}>Delete</Text>
-                  </TouchableOpacity>
-                </View>
-              ))}
-              <View style={styles.box}>
-                <Text style={styles.text}>Credit: </Text>
-                <View style={styles.input}>
-                  <Picker
-                    selectedValue={this.state.revenueName}
-                    style={styles.pickerItem}
-                    onValueChange={(itemValue, itemIndex) =>
-                      this.setState({ revenueName: itemValue, revenueId: this.state.revenueAccounts[itemIndex]._id, revenuePrice: this.state.revenueAccounts[itemIndex].price })
-                    }>
-                    {this.state.revenueAccounts.map((item, index) => (
-                      <Picker.Item style={styles.pickerItem} label={item.name} value={item.name} key={index} />
-                    ))}
-                  </Picker>
-                </View>
+            </View>
+            
+            {this.state.revenue.map((item, index) => (
+              <View key={index} style ={{
+                width: 300,
+                flexDirection: 'row',
+                marginTop: 10,
+                justifyContent: "space-between",
+                borderWidth: 1,
+                padding: 10,
+                borderRadius: 4,
+              }}>
+                <Text>{item.name}:  {item.q *-1}</Text>
+                <TouchableOpacity style={styles.smallBtn} onPress={() => this.delete(index)}>
+                  <Text style={styles.text}>Delete</Text>
+                </TouchableOpacity>
               </View>
-              <View style={styles.box}>
-                <Text style={styles.text}>Jumlah(pcs): </Text>
+            ))}
+            <View style={styles.box}>
+              <Text style={styles.text}>Credit: </Text>
+              <View style={styles.input}>
+                <Picker
+                  selectedValue={this.state.revenueName}
+                  style={styles.pickerItem}
+                  onValueChange={(itemValue, itemIndex) =>
+                    this.setState({ revenueName: itemValue, revenueId: this.state.revenueAccounts[itemIndex]._id, revenuePrice: this.state.revenueAccounts[itemIndex].price })
+                  }>
+                  {this.state.revenueAccounts.map((item, index) => (
+                    <Picker.Item style={styles.pickerItem} label={item.name} value={item.name} key={index} />
+                  ))}
+                </Picker>
+              </View>
+            </View>
+            <View style={styles.box}>
+              <Text style={styles.text}>Jumlah(pcs): </Text>
+              <View style={{flexDirection: 'row'}}>
                 <TextInput
-                  style={styles.input}
-                  placeholder={"Jumlah"}
-                  placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+                  style={{
+                    width: width /2,
+                    height: 30,
+                    borderRadius: 60,
+                    paddingLeft: 20,
+                    backgroundColor: '#ccebff',
+                    marginRight: 10
+                  }}
+                  placeholder={"pcs.."}
+                  placeholderTextColor={'grey'}
                   value={this.state.revenueAmount}
                   onChangeText={(revenueAmount) => this.setState({ revenueAmount })}
                 />
-              </View>
-              <View style={styles.box}>
                 <TouchableOpacity style={styles.smallBtn} onPress={this.submitRevenue}>
-                  <Text style={styles.text}>Input</Text>
+                  <Text style={{color: '#484848', fontWeight: 'bold'}}>Input</Text>
                 </TouchableOpacity>
               </View>
-              <TouchableOpacity style={styles.btn} onPress={this.submit}>
-                <Text style={styles.text}>Submit</Text>
-              </TouchableOpacity>
-            </ScrollView>
+            </View>
+            <TouchableOpacity style={styles.btn} onPress={this.submit}>
+              <Text style={{color: 'white', fontWeight: 'bold'}}>Submit</Text>
+            </TouchableOpacity>
           </View>
-        </KeyboardAvoidingView>
-      </Gradient>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  containerGrey: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 14,
+    backgroundColor: '#e1e2e1',
+  },
+  containerWhite: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
-    fontFamily: 'serif',
     fontSize: 14,
-    width: width,
-    height: height
+    backgroundColor: 'white',
+    margin: 10,
+    borderRadius: 4
   },
   boxWrapper: {
     width: width,
@@ -219,33 +241,33 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   box: {
-    width: width * 0.95,
-    height: 30,
-    flexDirection: 'row',
-    margin: 5,
+    width: width * 0.85,
+    marginTop: 15,
     justifyContent: "space-between"
   },
   input: {
-    width: width * 0.7,
+    width: width * 0.8,
     height: 30,
     borderRadius: 60,
     paddingLeft: 20,
-    backgroundColor: 'azure'
+    backgroundColor: '#ccebff'
   },
   pickerItem: {
     marginTop: -10,
     marginLeft: -10
   },
   text: {
+    margin: 5
   },
   btn: {
-    width: width - 55,
+    width: width *0.8,
     height: 45,
     borderRadius: 25,
-    backgroundColor: '#3CB371',
+    backgroundColor: '#009efd',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 20,
+    marginBottom: 20,
     marginHorizontal: 25
   },
   smallBtn: {
@@ -255,7 +277,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'skyblue',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10,
-    marginHorizontal: 25
   },
 });
