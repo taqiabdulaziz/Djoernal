@@ -318,13 +318,17 @@ class Revenue extends React.Component {
               margin: 5
             }}>
               <View>
+                <Text style={{
+                  fontSize: 16,
+                  fontWeight: "bold"
+                }}>Debet</Text>
                 <Picker
                   selectedValue={this.state.expenseType}
                   onValueChange={(itemValue, itemIndex) =>
                     this.setState({ expenseType: itemValue })
                   }>
                   {this.state.expenseAccounts.map((item, index) => (
-                    <Picker.Item label={item} value={item} key={index} />
+                    <Picker.Item label={item} value={item} key={index} style={styles.input}/>
                   ))}
                 </Picker>
                 <View style={{
@@ -338,7 +342,7 @@ class Revenue extends React.Component {
                     }}
                     placeholder={"IDR"}
                     value={(this.state.expenseAmount == 0) ? 'IDR' : String(this.state.expenseAmount)}
-                    placeholderTextColor="black"
+                    placeholderTextColor="grey"
                     onChangeText={(expenseAmount) => this.setState({ expenseAmount })}
                   ></TextInput>
                 </View>
@@ -355,7 +359,7 @@ class Revenue extends React.Component {
                 <Text style={{
                   fontSize: 16,
                   fontWeight: "bold"
-                }}>Sumber Dana</Text>
+                }}>Credit</Text>
                 <Picker
                   selectedValue={this.state.source}
                   onValueChange={(itemValue, itemIndex) =>
@@ -376,7 +380,7 @@ class Revenue extends React.Component {
                     }}
                     placeholder={"IDR"}
                     value={this.state.sourceAmount}
-                    placeholderTextColor="black"
+                    placeholderTextColor="grey"
                     onChangeText={(sourceAmount) => this.setState({ sourceAmount, diff: (sourceAmount - this.state.expenseAmount) * -1 })}
                   />
                 </View>
@@ -675,11 +679,11 @@ const styles = StyleSheet.create({
     margin: 5
   },
   input: {
-    flex: 2.5,
+    width: width * 0.8,
     height: 30,
-    width: width,
-    borderWidth: 1,
-    paddingLeft: 10
+    borderRadius: 60,
+    paddingLeft: 20,
+    backgroundColor: '#ccebff'
   },
   text: {
 

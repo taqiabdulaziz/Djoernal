@@ -73,12 +73,14 @@ const TransactionList = createMaterialTopTabNavigator({
     navigationOptions: ({navigation}) => ({
       headerStyle: {
         backgroundColor: "#3CB371",
-        elevation: 0
+        elevation: 0,
+        color: 'white'
       },
       title: "Transactions",
       headerLeft: (
         <Icon name="md-menu" size={28} style={{
-          margin: 17
+          margin: 17,
+          color: 'white'
         }} onPress={() => navigation.openDrawer()} />
       )
     }),

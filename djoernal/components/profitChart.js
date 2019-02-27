@@ -64,6 +64,18 @@ export default class Profit extends Component {
     profit: 0
   }
 
+  formatMoney(n, c, d, t) {
+    var c = isNaN(c = Math.abs(c)) ? 2 : c,
+        d = d == undefined ? "." : d,
+        t = t == undefined ? "," : t,
+        s = n < 0 ? "-" : "",
+        i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))),
+        j = (j = i.length) > 3 ? j % 3 : 0;
+
+    let result = s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "")
+    return result
+  }
+
   render() {
     const chart_wh = 155
     const series = [this.state.expense,this.state.profit]
@@ -91,15 +103,18 @@ export default class Profit extends Component {
               />
             </View>
             <View style={{marginLeft: 10}}>
-              <Text style={{paddingLeft: 5, fontSize: 12, marginBottom: 8}}>Revenue: {this.state.revenue}</Text>
+              <Text style={{paddingLeft: 5, fontSize: 12}}>Revenue: </Text>
+              <Text style={{marginBottom: 8}}>Rp.{this.formatMoney(this.state.revenue)}</Text>
               <View style= {styles. box}>
                 <TouchableOpacity style={{backgroundColor: '#F44336', width: 10, height:10}}></TouchableOpacity>
-                <Text style={{paddingLeft: 5, fontSize: 12}}>Expense: {this.state.expense}</Text>
+                <Text style={{paddingLeft: 5, fontSize: 12}}>Expense:</Text>
               </View>
+              <Text>Rp. {this.formatMoney(this.state.expense)}</Text>
               <View style= {styles. box}>
                 <TouchableOpacity style={{backgroundColor: '#2196F3', width: 10, height:10}}></TouchableOpacity>
-                <Text style={{paddingLeft: 5, fontSize: 12}}>Profit: {this.state.profit}</Text>
+                <Text style={{paddingLeft: 5, fontSize: 12}}>Profit: </Text>
               </View>
+              <Text>Rp.{this.formatMoney(this.state.profit)}</Text>
             </View>
           </View>
           
