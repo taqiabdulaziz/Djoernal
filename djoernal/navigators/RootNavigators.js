@@ -7,7 +7,7 @@ import {
   DrawerItems
 } from 'react-navigation'
 import React from 'react'
-import { View, SafeAreaView, Button} from 'react-native'
+import { View, SafeAreaView, Button } from 'react-native'
 
 
 //screens
@@ -29,19 +29,31 @@ const HomeNav = createStackNavigator({
   Home: {
     screen: Home
   },
-})
+}, {
+    defaultNavigationOptions: {
+      headerTintColor: '#fff',
+    }
+  })
 
 const RevenueNav = createStackNavigator({
   Revenue: {
     screen: Revenue
   },
-})
+}, {
+    defaultNavigationOptions: {
+      headerTintColor: '#fff',
+    }
+  })
 
 const ExpenseNav = createStackNavigator({
   Expense: {
     screen: Expense
   }
-})
+}, {
+    defaultNavigationOptions: {
+      headerTintColor: '#fff',
+    }
+  })
 
 const TransactionList = createMaterialTopTabNavigator({
   Pendapatan: {
@@ -56,7 +68,8 @@ const TransactionList = createMaterialTopTabNavigator({
         backgroundColor: "#3CB371",
         elevation: 0
       },
-      title: "Transactions"
+    title: "Transactions",
+    headerTintColor: '#fff',
     },
     tabBarOptions: {
       style: {
@@ -88,11 +101,19 @@ const ProductNav = createStackNavigator({
   Product: {
     screen: Product
   }
+}, {
+    defaultNavigationOptions: {
+      headerTintColor: '#fff',
+  }
 })
 
 const BalanceSheetNav = createStackNavigator({
   BalanceSheet: {
     screen: BalanceSheet
+  }
+}, {
+    defaultNavigationOptions: {
+      headerTintColor: '#fff',
   }
 })
 
@@ -122,15 +143,15 @@ const DrawerNavigator = createDrawerNavigator({
     screen: ProductNav
   },
 }, {
-  contentComponent:(props) => (
-    <View style={{flex:1}}>
-      <SafeAreaView forceInset={{ top: 'never', horizontal: 'never' }}>
-        <DrawerItems {...props} />
-        <Button title="Logout" onPress={() => props.navigation.navigate('Signin')}/>
-      </SafeAreaView>
-    </View>
-),
-})
+    contentComponent: (props) => (
+      <View style={{ flex: 1 }}>
+        <SafeAreaView forceInset={{ top: 'never', horizontal: 'never' }}>
+          <DrawerItems {...props} />
+          <Button title="Logout" onPress={() => props.navigation.navigate('Signin')} />
+        </SafeAreaView>
+      </View>
+    ),
+  })
 
 const rootNav = createSwitchNavigator({
   MainNavigation: {

@@ -24,7 +24,7 @@ const { width, height } = Dimensions.get('window')
 
 export default class Transaction extends React.Component {
   static navigationOptions = {
-    title: 'Transaksi Penjualan'
+    title: 'Penjualan'
   }
 
   async componentDidMount() {

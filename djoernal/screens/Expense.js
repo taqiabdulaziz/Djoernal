@@ -39,15 +39,19 @@ class Revenue extends React.Component {
       title: 'Expense',
       headerStyle: {
         elevation: 2,
-        backgroundColor: "#3CB371"
+        backgroundColor: "#3CB371",
+        titleStyle: {
+          color: "white"
+        }
       },
       headerLeft: (
         <Ionicons name="md-menu" size={28} style={{
           paddingLeft: 17,
           paddingTop: 17,
-          paddingBottom: 17
+          paddingBottom: 17,
+          color: "white"
         }} onPress={() => props.navigation.openDrawer()}></Ionicons>
-      )
+      ),
     }
   }
 
