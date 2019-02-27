@@ -66,7 +66,7 @@ class Home extends React.Component {
                                 source={{uri: 'https://cdn4.iconfinder.com/data/icons/pretty_office_3/256/packing.png'}}
                             />
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('BalanceSheet')} style={{width: 115, height: 115,borderWidth:1}}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('BalanceSheet')} style={{width: 110, height: 110,borderWidth:1}}>
                             <Image
                                 style={{width: 110, height: 110}}
                                 source={{uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM6oRtq0Mvr4zPKsfn_0TQ8YVZU1OQhbQUdhgEd8G9Egr0Chrrow'}}
