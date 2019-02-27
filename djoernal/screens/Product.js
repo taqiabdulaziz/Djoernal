@@ -393,6 +393,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 10,
+    margin: 10
   },
   input: {
     width: width * 0.7,
