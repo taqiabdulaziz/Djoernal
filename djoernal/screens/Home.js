@@ -12,8 +12,8 @@ import {
 import Gradient from 'react-native-css-gradient'
 import { Ionicons as Icon } from '@expo/vector-icons'
 import Profit from '../components/profitChart'
-const {gradient} = require ('../helpers/helpers')
-const {width, height} = Dimensions.get('window')
+const { gradient } = require('../helpers/helpers')
+const { width, height } = Dimensions.get('window')
 
 class Home extends React.Component {
     static navigationOptions(props) {
@@ -25,7 +25,10 @@ class Home extends React.Component {
             },
             headerLeft: (
                 <Icon name="md-menu" size={28} style={{
-                    margin: 17
+                    paddingLeft: 17,
+                    paddingTop: 17,
+                    paddingBottom: 17,
+                    color: "white"
                 }} onPress={() => props.navigation.openDrawer()}></Icon>
             )
         }
@@ -34,13 +37,13 @@ class Home extends React.Component {
         return (
             <Gradient gradient={gradient} style={{ width: width, height: height }}>
                 <View style={styles.container}>
-                <ScrollView>
-                    <Image
-                        style={{ width: width, height: 235 }}
-                        source={{ uri: 'http://www.stickpng.com/assets/images/58aff217829958a978a4a6d2.png' }}
-                    />
-                    <Profit/>
-                </ScrollView>
+                    <ScrollView>
+                        <Image
+                            style={{ width: width, height: 235 }}
+                            source={{ uri: 'http://www.stickpng.com/assets/images/58aff217829958a978a4a6d2.png' }}
+                        />
+                        <Profit />
+                    </ScrollView>
                 </View>
             </Gradient>
         )

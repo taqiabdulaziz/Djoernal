@@ -32,7 +32,8 @@ export default class Revenue extends React.Component {
       },
       headerLeft: (
         <Icon name="md-menu" size={28} style={{
-          margin: 17
+          margin: 17,
+          color: "white"
         }} onPress={() => props.navigation.openDrawer()}></Icon>
       )
     }

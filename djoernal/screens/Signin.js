@@ -74,6 +74,7 @@ class Signin extends Component {
       await AsyncStorage.setItem("token", data.token)
       await AsyncStorage.setItem("id", data._id)
       await AsyncStorage.setItem("kas", String(data.kas))
+      await AsyncStorage.setItem("company",data.company)
 
       this.props.navigation.navigate("MainNavigation")
     } catch (error) {
@@ -134,7 +135,7 @@ class Signin extends Component {
   }
 
   componentDidMount() {
-    this.signin()
+    // this.signin()
   }
 
 }

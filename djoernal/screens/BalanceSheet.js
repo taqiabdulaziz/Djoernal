@@ -5,8 +5,10 @@ import {
     Text,
     StyleSheet,
     AsyncStorage,
-    Button
+    Button,
+    Linking
 } from 'react-native'
+import { FileSystem } from 'expo';
 import axios from 'axios'
 import { ScrollView } from 'react-native-gesture-handler';
 import { ref } from '../config/firebase'
@@ -102,112 +104,162 @@ class BalanceSheet extends React.Component {
         }
     }
 
+    generateCsv = async () => {
+
+        let json = {
+            ASET: {
+                kas: this.state.kas,
+                piutang: this.state.piutang,
+                product: this.state.product
+            },
+            LIABILITAS: {
+                utang: this.state.hutang
+            },
+            EKUITAS: {
+                modal: (this.state.totalAset - this.state.totalLiabilitas)
+            }
+        }
+
+        const rows = []
+        let companyName = await AsyncStorage.getItem("company")
+        rows.push([`Neraca ${companyName} per 1 feb - 31 maret`])
+
+        for (const key in json) {
+            let arr = [key]
+            rows.push(arr)
+            arr = []
+            let total = 0
+            for (const key2 in json[key]) {
+                arr.push(key2)
+                arr.push(`Rp. ${json[key][key2]}`)
+                rows.push(arr)
+                total += Number(json[key][key2])
+                arr = []
+            }
+            rows.push(["---------", `Rp. ${total}`])
+            total = 0
+            // rows.push(arr)
+            arr = []
+        }
+
+        const name = await AsyncStorage.getItem("id")
+
+
+        let { data } = await axios.post(`${baseUrl}/users/buffer`, {
+            buffer: rows,
+            name: `${name}.csv`
+        })
+
+        // FileSystem.downloadAsync(`${baseUrl}/${name}.csv`, FileSystem.documentDirectory + `${name}.csv`)
+        //     .then((result) => {
+        //         console.log(`berhasillll`);
+        //         console.log(result);
+
+        //     }).catch((err) => {
+        //         console.log(err);
+
+        //     });
+
+        Linking.openURL(`${baseUrl}/${name}.csv`)
+
+    }
+
     render() {
         const { kas, piutang, product, productList, hutang } = this.state
         return (
             <View>
-                <ScrollView>
-                    <View style={styles.accountWrapper}>
-                        <Text style={styles.accountTitle}>Aset</Text>
-                        <View style={{
-                            flexDirection: "row",
-                            justifyContent: "space-between"
-                        }}>
-                            <Text style={styles.accountTitle2}>Total Aset</Text>
-                            <Text style={styles.accountTitle2}>{this.formatMoney(this.state.totalAset)}</Text>
-                        </View>
-                        {
-                            Object.keys(this.state).map((key) => {
-                                if (
-                                    key == "kas" ||
-                                    key == "piutang" ||
-                                    key == "product") {
-                                    let string = key
-                                    let amount = this.state[key]
-                                    if (amount > 0) {
-                                        return (
-                                            <View style={styles.account}>
-                                                <Text style={styles.accountTitle}>{string.charAt(0).toUpperCase() + string.slice(1)}</Text>
-                                                <Text style={styles.accountTitle}>{this.formatMoney(amount)}</Text>
-                                            </View>
-                                        )
-                                    }
-                                }
-                            })
-                        }
-                    </View>
+
+                <View style={styles.accountWrapper}>
+                    <Text style={styles.accountTitle}>Aset</Text>
                     <View style={{
-                        width: "100%",
-                        borderWidth: 0.25,
-                        borderColor: "black"
+                        flexDirection: "row",
+                        justifyContent: "space-between"
                     }}>
+                        <Text style={styles.accountTitle2}>Total Aset</Text>
+                        <Text style={styles.accountTitle2}>{this.formatMoney(this.state.totalAset)}</Text>
                     </View>
-                    <View style={styles.accountWrapper}>
-                        <Text style={styles.accountTitle}>Liabilitas</Text>
-                        <View style={{
-                            flexDirection: "row",
-                            justifyContent: "space-between"
-                        }}>
-                            <Text style={styles.accountTitle2}>Total Liabilitas</Text>
-                            <Text style={styles.accountTitle2}>{this.state.totalLiabilitas}</Text>
-                        </View>
-                        {
-                            this.state.hutang > 0 &&
-                            (
-                                <View style={styles.account}>
-                                    <Text style={styles.accountTitle}>Utang</Text>
-                                    <Text style={styles.accountTitle}>{this.state.hutang}</Text>
-                                </View>
-                            )
-                        }
+                    {
+                        Object.keys(this.state).map((key) => {
+                            if (
+                                key == "kas" ||
+                                key == "piutang" ||
+                                key == "product") {
+                                let string = key
+                                let amount = this.state[key]
+                                if (amount > 0) {
+                                    return (
+                                        <View style={styles.account}>
+                                            <Text style={styles.accountTitle}>{string.charAt(0).toUpperCase() + string.slice(1)}</Text>
+                                            <Text style={styles.accountTitle}>{this.formatMoney(amount)}</Text>
+                                        </View>
+                                    )
+                                }
+                            }
+                        })
+                    }
+                </View>
+                <View style={{
+                    width: "100%",
+                    borderWidth: 0.25,
+                    borderColor: "black"
+                }}>
+                </View>
+                <View style={styles.accountWrapper}>
+                    <Text style={styles.accountTitle}>Liabilitas</Text>
+                    <View style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between"
+                    }}>
+                        <Text style={styles.accountTitle2}>Total Liabilitas</Text>
+                        <Text style={styles.accountTitle2}>{this.state.totalLiabilitas}</Text>
+                    </View>
+                    {
+                        this.state.hutang > 0 &&
+                        (
+                            <View style={styles.account}>
+                                <Text style={styles.accountTitle}>Utang</Text>
+                                <Text style={styles.accountTitle}>{this.state.hutang}</Text>
+                            </View>
+                        )
+                    }
 
+                </View>
+                <View style={styles.accountWrapper}>
+                    <Text style={styles.accountTitle}>Ekutas</Text>
+                    <View style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between"
+                    }}>
+                        <Text style={styles.accountTitle2}>Total Ekuitas</Text>
+                        <Text style={styles.accountTitle2}>{this.formatMoney((this.state.totalAset - this.state.totalLiabilitas))}</Text>
                     </View>
-                    <View style={styles.accountWrapper}>
-                        <Text style={styles.accountTitle}>Ekutas</Text>
-                        <View style={{
-                            flexDirection: "row",
-                            justifyContent: "space-between"
-                        }}>
-                            <Text style={styles.accountTitle2}>Total Ekuitas</Text>
-                            <Text style={styles.accountTitle2}>{this.formatMoney((this.state.totalAset - this.state.totalLiabilitas))}</Text>
-                        </View>
 
+                </View>
+                <View style={{
+                    width: "100%",
+                    borderWidth: 0.25,
+                    borderColor: "black"
+                }}>
+                </View>
+
+                <View style={styles.accountWrapper}>
+                    <View style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between"
+                    }}>
+                        <Text style={styles.accountTitle2}>Total Liabilitas + Ekuitas</Text>
+                        <Text style={styles.accountTitle2}>{this.formatMoney((this.state.totalAset - this.state.totalLiabilitas + this.state.totalLiabilitas))}</Text>
                     </View>
-                    <Button title="COBA" onPress={() => this.generateCsv()}></Button>
-                </ScrollView>
+
+                </View>
+
+                <View style={{justifyContent: "center", alignItems: "center"}}>
+                    <View style={{ width: "50%" }}>
+                        <Button title="Import Data" onPress={() => this.generateCsv()}></Button>
+                    </View>
+                </View>
             </View>
         )
-    }
-
-    generateCsv() {
-        console.log('generate csv');
-
-        const rows = [
-            ["name1", "city1", "some other info"],
-            ["name2", "city2", "more info"]
-        ]
-
-        var csvContent = "dimitri"
-
-        // rows.forEach(function (rowArray) {
-        //     let row = rowArray.join(",");
-        //     csvContent += row + "\r\n";
-        // });
-
-        const metadata = {
-            contentType: 'text/csv'
-        }
-
-        ref.child('ayomanis.csv').putString(csvContent, 'raw', { contentType: 'text/csv' })
-            .then(data => {
-                console.log('data')
-            })
-            .catch(err => {
-                console.log(err)
-            })
-
-
-
     }
 
     formatMoney(n, c, d, t) {
@@ -218,7 +270,8 @@ class BalanceSheet extends React.Component {
             i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))),
             j = (j = i.length) > 3 ? j % 3 : 0;
 
-        return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+        let result = s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "")
+        return result
     }
 }
 
