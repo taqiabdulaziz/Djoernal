@@ -1,11 +1,10 @@
 import { ImagePicker, Permissions } from 'expo'
 import uuid from 'uuid'
-import Compressor from 'compressorjs'
 import { ref } from '../config/firebase'
 
 module.exports = {
     baseUrl: "http://35.187.225.61",
-    gradient: `linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%)`,
+    gradient: `linear-gradient(to top, #0ba360 0%, #3cba92 100%)`,
     imagePick: async () => {
       try {
         let result = await ImagePicker.launchImageLibraryAsync()
