@@ -107,13 +107,17 @@ class Revenue extends React.Component {
 
   deleteItem = async (itemIndex) => {
     let newItemList = []
+    let expenseNow = this.state.expenseAmount
     this.state.itemList.forEach((item, index) => {
       if (index != itemIndex) {
         newItemList.push(item)
+      } else {
+        expenseNow -= item.nominal
       }
     })
     await this.setState({
-      itemList: newItemList
+      itemList: newItemList,
+      expenseAmount: expenseNow
     })
 
   }
@@ -286,8 +290,10 @@ class Revenue extends React.Component {
   }
 
   addItem = async () => {
-    const { itemName, itemAmount, itemList } = this.state
+    const { itemName, itemAmount, itemList, expenseAmount } = this.state
+    let expenseNow = (expenseAmount + Number(itemAmount))
     await this.setState({
+      expenseAmount: expenseNow,
       itemList: itemList.concat({
         name: itemName,
         nominal: Number(itemAmount)
@@ -331,7 +337,7 @@ class Revenue extends React.Component {
                       padding: 8,
                     }}
                     placeholder={"IDR"}
-                    value={this.state.expenseAmount}
+                    value={(this.state.expenseAmount == 0) ? 'IDR' : String(this.state.expenseAmount)}
                     placeholderTextColor="black"
                     onChangeText={(expenseAmount) => this.setState({ expenseAmount })}
                   ></TextInput>
@@ -544,6 +550,9 @@ class Revenue extends React.Component {
           style={{
             height: 200,
           }}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+          }}
           visible={this.state.modalVisibleItem}
         >
           <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "rgba(0, 0, 0, 0.61)" }}>
@@ -593,6 +602,9 @@ class Revenue extends React.Component {
             height: 200,
           }}
           visible={this.state.modalVisibleSubmit}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+          }}
         >
           <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "rgba(0, 0, 0, 0.61)" }}>
             <View style={{
@@ -618,6 +630,9 @@ class Revenue extends React.Component {
             height: 200,
           }}
           visible={this.state.modalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+          }}
         >
           <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "rgba(0, 0, 0, 0.61)" }}>
             <View style={{

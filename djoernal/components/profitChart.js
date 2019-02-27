@@ -91,7 +91,7 @@ export default class Profit extends Component {
               />
             </View>
             <View style={{marginLeft: 10}}>
-              <Text style={{paddingLeft: 10, fontSize: 12, marginBottom: 8}}>Revenue: {this.state.revenue}</Text>
+              <Text style={{paddingLeft: 5, fontSize: 12, marginBottom: 8}}>Revenue: {this.state.revenue}</Text>
               <View style= {styles. box}>
                 <TouchableOpacity style={{backgroundColor: '#F44336', width: 10, height:10}}></TouchableOpacity>
                 <Text style={{paddingLeft: 5, fontSize: 12}}>Expense: {this.state.expense}</Text>

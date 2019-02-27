@@ -8,7 +8,14 @@ import {
   withNavigation
 } from 'react-navigation'
 import React from 'react'
-import { View, SafeAreaView, Button, Text, TouchableOpacity } from 'react-native'
+import { 
+  View, 
+  SafeAreaView, 
+  Button, 
+  TouchableOpacity,
+  Text,
+} from 'react-native'
+import { Ionicons as Icon } from '@expo/vector-icons'
 
 //screens
 import Register from '../screens/Register'
@@ -151,7 +158,10 @@ const DrawerNavigator = createDrawerNavigator({
     <View style={{flex:1, backgroundColor: '#e1e2e1'}}>
       <SafeAreaView forceInset={{ top: 'never', horizontal: 'never' }}>
         <DrawerItems {...props} />
-        <Button title="Logout" onPress={() => props.navigation.navigate('Signin')}/>
+        {/* <Button title="Logout" onPress={() => props.navigation.navigate('Signin')}/> */}
+        <TouchableOpacity style={{width: 220, height: 40, backgroundColor:'#009efd', marginLeft: 30, borderRadius:20, justifyContent: 'center', alignItems: 'center'}} onPress={() => props.navigation.navigate('Signin')}>
+          <Text style={{color: 'white', fontWeight: 'bold'}}>Logout</Text>
+        </TouchableOpacity>
       </SafeAreaView>
     </View>
 ),

@@ -6,7 +6,8 @@ import {
     StyleSheet,
     AsyncStorage,
     Button,
-    Linking
+    Linking,
+    Dimensions
 } from 'react-native'
 import { FileSystem } from 'expo';
 import axios from 'axios'

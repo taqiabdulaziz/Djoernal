@@ -49,7 +49,7 @@ export default Home
 const styles = StyleSheet.create({
     containerGrey: {
         width: width,
-        height: height,
+        height: height * 0.87,
         alignItems: 'center',
         justifyContent: 'flex-start',
         backgroundColor: '#e1e2e1',

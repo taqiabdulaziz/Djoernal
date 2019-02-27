@@ -32,7 +32,7 @@ class MyOther extends React.Component {
   render() {
     const { transactionData } = this.props
     return (
-      <View style={{margin: 8}}>
+      <View style={{padding: 8, height:'100%', backgroundColor: '#e1e2e1'}}>
         <Button title="Sync Data" onPress={this.sync}></Button>
         <FlatList
           data={ transactionData.otherTransactionList }

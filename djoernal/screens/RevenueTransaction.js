@@ -79,7 +79,7 @@ export default class Transaction extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.containerGrey}>
         <ScrollView>
           {/* <Text>{JSON.stringify(this.state.list)}</Text> */}
           <Modal
@@ -96,13 +96,13 @@ export default class Transaction extends React.Component {
             justifyContent: 'center',
             padding: 10,
           }}>
-            <Gradient gradient='linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%)' style={{width: width*0.9, height: height/2, borderRadius: 60}}>
+            <Gradient gradient='linear-gradient(to right, #868f96 0%, #596164 100%)' style={{width: width*0.9, height: height/2, borderRadius: 60}}>
             <TouchableHighlight
               style={styles.smallBtn}
               onPress={() => {
                 this.setModalVisible(!this.state.modalVisible);
               }}>
-              <Text>X</Text>
+              <Text style={{color: 'white', fontWeight: 'bold'}}>X</Text>
             </TouchableHighlight>
             <Text></Text>
             <Text style={{padding: 10}}>HPP: </Text>
@@ -118,23 +118,40 @@ export default class Transaction extends React.Component {
           </View>
           </Modal>
         
-          <TouchableOpacity onPress={this.syncData} style={styles.btn}>
-            <Text style={{color: 'white', fontWeight: 'bold'}}>Sync Data</Text>
+          <TouchableOpacity onPress={this.syncData} style={{
+            width: width *0.95,
+            height: 36,
+            backgroundColor: "#009efd",
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 8,
+            marginLeft: 6,
+            borderRadius: 4,
+          }}>
+            <Text style={{color: 'white', fontWeight: 'bold'}}>SYNC DATA</Text>
           </TouchableOpacity>
           {this.state.list.map((item, index )=> (
-            <View key ={index} style={{backgroundColor: 'white', borderRadius: 20, width: width*0.8, alignItems:'flex-start', justifyContent: 'center', margin: 20}}>
-              <Text style={{paddingLeft:20}}>{item.debit.accountType}:{item.debit.nominal}</Text>
-              <Text style={{paddingLeft:50}}>Penjualan:{item.debit.nominal}</Text>
-              <TouchableOpacity
-                onPress={() => {
-                  this.setState({ selectedItem: item.kredit });
-                  this.setModalVisible(!this.state.modalVisible);
-                }}
-                style={styles.btn}
-              >
-              <Text style={{color: 'white', fontWeight: 'bold'}}>Detail</Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity 
+              key ={index} 
+              onPress={() => {
+                this.setState({ selectedItem: item.kredit });
+                this.setModalVisible(!this.state.modalVisible);
+              }}
+              style={{
+                backgroundColor: 'white', 
+                borderRadius: 4, 
+                width: width*0.9, 
+                alignItems:'flex-start', 
+                justifyContent: 'flex-start', 
+                marginTop: 10,
+                marginLeft: 15
+            }}>
+              <View style={{flexDirection:'row'}}>
+                <Text style={{paddingTop:10, paddingLeft:10}}>Rp. {item.debit.nominal}</Text>
+                <Text style={{marginLeft: 168, marginTop:7, color:'green'}}>{item.debit.accountType}</Text>
+              </View>
+              <Text style={{paddingLeft:10, paddingBottom:10}}>Penjualan</Text>
+            </TouchableOpacity>
           ))}
         </ScrollView>
       </View>
@@ -143,12 +160,21 @@ export default class Transaction extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  containerGrey: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 14,
+    backgroundColor: '#e1e2e1',
+  },
+  containerWhite: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
     fontSize: 14,
-    width: width,
-    height: height * 0.8
+    backgroundColor: 'white',
+    margin: 10,
+    borderRadius: 4
   },
   boxWrapper: {
     width: width,
