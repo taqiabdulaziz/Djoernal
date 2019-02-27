@@ -31,7 +31,7 @@ export default class otherTransactionList extends Component {
             elevation: 2,
             borderRadius: 4,
             padding: 10,
-            flexDirection: "row"
+            flexDirection: "row",
           }}>
             <View style={{
               flex: 1
@@ -125,7 +125,8 @@ export default class otherTransactionList extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 8
+    padding: 8,
+    elevation: 2,
   },
   image: {
     width: 50,

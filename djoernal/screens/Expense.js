@@ -180,7 +180,9 @@ class Revenue extends React.Component {
           receipt: '',
           itemName: '',
           itemAmount: '',
-          diff: 0
+          diff: 0,
+          receipt: '',
+          receiptUrl: null
         })
         this.props.navigation.navigate('Expense')
       } catch (error) {
@@ -341,7 +343,6 @@ class Revenue extends React.Component {
                       padding: 8,
                     }}
                     placeholder={"IDR"}
-                    value={(this.state.expenseAmount == 0) ? 'IDR' : String(this.state.expenseAmount)}
                     placeholderTextColor="grey"
                     onChangeText={(expenseAmount) => this.setState({ expenseAmount })}
                   ></TextInput>
@@ -379,7 +380,6 @@ class Revenue extends React.Component {
                       padding: 8
                     }}
                     placeholder={"IDR"}
-                    value={this.state.sourceAmount}
                     placeholderTextColor="grey"
                     onChangeText={(sourceAmount) => this.setState({ sourceAmount, diff: (sourceAmount - this.state.expenseAmount) * -1 })}
                   />
