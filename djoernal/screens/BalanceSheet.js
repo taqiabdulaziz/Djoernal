@@ -11,6 +11,7 @@ import {
 } from 'react-native'
 import { FileSystem } from 'expo';
 import axios from 'axios'
+import {Ionicons} from '@expo/vector-icons'
 import { ScrollView } from 'react-native-gesture-handler';
 import { ref } from '../config/firebase'
 
@@ -43,13 +44,21 @@ class BalanceSheet extends React.Component {
         totalEkuitas: 0
     }
 
-    static navigationOptions = () => {
+    static navigationOptions = (props) => {
         return {
             title: "Balance Sheet",
             headerStyle: {
                 elevation: 2,
                 backgroundColor: "#3CB371"
             },
+            headerLeft: (
+                <Ionicons name="md-menu" size={28} style={{
+                  paddingLeft: 17,
+                  paddingTop: 17,
+                  paddingBottom: 17,
+                  color: "white"
+                }} onPress={() => props.navigation.openDrawer()}></Ionicons>
+              ),
         }
     }
 
