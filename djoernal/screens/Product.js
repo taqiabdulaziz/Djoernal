@@ -83,6 +83,18 @@ class Product extends React.Component {
     hpp: 0,
     modalVisible: false,
   }
+  
+  formatMoney(n, c, d, t) {
+    var c = isNaN(c = Math.abs(c)) ? 2 : c,
+        d = d == undefined ? "." : d,
+        t = t == undefined ? "," : t,
+        s = n < 0 ? "-" : "",
+        i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))),
+        j = (j = i.length) > 3 ? j % 3 : 0;
+
+    let result = s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "")
+    return result
+  }
 
   setModalVisible(visible) {
     this.setState({ modalVisible: visible });
@@ -306,8 +318,8 @@ class Product extends React.Component {
                 <View key={index} style={styles.card}>
                   <Text style={{ fontSize: 15, fontWeight: 'bold', textDecorationLine: 'underline' }}>{item.name}</Text>
                   <Text>Stock: {item.stock}</Text>
-                  <Text>Price: {item.price}</Text>
-                  <Text>HPP: {item.hpp}</Text>
+                  <Text>Price: {this.formatMoney(item.price)}</Text>
+                  <Text>HPP: {this.formatMoney(item.hpp)}</Text>
                   <View style={styles.box}>
                     <TouchableOpacity
                       onPress={() => {
