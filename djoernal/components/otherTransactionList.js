@@ -7,7 +7,7 @@ import {
   TouchableNativeFeedback,
   ActivityIndicator,
   Modal,
-  Button
+  Button,
 } from 'react-native'
 
 export default class otherTransactionList extends Component {
@@ -65,21 +65,47 @@ export default class otherTransactionList extends Component {
                 height: 200,
               }}
               visible={this.state.modalVisibility}
+              onRequestClose={() => console.log(`closed`)}
             >
               <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "rgba(0, 0, 0, 0.61)" }}>
                 <View style={{
                   backgroundColor: "white",
                   width: "80%",
-                  height: "40%",
                   borderRadius: 20,
-                  justifyContent: "center",
-                  alignItems: "center"
+                  padding: 10
                 }}>
-                  <ActivityIndicator></ActivityIndicator>
-                  <Text>{this.state.modalText}</Text>
+                  <View style={{ marginBottom: 10 }}>
+                    <Text style={{ fontSize: 17, fontWeight: "bold" }}>Items:</Text>
+                    {
+                      items.map((data, index) => {
+                        return (
+                          <View key={index} style={{justifyContent: "space-between", flexDirection: "row"}}>
+                            <Text>- {data.name}</Text>
+                            <Text>Rp. {data.nominal}</Text>
+                          </View>
+                        )
+                      })
+                    }
+                  </View>
+                  <View style={{ marginBottom: 10 }}>
+                    <Text style={{ fontSize: 17, fontWeight: "bold" }}>Total:</Text>
+                    <Text>Rp. {debit.nominal}</Text>
+                  </View>
+                  <View style={{ marginBottom: 10 }}>
+                    <Text style={{fontSize: 17, fontWeight: "bold"}}>Tanggal:</Text>
+                    <Text>{date}</Text>
+                  </View>
+
+                  <View style={{ marginBottom: 10 }}>
+                    <Image
+                      source={{ uri: receipt }}
+                      style={{ width: 250, height: 300 }} />
+                  </View>
+                  <View style={{justifyContent: "center", alignItems: "center"}}>
                   <Button title="close" onPress={() => this.setState({
                     modalVisibility: false
                   })}></Button>
+                  </View>
                 </View>
               </View>
             </Modal>
@@ -91,7 +117,10 @@ export default class otherTransactionList extends Component {
 
   componentDidMount = () => {
     console.log(this.props)
+    console.log(`test`);
+
   }
+
 }
 
 const styles = StyleSheet.create({

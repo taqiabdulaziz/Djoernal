@@ -11,12 +11,12 @@ import {
 } from 'react-native'
 import { FileSystem } from 'expo';
 import axios from 'axios'
-import {Ionicons} from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons'
 import { ScrollView } from 'react-native-gesture-handler';
 import { ref } from '../config/firebase'
 
 const { baseUrl, gradient } = require('../helpers/helpers')
-const {width, height} = Dimensions.get('window')
+const { width, height } = Dimensions.get('window')
 
 class BalanceSheet extends React.Component {
     static navigationOptions(props) {
@@ -24,7 +24,10 @@ class BalanceSheet extends React.Component {
             title: 'Balance Sheet',
             headerStyle: {
                 elevation: 0,
-                backgroundColor: "#3CB371"
+                backgroundColor: "#3CB371",
+                titleStyle: {
+                    color: "white"
+                }
             },
             headerLeft: (
                 <Icon name="md-menu" size={28} style={{
@@ -53,12 +56,12 @@ class BalanceSheet extends React.Component {
             },
             headerLeft: (
                 <Ionicons name="md-menu" size={28} style={{
-                  paddingLeft: 17,
-                  paddingTop: 17,
-                  paddingBottom: 17,
-                  color: "white"
+                    paddingLeft: 17,
+                    paddingTop: 17,
+                    paddingBottom: 17,
+                    color: "white"
                 }} onPress={() => props.navigation.openDrawer()}></Ionicons>
-              ),
+            ),
         }
     }
 
@@ -278,7 +281,7 @@ class BalanceSheet extends React.Component {
 
                 </View>
 
-                <View style={{justifyContent: "center", alignItems: "center"}}>
+                <View style={{ justifyContent: "center", alignItems: "center" }}>
                     <View style={{ width: "50%" }}>
                         <Button title="Import Data" onPress={() => this.generateCsv()}></Button>
                     </View>
