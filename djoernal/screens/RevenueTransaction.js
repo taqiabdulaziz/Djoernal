@@ -46,6 +46,19 @@ export default class Transaction extends React.Component {
       console.log(err.message)
     }
   }
+
+  formatMoney(n, c, d, t) {
+    var c = isNaN(c = Math.abs(c)) ? 2 : c,
+        d = d == undefined ? "." : d,
+        t = t == undefined ? "," : t,
+        s = n < 0 ? "-" : "",
+        i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))),
+        j = (j = i.length) > 3 ? j % 3 : 0;
+
+    let result = s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "")
+    return result
+  }
+
   syncData = async () => {
     try {
       let { data } = await axios.get(`${baseUrl}/users`, {
@@ -96,7 +109,13 @@ export default class Transaction extends React.Component {
             justifyContent: 'center',
             padding: 10,
           }}>
-            <Gradient gradient='linear-gradient(to right, #868f96 0%, #596164 100%)' style={{width: width*0.9, height: height/2, borderRadius: 60}}>
+            <Gradient gradient='linear-gradient(to right, #868f96 0%, #596164 100%)' style={{
+              width: width*0.9, 
+              height: height/2, 
+              borderRadius: 20, 
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+            }}>
             <TouchableHighlight
               style={styles.smallBtn}
               onPress={() => {
@@ -105,14 +124,11 @@ export default class Transaction extends React.Component {
               <Text style={{color: 'white', fontWeight: 'bold'}}>X</Text>
             </TouchableHighlight>
             <Text></Text>
-            <Text style={{padding: 10}}>HPP: </Text>
+            <Text>HPP: </Text>
               {this.state.selectedItem.map((element, i) => {                  
-                return (<View key={i} style={{
-                  alignItems: 'flex-start',
-                  justifyContent: 'flex-start',
-                }}>
-                  <Text style={{padding: 20}} >{element.product.name} ({element.q*-1}pcs):{element.product.hpp * (element.q*-1)}</Text>
-                </View>)
+                return (                
+                  <Text style={{padding: 10}} key={i}>{element.product.name} ({element.q*-1}pcs): {this.formatMoney(element.product.hpp * (element.q*-1))}</Text>
+                )
               })}
             </Gradient>
           </View>
@@ -147,7 +163,7 @@ export default class Transaction extends React.Component {
                 marginLeft: 15
             }}>
               <View style={{flexDirection:'row'}}>
-                <Text style={{paddingTop:10, paddingLeft:10}}>Rp. {item.debit.nominal}</Text>
+                <Text style={{paddingTop:10, paddingLeft:10}}>Rp. {this.formatMoney(item.debit.nominal)}</Text>
                 <Text style={{marginLeft: 168, marginTop:7, color:'green'}}>{item.debit.accountType}</Text>
               </View>
               <Text style={{paddingLeft:10, paddingBottom:10}}>Penjualan</Text>
@@ -211,13 +227,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 25
   },
   smallBtn: {
-    width: width / 4,
+    width: width / 6,
     height: 30,
     borderRadius: 25,
-    backgroundColor: 'skyblue',
+    backgroundColor: '#009efd',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10,
-    marginHorizontal: 25
+    marginTop: 20,
+    marginLeft: width *0.7
   },
 });
