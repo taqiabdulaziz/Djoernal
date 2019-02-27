@@ -4,11 +4,12 @@ import {
   createDrawerNavigator,
   createStackNavigator,
   createMaterialTopTabNavigator,
-  DrawerItems
+  DrawerItems,
+  withNavigation
 } from 'react-navigation'
 import React from 'react'
 import { View, SafeAreaView, Button} from 'react-native'
-
+import { Ionicons as Icon } from '@expo/vector-icons'
 
 //screens
 import Register from '../screens/Register'
@@ -51,13 +52,18 @@ const TransactionList = createMaterialTopTabNavigator({
     screen: OtherTransaction
   }
 }, {
-    navigationOptions: {
+    navigationOptions: ({navigation}) => ({
       headerStyle: {
         backgroundColor: "#3CB371",
         elevation: 0
       },
-      title: "Transactions"
-    },
+      title: "Transactions",
+      headerLeft: (
+        <Icon name="md-menu" size={28} style={{
+          margin: 17
+        }} onPress={() => navigation.openDrawer()} />
+      )
+    }),
     tabBarOptions: {
       style: {
         backgroundColor: "#3CB371"
@@ -123,7 +129,7 @@ const DrawerNavigator = createDrawerNavigator({
   },
 }, {
   contentComponent:(props) => (
-    <View style={{flex:1}}>
+    <View style={{flex:1, backgroundColor: '#e1e2e1'}}>
       <SafeAreaView forceInset={{ top: 'never', horizontal: 'never' }}>
         <DrawerItems {...props} />
         <Button title="Logout" onPress={() => props.navigation.navigate('Signin')}/>

@@ -32,17 +32,11 @@ class Home extends React.Component {
     }
     render() {
         return (
-            <Gradient gradient={gradient} style={{ width: width, height: height }}>
-                <View style={styles.container}>
-                <ScrollView>
-                    <Image
-                        style={{ width: width, height: 235 }}
-                        source={{ uri: 'http://www.stickpng.com/assets/images/58aff217829958a978a4a6d2.png' }}
-                    />
+            <ScrollView>
+                <View style={styles.containerGrey}>
                     <Profit/>
-                </ScrollView>
                 </View>
-            </Gradient>
+            </ScrollView>
         )
     }
 }
@@ -50,10 +44,11 @@ class Home extends React.Component {
 export default Home
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
+    containerGrey: {
+        width: width,
+        height: height,
         alignItems: 'center',
-        justifyContent: 'center',
-        //   paddingTop: Platform.OS === 'android' ? 25 : 0,
-    },
+        justifyContent: 'flex-start',
+        backgroundColor: '#e1e2e1',
+    }
 })

@@ -12,8 +12,23 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { ref } from '../config/firebase'
 
 const { baseUrl, gradient } = require('../helpers/helpers')
+const {width, height} = Dimensions.get('window')
 
 class BalanceSheet extends React.Component {
+    static navigationOptions(props) {
+        return {
+            title: 'Balance Sheet',
+            headerStyle: {
+                elevation: 0,
+                backgroundColor: "#3CB371"
+            },
+            headerLeft: (
+                <Icon name="md-menu" size={28} style={{
+                    margin: 17
+                }} onPress={() => props.navigation.openDrawer()}></Icon>
+            )
+        }
+    }
     state = {
         kas: 0,
         piutang: 0,
