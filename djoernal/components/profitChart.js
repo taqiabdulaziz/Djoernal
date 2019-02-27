@@ -1,34 +1,57 @@
 import React, { Component } from 'react';
-import { 
-  AppRegistry, 
-  StyleSheet, 
-  ScrollView , 
-  StatusBar, 
-  Text, 
+import {
+  AppRegistry,
+  StyleSheet,
+  ScrollView,
+  StatusBar,
+  Text,
   View,
   KeyboardAvoidingView,
   Dimensions,
   AsyncStorage,
   TouchableOpacity,
   ActivityIndicator,
-  Alert
+  Alert,
+  Button
 } from 'react-native';
 import PieChart from 'react-native-pie-chart';
 import axios from 'axios'
 import Gradient from 'react-native-css-gradient'
 import { Header } from 'react-navigation';
-const {baseUrl, gradient} = require ('../helpers/helpers')
-const {width, height} = Dimensions.get('window')
- 
+const { baseUrl, gradient } = require('../helpers/helpers')
+const { width, height } = Dimensions.get('window')
+
 export default class Profit extends Component {
   async componentDidMount() {
-    try  {
-      let {data} = await axios.get(`${baseUrl}/users`, {
+    this.syncData()
+  }
+
+  state = {
+    revenue: 0,
+    expense: 0,
+    profit: 0
+  }
+
+  formatMoney(n, c, d, t) {
+    var c = isNaN(c = Math.abs(c)) ? 2 : c,
+      d = d == undefined ? "." : d,
+      t = t == undefined ? "," : t,
+      s = n < 0 ? "-" : "",
+      i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))),
+      j = (j = i.length) > 3 ? j % 3 : 0;
+
+    let result = s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "")
+    return result
+  }
+
+  syncData = async () => {
+    try {
+      let { data } = await axios.get(`${baseUrl}/users`, {
         headers: {
           token: await AsyncStorage.getItem("token")
         }
       })
-      let revenue= data.transactionList.filter(item => {
+      let revenue = data.transactionList.filter(item => {
         return item.transactionType.accountType === "Revenue"
       })
       let expense = data.otherTransactionList.filter(item => {
@@ -42,13 +65,13 @@ export default class Profit extends Component {
       })
       await revenue.map(item => {
         return item.kredit.map(element => {
-          return totalHPP += ((element.q*-1) * element.product.hpp)
+          return totalHPP += ((element.q * -1) * element.product.hpp)
         })
       })
       await expense.map(item => {
         return totalExpense += item.debit.nominal
       })
-      this.setState({ 
+      this.setState({
         revenue: totalRevenue,
         expense: totalExpense + totalHPP,
         profit: totalRevenue - (totalExpense + totalHPP)
@@ -58,28 +81,10 @@ export default class Profit extends Component {
     }
   }
 
-  state = {
-    revenue: 0,
-    expense: 0,
-    profit: 0
-  }
-
-  formatMoney(n, c, d, t) {
-    var c = isNaN(c = Math.abs(c)) ? 2 : c,
-        d = d == undefined ? "." : d,
-        t = t == undefined ? "," : t,
-        s = n < 0 ? "-" : "",
-        i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))),
-        j = (j = i.length) > 3 ? j % 3 : 0;
-
-    let result = s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "")
-    return result
-  }
-
   render() {
     const chart_wh = 155
-    const series = [this.state.expense,this.state.profit]
-    const sliceColor = ['#F44336','#2196F3']
+    const series = [this.state.expense, this.state.profit]
+    const sliceColor = ['#F44336', '#2196F3']
     return this.state.profit > 0 ? (
       <ScrollView>
         <View style={styles.containerWhite}>
@@ -117,8 +122,9 @@ export default class Profit extends Component {
               <Text style={{paddingLeft: 5, fontSize: 13}}>Rp.{this.formatMoney(this.state.profit)}</Text>
             </View>
           </View>
-          
+
         </View>
+        <Button title="Sync" onPress={() => this.syncData()}></Button>
       </ScrollView>
     ) : <Text style={{
         justifyContent: 'center', 
@@ -139,7 +145,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'white',
     margin: 10,
-    width: width -20,
+    width: width - 20,
     borderRadius: 4,
     padding: 10
   },
@@ -153,5 +159,5 @@ const styles = StyleSheet.create({
     paddingLeft: 5
   },
 });
- 
+
 AppRegistry.registerComponent('Profit', () => Profit);
