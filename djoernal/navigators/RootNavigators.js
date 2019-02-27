@@ -8,10 +8,10 @@ import {
   withNavigation
 } from 'react-navigation'
 import React from 'react'
-import { 
-  View, 
-  SafeAreaView, 
-  Button, 
+import {
+  View,
+  SafeAreaView,
+  Button,
   TouchableOpacity,
   Text,
 } from 'react-native'
@@ -70,11 +70,21 @@ const TransactionList = createMaterialTopTabNavigator({
     screen: OtherTransaction
   }
 }, {
-    navigationOptions: ({navigation}) => ({
+    defaultNavigationOptions: {
+      headerStyle: {
+        titleStyle: {
+          color: "white"
+        }
+      }
+    },
+    navigationOptions: ({ navigation }) => ({
       headerStyle: {
         backgroundColor: "#3CB371",
         elevation: 0,
-        color: 'white'
+        color: 'white',
+        titleStyle: {
+          color: "white"
+        }
       },
       title: "Transactions",
       headerLeft: (
@@ -102,7 +112,15 @@ const MyTransaction = createStackNavigator({
   Transactions: {
     screen: TransactionList
   }
-})
+}, {
+    defaultNavigationOptions: {
+      headerStyle: {
+        titleStyle: {
+          color: "white"
+        }
+      }
+    }
+  })
 
 const RevTransNav = createStackNavigator({
   RevenueTransaction: {
@@ -117,18 +135,18 @@ const ProductNav = createStackNavigator({
 }, {
     defaultNavigationOptions: {
       headerTintColor: '#fff',
-  }
-})
+    }
+  })
 
 const BalanceSheetNav = createStackNavigator({
-  BalanceSheet: {
+  Neraca: {
     screen: BalanceSheet
   }
 }, {
     defaultNavigationOptions: {
       headerTintColor: '#fff',
-  }
-})
+    }
+  })
 
 const TestGoogleVision = createStackNavigator({
   Test: {
@@ -149,25 +167,25 @@ const DrawerNavigator = createDrawerNavigator({
   Transaksi: {
     screen: MyTransaction
   },
-  BalanceSheet: {
+  Neraca: {
     screen: BalanceSheetNav
   },
   Produk: {
     screen: ProductNav
   },
 }, {
-  contentComponent:(props) => (
-    <View style={{flex:1, backgroundColor: '#e1e2e1'}}>
-      <SafeAreaView forceInset={{ top: 'never', horizontal: 'never' }}>
-        <DrawerItems {...props} />
-        {/* <Button title="Logout" onPress={() => props.navigation.navigate('Signin')}/> */}
-        <TouchableOpacity style={{width: 220, height: 40, backgroundColor:'#009efd', marginLeft: 30, borderRadius:20, justifyContent: 'center', alignItems: 'center'}} onPress={() => props.navigation.navigate('Signin')}>
-          <Text style={{color: 'white', fontWeight: 'bold'}}>Logout</Text>
-        </TouchableOpacity>
-      </SafeAreaView>
-    </View>
-),
-})
+    contentComponent: (props) => (
+      <View style={{ flex: 1, backgroundColor: '#e1e2e1' }}>
+        <SafeAreaView forceInset={{ top: 'never', horizontal: 'never' }}>
+          <DrawerItems {...props} />
+          {/* <Button title="Logout" onPress={() => props.navigation.navigate('Signin')}/> */}
+          <TouchableOpacity style={{ width: 220, height: 40, backgroundColor: '#009efd', marginLeft: 30, borderRadius: 20, justifyContent: 'center', alignItems: 'center' }} onPress={() => props.navigation.navigate('Signin')}>
+            <Text style={{ color: 'white', fontWeight: 'bold' }}>Logout</Text>
+          </TouchableOpacity>
+        </SafeAreaView>
+      </View>
+    ),
+  })
 
 const rootNav = createSwitchNavigator({
   MainNavigation: {
