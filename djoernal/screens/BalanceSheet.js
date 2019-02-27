@@ -14,28 +14,13 @@ import axios from 'axios'
 import { Ionicons } from '@expo/vector-icons'
 import { ScrollView } from 'react-native-gesture-handler';
 import { ref } from '../config/firebase'
+import { setTransaction } from '../store/action'
+import { bindActionCreators } from 'redux'
 
 const { baseUrl, gradient } = require('../helpers/helpers')
 const { width, height } = Dimensions.get('window')
 
 class BalanceSheet extends React.Component {
-    static navigationOptions(props) {
-        return {
-            title: 'Balance Sheet',
-            headerStyle: {
-                elevation: 0,
-                backgroundColor: "#3CB371",
-                titleStyle: {
-                    color: "white"
-                }
-            },
-            headerLeft: (
-                <Icon name="md-menu" size={28} style={{
-                    margin: 17
-                }} onPress={() => props.navigation.openDrawer()}></Icon>
-            )
-        }
-    }
     state = {
         kas: 0,
         piutang: 0,
@@ -62,18 +47,35 @@ class BalanceSheet extends React.Component {
                     color: "white"
                 }} onPress={() => props.navigation.openDrawer()}></Ionicons>
             ),
+            headerRight: (
+                <Ionicons name="md-refresh" size={28} style={{
+                    paddingRight: 17,
+                    paddingTop: 17,
+                    paddingBottom: 17,
+                    color: "white"
+                }} onPress={() => props.navigation.state.params.sync()}></Ionicons>
+            )
         }
     }
 
     async componentDidMount() {
+        this.props.navigation.setParams({ sync: this.getData })
         this.getData()
     }
 
     getData = async () => {
         try {
             let ekuitas = 0
+            let userData = await axios.get(`${baseUrl}/users`, {
+                headers: {
+                    token: await AsyncStorage.getItem("token")
+                }
+            })
+
+            let otherTransactionList = userData.data.otherTransactionList
+            let transactionList = userData.data.transactionList
             //DARI TRANSACTION LIST
-            const { transactionList, otherTransactionList } = this.props.transactionData
+            // const { transactionList, otherTransactionList } = this.props.transactionData
             let { data } = await axios.get(`${baseUrl}/product`, {
                 headers: {
                     token: await AsyncStorage.getItem("token")
@@ -102,12 +104,7 @@ class BalanceSheet extends React.Component {
                 }
             })
 
-            //NGAMBIL CURRENT CASH USER                        
-            let userData = await axios.get(`${baseUrl}/users`, {
-                headers: {
-                    token: await AsyncStorage.getItem("token")
-                }
-            })
+
             kasCount += userData.data.kas
             otherTransactionList.forEach((data) => {
                 data.kredit.forEach((dataKredit) => {
@@ -124,12 +121,14 @@ class BalanceSheet extends React.Component {
                 hutang: hutangCount,
                 totalEkuitas: ekuitas,
                 totalAset: (kasCount + piutangCount + productCount),
-                totalLiabilitas: (this.state.hutang)
+                totalLiabilitas: hutangCount
             })
-            console.log(this.state)
         } catch (err) {
             console.log(err)
         }
+        console.log(`utank`);
+
+        console.log(this.state.hutang)
     }
 
     generateCsv = async () => {
@@ -161,7 +160,12 @@ class BalanceSheet extends React.Component {
                 arr.push(key2)
                 arr.push(`Rp. ${json[key][key2]}`)
                 rows.push(arr)
-                total += Number(json[key][key2])
+                if (key2 == "modal") {
+                    total += (Number(json[key][key2]) + json.LIABILITAS.utang)
+                } else {
+                    total += Number(json[key][key2])
+
+                }
                 arr = []
             }
             rows.push(["---------", `Rp. ${total}`])
@@ -239,14 +243,14 @@ class BalanceSheet extends React.Component {
                         justifyContent: "space-between"
                     }}>
                         <Text style={styles.accountTitle2}>Total Liabilitas</Text>
-                        <Text style={styles.accountTitle2}>{this.state.totalLiabilitas}</Text>
+                        <Text style={styles.accountTitle2}>{this.formatMoney(this.state.totalLiabilitas)}</Text>
                     </View>
                     {
                         this.state.hutang > 0 &&
                         (
                             <View style={styles.account}>
                                 <Text style={styles.accountTitle}>Utang</Text>
-                                <Text style={styles.accountTitle}>{this.state.hutang}</Text>
+                                <Text style={styles.accountTitle}>{this.formatMoney(this.state.hutang)}</Text>
                             </View>
                         )
                     }
@@ -307,7 +311,9 @@ const stateProps = (state) => ({
     transactionData: state.mainReducer.transactionData
 })
 
-export default connect(stateProps, null)(BalanceSheet)
+const mapDispatchToProps = (dispatch) => bindActionCreators({ setTransaction }, dispatch)
+
+export default connect(stateProps, mapDispatchToProps)(BalanceSheet)
 
 const styles = StyleSheet.create({
     container: {

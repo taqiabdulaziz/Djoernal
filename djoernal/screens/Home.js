@@ -39,7 +39,7 @@ class Home extends React.Component {
             <ScrollView>
                 <View style={styles.containerGrey}>
                     <Profit/>
-                    <View style={{flexDirection:'row', marginTop:30, marginBottom:20}}>
+                    {/* <View style={{flexDirection:'row', marginTop:30, marginBottom:20}}>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('Revenue')} style={{width: 110, height: 110, borderWidth:1}}>
                             <Image
                                 style={{width: 110, height: 110}}
@@ -75,7 +75,7 @@ class Home extends React.Component {
                         <TouchableOpacity style={{width: 110, height: 110}}>
                             
                         </TouchableOpacity>
-                    </View>
+                    </View> */}
                 </View>
             </ScrollView>
         )
