@@ -257,7 +257,16 @@ class BalanceSheet extends React.Component {
 
                 </View>
                 <View style={styles.accountWrapper}>
-                    <Text style={styles.accountTitle}>Ekutas</Text>
+                    <Text style={styles.accountTitle}>Ekuitas</Text>
+                    {
+                        (this.state.totalAset - this.state.totalLiabilitas) > 0 &&
+                        (
+                            <View style={styles.account}>
+                                <Text style={styles.accountTitle}>Modal</Text>
+                                <Text style={styles.accountTitle}>{this.formatMoney(this.state.totalAset - this.state.totalLiabilitas)}</Text>
+                            </View>
+                        )
+                    }
                     <View style={{
                         flexDirection: "row",
                         justifyContent: "space-between"
