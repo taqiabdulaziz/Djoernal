@@ -342,6 +342,7 @@ class Revenue extends React.Component {
                     style={{
                       padding: 8,
                     }}
+                    value={this.state.expenseAmount}
                     placeholder={"IDR"}
                     placeholderTextColor="grey"
                     onChangeText={(expenseAmount) => this.setState({ expenseAmount })}
@@ -379,6 +380,7 @@ class Revenue extends React.Component {
                     style={{
                       padding: 8
                     }}
+                    value={this.state.sourceAmount}
                     placeholder={"IDR"}
                     placeholderTextColor="grey"
                     onChangeText={(sourceAmount) => this.setState({ sourceAmount, diff: (sourceAmount - this.state.expenseAmount) * -1 })}

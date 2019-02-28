@@ -124,10 +124,10 @@ export default class Transaction extends React.Component {
               <Text style={{color: 'white', fontWeight: 'bold'}}>X</Text>
             </TouchableHighlight>
             <Text></Text>
-            <Text>HPP: </Text>
+            <Text style={{color: "white", fontWeight: "bold"}}>HPP: </Text>
               {this.state.selectedItem.map((element, i) => {                  
                 return (                
-                  <Text style={{padding: 10}} key={i}>{element.product.name} ({element.q*-1}pcs): {this.formatMoney(element.product.hpp * (element.q*-1))}</Text>
+                  <Text style={{padding: 10, color: "white", fontWeight: "bold"}} key={i}>{element.product.name} ({element.q*-1}pcs): {this.formatMoney(element.product.hpp * (element.q*-1))}</Text>
                 )
               })}
             </Gradient>
