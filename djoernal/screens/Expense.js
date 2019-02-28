@@ -309,8 +309,8 @@ class Revenue extends React.Component {
 
   render() {
     return (
-      <ScrollView>
-        <View style={{ backgroundColor: "#e1e2e1" }}>
+      <ScrollView style={{height: "100%"}}>
+        <View style={{ backgroundColor: "#e1e2e1", height: "100%" }}>
           <View style={{ padding: 10 }}>
             <View style={{
               backgroundColor: "white",
@@ -330,7 +330,7 @@ class Revenue extends React.Component {
                     this.setState({ expenseType: itemValue })
                   }>
                   {this.state.expenseAccounts.map((item, index) => (
-                    <Picker.Item label={item} value={item} key={index} style={styles.input}/>
+                    <Picker.Item label={item} value={item} key={index} style={styles.input} />
                   ))}
                 </Picker>
                 <View style={{
@@ -545,9 +545,11 @@ class Revenue extends React.Component {
               {/* <Button style={{ color: "green" }} onPress={() => this.imagePick(true)} title="Quick Mode"></Button> */}
             </View>
           </View>
+          <View style={{padding: 14}}>
+            <Button title="SUBMIT" onPress={this.submit} style={{ margin: 5 }}></Button>
+          </View>
         </View>
         <View>
-          <Button title="SUBMIT" onPress={this.submit} style={{ margin: 5 }}></Button>
         </View>
 
         <Modal
