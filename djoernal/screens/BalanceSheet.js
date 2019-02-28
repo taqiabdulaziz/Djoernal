@@ -200,7 +200,7 @@ class BalanceSheet extends React.Component {
         const { kas, piutang, product, productList, hutang } = this.state
         return (
             <View>
-
+                <ScrollView>
                 <View style={styles.accountWrapper}>
                     <Text style={styles.accountTitle}>Aset</Text>
                     <View style={{
@@ -298,7 +298,8 @@ class BalanceSheet extends React.Component {
                     <View style={{ width: "50%" }}>
                         <Button title="Import Data" onPress={() => this.generateCsv()}></Button>
                     </View>
-                </View>
+                    </View>
+                    </ScrollView>
             </View>
         )
     }
