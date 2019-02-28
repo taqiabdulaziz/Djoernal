@@ -94,7 +94,7 @@ class BalanceSheet extends React.Component {
             let kasCount = 0
             let piutangCount = 0
             transactionList.map(e => {
-                if (e.transactionType.accountType === 'Revenue') {
+                if (e.debit.accountType === 'Kas') {
                     kasCount += e.debit.nominal
                     e.kredit.forEach(kredit => {
                         ekuitas += (kredit.price - kredit.hpp)

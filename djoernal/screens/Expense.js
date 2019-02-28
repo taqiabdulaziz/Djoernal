@@ -342,10 +342,10 @@ class Revenue extends React.Component {
                     style={{
                       padding: 8,
                     }}
-                    value={String(this.state.expenseAmount).toLocaleString()}
+                    value={String(this.state.expenseAmount)}
                     placeholder={"IDR"}
                     placeholderTextColor="grey"
-                    onChangeText={(expenseAmount) => this.setState({ expenseAmount })}
+                    onChangeText={(expenseAmount) => this.setState({ expenseAmount: Number(expenseAmount) })}
                   ></TextInput>
                 </View>
               </View>
